@@ -98,4 +98,13 @@ public class SpecificationServiceImpl implements SpecificationService {
     public List<Map> selectOptionList() {
         return specificationDao.selectOptionList();
     }
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            Specification specification = specificationDao.selectByPrimaryKey(id);
+            specification.setStatus(status);
+            specificationDao.updateByPrimaryKeySelective(specification);
+
+        }
+    }
 }
