@@ -10,6 +10,7 @@ import cn.itcast.core.pojo.log.PayLog;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
 import com.alibaba.dubbo.config.annotation.Service;
+import entity.PageResult;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.FastArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +150,15 @@ public class OrderServiceImpl implements  OrderService {
         //清空
         //redisTemplate.boundHashOps("CART").delete(order.getUserId());
 
+    }
+
+    @Override
+    public List<OrderItem> findAll() {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer pageNo, Integer pageSize) {
+        return null;
     }
 }
