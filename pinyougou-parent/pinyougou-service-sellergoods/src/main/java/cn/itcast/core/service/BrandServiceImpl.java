@@ -117,6 +117,7 @@ public class BrandServiceImpl implements BrandService{
     public List<Map> selectOptionList() {
         return brandDao.selectOptionList();
     }
+
     @Override
     public void updateStatus(Long[] ids,String status) {
         for (Long id : ids) {
