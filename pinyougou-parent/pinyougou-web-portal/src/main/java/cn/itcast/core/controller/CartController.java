@@ -15,6 +15,9 @@ import vo.Cart;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,11 +116,11 @@ public class CartController {
 
             //判断当前用户是否登陆
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (!"anonymity".equals(name)) {
+            if (!"anonymousUser".equals(name)) {
                 //登陆了
                // 5：将上面合并后的购物车集合再次追加到Redis缓存   清空Cookie
                 cartService.addCartListToRedis(cartList,name);
-                Cookie cookie = new Cookie("CART", null);
+                Cookie cookie = new Cookie("CART", URLEncoder.encode( JSON.toJSONString(cartList),"UTF-8"));
                 //存活时间
                 cookie.setMaxAge(0);
                 //路径  http://localhost:9103/cart/addGoodsToCartList.do
@@ -127,7 +130,7 @@ public class CartController {
             } else {
                 //未登陆
                 //5：创建Cookie 保存购物车 并回显浏览器 request
-                Cookie cookie = new Cookie("CART", JSON.toJSONString(cartList));
+                Cookie cookie = new Cookie("CART", URLEncoder.encode( JSON.toJSONString(cartList),"UTF-8"));
                 //存活时间
                 cookie.setMaxAge(60 * 60 * 24 * 7);
                 //路径  http://localhost:9103/cart/addGoodsToCartList.do
@@ -145,7 +148,7 @@ public class CartController {
 
     //查询所有购物车结果集
     @RequestMapping("/findCartList")
-    public List<Cart> findCartList(HttpServletRequest request, HttpServletResponse response) {
+    public List<Cart> findCartList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
         List<Cart> cartList = null;
 //            未登陆
@@ -155,7 +158,8 @@ public class CartController {
             for (Cookie cookie : cookies) {
 //            2：获取Cookie中购物车集合
                 if ("CART".equals(cookie.getName())) {
-                    String value = cookie.getValue();
+                    String value1 = cookie.getValue();
+                    String value = URLDecoder.decode(value1, "UTF-8");
                     cartList = JSON.parseArray(value, Cart.class);
 
                     break;
@@ -166,7 +170,7 @@ public class CartController {
         }
         //判断当前用户是否登陆
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!"anonymity".equals(name)) {
+        if (!"anonymousUser".equals(name)) {
             //登陆了
 //            3：有 追加到Redis缓存中
             if(null != cartList){
