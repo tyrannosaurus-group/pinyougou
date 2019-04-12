@@ -10,4 +10,8 @@ public interface ItemCatService {
     ItemCat findOne(Long id);
 
     List<ItemCat> findAll();
+
+    void add(ItemCat entity);
+
+    void update(ItemCat entity);
 }

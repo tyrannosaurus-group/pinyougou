@@ -48,6 +48,8 @@ public class BrandServiceImpl implements BrandService{
     //添加
     @Override
     public void add(Brand brand) {
+        //默认刚添加都未审核
+        brand.setStatus("0");
         brandDao.insertSelective(brand);
                 //insert into tb_tb (id,name,98个都是null) values (1,haha,null,null 98个null           100个字段
                 //insert into tb_tb (id,name) values (1,haha)
@@ -61,6 +63,8 @@ public class BrandServiceImpl implements BrandService{
     //修改
     @Override
     public void update(Brand brand) {
+        //更改过后要重新审核
+        brand.setStatus("0");
         brandDao.updateByPrimaryKeySelective(brand);
     }
 
