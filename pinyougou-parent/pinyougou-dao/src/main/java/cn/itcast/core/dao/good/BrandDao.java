@@ -3,6 +3,8 @@ package cn.itcast.core.dao.good;
 import cn.itcast.core.pojo.good.Brand;
 import cn.itcast.core.pojo.good.BrandQuery;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface BrandDao {
@@ -19,6 +21,8 @@ public interface BrandDao {
     List<Brand> selectByExample(BrandQuery example);
 
     Brand selectByPrimaryKey(Long id);
+
+    List<Map> selectOptionList();
 
     int updateByExampleSelective(@Param("record") Brand record, @Param("example") BrandQuery example);
 
