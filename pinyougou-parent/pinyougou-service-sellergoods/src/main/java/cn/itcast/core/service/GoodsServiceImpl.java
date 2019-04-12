@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import entity.PageResult;
+import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.SimpleQuery;
@@ -249,7 +250,6 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
 
-
     @Autowired
     private JmsTemplate jmsTemplate;
     @Autowired
@@ -270,13 +270,13 @@ public class GoodsServiceImpl implements GoodsService {
             //商品ID
             //商品详情表
             //库存表  多个库存
-
             goods.setId(id);
             //1:更新商品的审核状态
             goodsDao.updateByPrimaryKeySelective(goods);
-            //判断是否为审核通过
-            if("1".equals(status)){
 
+
+            // 如果商品审核通过，就生成商品详情的静态页面
+            /*if("1".equals(status)){
                 //发消息 目的地
                jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
                    @Override
@@ -287,7 +287,7 @@ public class GoodsServiceImpl implements GoodsService {
                });
 
 
-            }
+            }*/
 
         }
 
@@ -315,12 +315,42 @@ public class GoodsServiceImpl implements GoodsService {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
                     //五大类型 TextMessage
-                    return  session.createTextMessage(String.valueOf(id));// null + ""  "null"
+                    return session.createTextMessage(String.valueOf(id));// null + ""  "null"
                 }
             });
 
 
-
         }
+    }
+
+    // 批量上架/单个上架
+    @Override
+    public Result sendIds(Long[] ids) {
+        if (ids != null && ids.length > 0) {
+            Goods goods = new Goods();
+            for (Long id : ids) {
+                // 查询该id是否是审核通过
+                Goods goods1 = goodsDao.selectByPrimaryKey(id);
+                String auditStatus = goods1.getAuditStatus();
+                if (!"1".equalsIgnoreCase(auditStatus)){
+                    return new Result(false, "该商品未审核，不能上架！");
+                }
+                // 商品上架
+                goods.setId(id);
+                goods.setIsMarketable("1");
+                goodsDao.updateByPrimaryKeySelective(goods);
+
+                //目的地 发送的消息
+                jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        //五大类型 TextMessage
+                        return session.createTextMessage(String.valueOf(id));// null + ""  "null"
+                    }
+                });
+            }
+            return new Result(true, "商品上架成功！");
+        }
+        return new Result(false, "商品上架失败！");
     }
 }
