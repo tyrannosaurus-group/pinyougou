@@ -20,6 +20,7 @@ import java.util.Map;
 @Service
 public class BrandServiceImpl implements BrandService{
 
+    //test1
     //直接 Controller Service
     @Autowired
     private BrandDao brandDao;
