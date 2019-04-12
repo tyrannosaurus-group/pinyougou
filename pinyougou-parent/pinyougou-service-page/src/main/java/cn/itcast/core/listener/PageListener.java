@@ -20,11 +20,8 @@ public class PageListener implements MessageListener {
         ActiveMQTextMessage atm = (ActiveMQTextMessage) message;
         try {
             String id = atm.getText();
-            System.out.println("静态化项目接收到的ID：" + id);
-
             //3:将商品信息静态化处理
             staticPageService.index(Long.parseLong(id));
-
         } catch (JMSException e) {
             e.printStackTrace();
         }

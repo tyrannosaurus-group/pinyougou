@@ -22,43 +22,53 @@ public class GoodsController {
 
     @Reference
     private GoodsService goodsService;
+
     //商品添加
     @RequestMapping("/add")
-    public Result add(@RequestBody GoodsVo vo){
+    public Result add(@RequestBody GoodsVo vo) {
         try {
             //商家ID
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
             vo.getGoods().setSellerId(name);
             goodsService.add(vo);
-            return new Result(true,"成功");
+            return new Result(true, "成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,"失败");
+            return new Result(false, "失败");
         }
     }
+
     //商品修改
     @RequestMapping("/update")
-    public Result update(@RequestBody GoodsVo vo){
+    public Result update(@RequestBody GoodsVo vo) {
         try {
 
             goodsService.update(vo);
-            return new Result(true,"成功");
+            return new Result(true, "成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,"失败");
+            return new Result(false, "失败");
         }
     }
+
     //根据条件查询 分页对象
     @RequestMapping("/search")
-    public PageResult search(Integer page,Integer rows ,@RequestBody Goods goods){
+    public PageResult search(Integer page, Integer rows, @RequestBody Goods goods) {
         //商家ID
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         goods.setSellerId(name);
-        return  goodsService.search(page,rows,goods);
+        return goodsService.search(page, rows, goods);
     }
+
     //查询一个包装对象GoodsVo
     @RequestMapping("/findOne")
-    public GoodsVo findOne(Long id){
+    public GoodsVo findOne(Long id) {
         return goodsService.findOne(id);
+    }
+
+    // 批量上架/单个上架
+    @RequestMapping("/sendIds")
+    public Result sendIds(Long[] ids) {
+        return goodsService.sendIds(ids);
     }
 }
