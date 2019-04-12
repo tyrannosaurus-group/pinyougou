@@ -65,7 +65,9 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		);				
 	}
 	
-	$scope.searchEntity={};//定义搜索对象 
+	$scope.searchEntity={};//定义搜索对象
+
+    $scope.searchEntity.parentId=0;//上级ID
 	
 	//搜索
 	$scope.search=function(page,rows){			

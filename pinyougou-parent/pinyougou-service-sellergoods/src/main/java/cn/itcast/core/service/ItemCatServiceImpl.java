@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ItemCatServiceImpl implements ItemCatService{
+public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private ItemCatDao itemCatDao;
@@ -37,7 +37,6 @@ public class ItemCatServiceImpl implements ItemCatService{
 
         }
         //添加
-
         //修改
         //删除
         //redisTemplate.boundHashOps("itemCatList").delete(itemCat.getName())
@@ -62,17 +61,5 @@ public class ItemCatServiceImpl implements ItemCatService{
     @Override
     public List<ItemCat> findAll() {
         return itemCatDao.selectByExample(null);
-    }
-
-    @Override
-    public void add(ItemCat entity) {
-        entity.setStatus("0");
-        itemCatDao.insertSelective(entity);
-    }
-
-    @Override
-    public void update(ItemCat entity) {
-        entity.setStatus("0");
-        itemCatDao.updateByPrimaryKeySelective(entity);
     }
 }
