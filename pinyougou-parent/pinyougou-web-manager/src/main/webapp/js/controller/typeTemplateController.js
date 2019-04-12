@@ -110,4 +110,7 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 	$scope.deleteTableRow = function(index){
 		$scope.entity.customAttributeItems.splice(index,1);
 	}
+
+    // 显示状态
+    $scope.status = ["未审核","审核通过","审核未通过","关闭"];
 });	

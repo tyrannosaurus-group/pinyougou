@@ -22,6 +22,8 @@ public interface SpecificationDao {
 
     Specification selectByPrimaryKey(Long id);
 
+    List<Map> selectOptionList();
+
     int updateByExampleSelective(@Param("record") Specification record, @Param("example") SpecificationQuery example);
 
     int updateByExample(@Param("record") Specification record, @Param("example") SpecificationQuery example);
@@ -29,6 +31,4 @@ public interface SpecificationDao {
     int updateByPrimaryKeySelective(Specification record);
 
     int updateByPrimaryKey(Specification record);
-
-    List<Map> selectOptionList();
 }
