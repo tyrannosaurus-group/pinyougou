@@ -107,10 +107,11 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		
 		$scope.findByParentId(p_entity.id);
 	}
-	
-	
-	
-	
+
+
+
+    // 显示状态
+    $scope.status = ["未审核","审核通过","审核未通过","关闭"];
 	
 	
 	
