@@ -6,6 +6,7 @@ import cn.itcast.core.pojo.good.BrandQuery;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
+import cn.itcast.core.pojo.specification.SpecificationQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -34,8 +35,14 @@ public class SpecificationServiceImpl implements SpecificationService {
     public PageResult search(Integer page, Integer rows, Specification specification) {
         //插件
         PageHelper.startPage(page,rows);
+        //条件对象
+        SpecificationQuery specificationQuery= new SpecificationQuery();
+        SpecificationQuery.Criteria criteria = specificationQuery.createCriteria();
+        if (null !=specification.getSpecName() && !"".equals(specification.getSpecName().trim())){
+            criteria.andSpecNameLike("%"+specification.getSpecName().trim()+"%");
+        }
 
-        Page<Specification> p = (Page<Specification>) specificationDao.selectByExample(null);
+        Page<Specification> p = (Page<Specification>) specificationDao.selectByExample(specificationQuery);
 
 
         return new PageResult(p.getTotal(),p.getResult());
