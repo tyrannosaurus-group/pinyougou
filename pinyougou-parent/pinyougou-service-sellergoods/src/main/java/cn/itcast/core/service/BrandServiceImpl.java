@@ -18,7 +18,7 @@ import java.util.Map;
  * 品牌管理
  */
 @Service
-public class BrandServiceImpl implements BrandService{
+public class BrandServiceImpl implements BrandService {
 
     //test1
     //直接 Controller Service
@@ -34,15 +34,16 @@ public class BrandServiceImpl implements BrandService{
         //
         return brandDao.selectByExample(null);
     }
+
     //查询分页对象
     @Override
     public PageResult findPage(Integer pageNo, Integer pageSize) {
 
         //Mybatis分页插件
-        PageHelper.startPage(pageNo,pageSize);
+        PageHelper.startPage(pageNo, pageSize);
         Page<Brand> page = (Page<Brand>) brandDao.selectByExample(null);
         //PageInfo<Brand> info = new PageInfo<>(brandList);
-        return new PageResult(page.getTotal(),page.getResult());
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
     //添加
@@ -51,8 +52,8 @@ public class BrandServiceImpl implements BrandService{
         //默认刚添加都未审核
         brand.setStatus("0");
         brandDao.insertSelective(brand);
-                //insert into tb_tb (id,name,98个都是null) values (1,haha,null,null 98个null           100个字段
-                //insert into tb_tb (id,name) values (1,haha)
+        //insert into tb_tb (id,name,98个都是null) values (1,haha,null,null 98个null           100个字段
+        //insert into tb_tb (id,name) values (1,haha)
     }
 
     @Override
@@ -89,17 +90,24 @@ public class BrandServiceImpl implements BrandService{
     @Override
     public PageResult search(Integer pageNo, Integer pageSize, Brand brand) {
         //Mybatis分页插件
-        PageHelper.startPage(pageNo,pageSize);
+        PageHelper.startPage(pageNo, pageSize);
         //条件对象
         BrandQuery brandQuery = new BrandQuery();
         BrandQuery.Criteria criteria = brandQuery.createCriteria();
 
+        //判断查询什么状态下的品牌
+        if (null != brand.getStatus() && !"".equals(brand.getStatus())) {
+            criteria.andStatusEqualTo(brand.getStatus());
+        } else {
+            criteria.andStatusBetween("0", "3");
+        }
+
         //判断品牌中 名称是否为空
-        if(null != brand.getName() && !"".equals(brand.getName().trim())){
-            criteria.andNameLike("%"+brand.getName().trim()+"%");
+        if (null != brand.getName() && !"".equals(brand.getName().trim())) {
+            criteria.andNameLike("%" + brand.getName().trim() + "%");
         }
         //首字母
-        if(null != brand.getFirstChar() && !"".equals(brand.getFirstChar().trim())){
+        if (null != brand.getFirstChar() && !"".equals(brand.getFirstChar().trim())) {
             criteria.andFirstCharEqualTo(brand.getFirstChar().trim());
         }
 
@@ -107,7 +115,7 @@ public class BrandServiceImpl implements BrandService{
         Page<Brand> page = (Page<Brand>) brandDao.selectByExample(brandQuery);
 
 
-        return new PageResult(page.getTotal(),page.getResult());
+        return new PageResult(page.getTotal(), page.getResult());
 
 
     }
@@ -119,7 +127,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public void updateStatus(Long[] ids,String status) {
+    public void updateStatus(Long[] ids, String status) {
         for (Long id : ids) {
             Brand brand = brandDao.selectByPrimaryKey(id);
             brand.setStatus(status);
