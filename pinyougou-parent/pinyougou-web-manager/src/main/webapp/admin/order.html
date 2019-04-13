@@ -35,10 +35,11 @@
                 <!-- 数据表格 -->
                 <div class="table-box">
 
+
                     <div class="box-tools pull-right">
                         <div class="has-feedback">
-                            状态：<select>
-                            <option value="">全部</option>
+                            状态：<select ng-model="searchEntity.status">
+                            <option value="" selected>全部</option>
                             <option value="1">未付款</option>
                             <option value="2">已付款</option>
                             <option value="3">未发货</option>
@@ -54,7 +55,7 @@
                             <option value="3">月订单</option>
                         </select>
                             订单日期：<input>
-                            <button class="btn btn-default">查询</button>
+                            <button class="btn btn-default" ng-click="reloadList()">查询</button>
                         </div>
                     </div>
                     <!--工具栏/-->
@@ -62,37 +63,45 @@
                     <!--数据列表-->
                     <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
                         <thead>
-                        <tr>
-                            <th class="" style="padding-right:0px">
-                                <input id="selall" type="checkbox" class="icheckbox_square-blue">
-                            </th>
-                            <th class="sorting">商品名称</th>
-                            <th class="sorting">商品价格</th>
-                            <th class="sorting">商品数量</th>
-                            <th class="sorting">订单实付金额</th>
-                            <th class="sorting">订单来源</th>
-                            <th class="sorting">创建时间</th>
-                            <th class="sorting">状态</th>
+                            <tr>
+                                <th class="" style="padding-right:0px">
+                                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                                </th>
+                                <th class="sorting">订单号</th>
+                                <th class="sorting">商品名称</th>
+                                <th class="sorting">商品价格</th>
+                                <th class="sorting">商品数量</th>
+                                <th class="sorting">订单实付金额</th>
+                                <th class="sorting">订单来源</th>
+                                <th class="sorting">创建时间</th>
+                                <th class="sorting">状态</th>
 
-                        </tr>
+                            </tr>
                         </thead>
+
                         <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
 
-                            <td>小米6S手机</td>
-                            <td>1000</td>
-                            <td>2</td>
-                            <td>2000</td>
-                            <td>app端</td>
-                            <td>2018-06-23 10:45:27</td>
-                            <td>
-                                                        <span>
-                                                            已付款
-                                                        </span>
-                            </td>
+                            <tr ng-repeat="entity in list">
+                                <td><input  type="checkbox" ng-click="updateSelection($event,entity.id)"></td>
+                                <td>{{entity.id}}</td>
+                                <td>{{entity.goodsName}}</td>
+                                <td>{{entity.price}}</td>
+                                <td>{{entity.num}}</td>
+                                <td>{{entity.totalFee}}</td>
+                                <td>
+                                    <span>
+		                                 {{status2[entity.sourceType]}}
+		                            </span>
+                                </td>
+                                <td>{{entity.createTime}}</td>
+                                <td>
+		                                  	<span>
+		                                  		{{status[entity.status]}}
+		                                  	</span>
+                                </td>
 
-                        </tr>
+
+                            </tr>
                         </tbody>
                     </table>
                     <!--数据列表/-->
