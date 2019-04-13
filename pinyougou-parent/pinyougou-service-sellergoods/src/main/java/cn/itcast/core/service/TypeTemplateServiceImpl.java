@@ -5,6 +5,7 @@ import cn.itcast.core.dao.template.TypeTemplateDao;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
 import cn.itcast.core.pojo.template.TypeTemplate;
+import cn.itcast.core.pojo.template.TypeTemplateQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
@@ -61,7 +62,16 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 
         PageHelper.startPage(page,rows);
-        Page<TypeTemplate> p = (Page<TypeTemplate>) typeTemplateDao.selectByExample(null);
+        TypeTemplateQuery typeTemplateQuery = new TypeTemplateQuery();
+        TypeTemplateQuery.Criteria criteria = typeTemplateQuery.createCriteria();
+        if (null != tt.getName() && !"".equals(tt.getName().trim())) {
+            criteria.andNameLike("%" + tt.getName() + "%");
+        }
+        if (null != tt.getStatus() && !"".equals(tt.getStatus().trim())) {
+            criteria.andStatusEqualTo(tt.getStatus());
+        }
+
+        Page<TypeTemplate> p = (Page<TypeTemplate>) typeTemplateDao.selectByExample(typeTemplateQuery);
         return new PageResult(p.getTotal(),p.getResult());
     }
 
@@ -105,6 +115,25 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
             map.put("options",specificationOptions);
         }
         return listMap;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        if (null != ids && ids.length > 0) {
+
+            TypeTemplate typeTemplate = new TypeTemplate();
+            typeTemplate.setStatus(status);
+
+            for (Long id : ids) {
+
+                typeTemplate.setId(id);
+
+                typeTemplateDao.updateByPrimaryKeySelective(typeTemplate);
+
+            }
+
+
+        }
     }
 
     //Mysql 索引库 消息 队列  分布式文件系统 Redis缓存
