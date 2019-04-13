@@ -28,5 +28,13 @@ app.service('goodsService',function($http){
 	//搜索
 	this.search=function(page,rows,searchEntity){
 		return $http.post('../goods/search.do?page='+page+"&rows="+rows, searchEntity);
-	}    	
+	}
+	// 批量上架/单个上架
+    this.sendIds=function(ids){
+        return $http.get('../goods/sendIds.do?ids='+ids);
+    }
+    // 批量上架/单个上架
+    this.soldOut=function(ids){
+        return $http.get('../goods/soldOut.do?ids='+ids);
+    }
 });
