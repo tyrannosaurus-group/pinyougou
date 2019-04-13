@@ -109,6 +109,7 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
         try {
             Template template = configuration.getTemplate("RemoveItem.ftl"); //读
             Map<String,Object> root = new HashMap<>(); //数据
+            root.put("out",true);
             //输出流 写
             out = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
             //处理

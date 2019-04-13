@@ -16,38 +16,16 @@
     <script type="text/javascript" src="plugins/angularjs/angular.min.js"> </script>
     <script type="text/javascript" src="js/base.js"> </script>
     <script type="text/javascript" src="js/controller/itemController.js"> </script>
-    <script>
-        var skuList=[
-          <#list itemList as item>
-           {
-             id:${item.id?c},
-             title:'${item.title}',
-             price:${item.price?c},
-             spec:${item.spec}
-           } ,
-          </#list>   
-        ];
-        
-    </script>
 </head>
 
 <body ng-app="pinyougou" ng-controller="itemController" ng-init="num=1;loadSku()">
-
 <!--页面顶部 开始-->
 <#include "head.ftl">
-<#--图片列表-->
-<#assign imageList=goodsDesc.itemImages?eval>
-<#--扩展属性-->
-<#assign customAttributeList=goodsDesc.customAttributeItems?eval>
-<#--规格-->
-<#assign specificationList=goodsDesc.specificationItems?eval>
-
-
 <!--页面顶部 结束-->
 	<div class="py-container">
-        <div style="background-color: #dcf9d6; width: 60%; height: 300px">
-			<h1>该商品已下架！</h1>
-			<h2><a href="http://localhost:8103/index.html">去购物！</a></h2>
+        <div style="background-color: #dcf9d6; width: 80%; height: 300px">
+			<h1>亲，该商品已下架！</h1>
+			<h2><a href="http://localhost:8203/index.html">去购物！</a></h2>
 		</div>
 			<!--like-->
 			<div class="clearfix"></div>
