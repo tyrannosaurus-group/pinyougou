@@ -114,4 +114,5 @@ public class BrandController {
             return new Result(false,"失败");
         }
     }
+
 }
