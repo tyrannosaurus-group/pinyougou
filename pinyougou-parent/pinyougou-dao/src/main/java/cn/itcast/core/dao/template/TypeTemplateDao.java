@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface TypeTemplateDao {
     int countByExample(TypeTemplateQuery example);
 
+
     int deleteByExample(TypeTemplateQuery example);
 
     int deleteByPrimaryKey(Long id);

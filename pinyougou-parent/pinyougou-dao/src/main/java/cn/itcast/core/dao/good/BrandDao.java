@@ -22,6 +22,8 @@ public interface BrandDao {
 
     Brand selectByPrimaryKey(Long id);
 
+    List<Map> selectOptionList();
+
     int updateByExampleSelective(@Param("record") Brand record, @Param("example") BrandQuery example);
 
     int updateByExample(@Param("record") Brand record, @Param("example") BrandQuery example);
@@ -29,6 +31,4 @@ public interface BrandDao {
     int updateByPrimaryKeySelective(Brand record);
 
     int updateByPrimaryKey(Brand record);
-
-    List<Map> selectOptionList();
 }

@@ -12,6 +12,7 @@ public interface ItemCatDao {
 
     int deleteByPrimaryKey(Long id);
 
+
     int insert(ItemCat record);
 
     int insertSelective(ItemCat record);

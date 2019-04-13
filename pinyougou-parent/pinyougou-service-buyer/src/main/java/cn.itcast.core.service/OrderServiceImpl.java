@@ -13,6 +13,7 @@ import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.pojo.order.OrderItemQuery;
 import cn.itcast.core.pojo.order.OrderQuery;
 import com.alibaba.dubbo.config.annotation.Service;
+import entity.PageResult;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import entity.PageResult;
@@ -179,5 +180,15 @@ public class OrderServiceImpl implements  OrderService {
             longs.add(parseLong);
         }
         return longs;
+    }
+
+    @Override
+    public List<OrderItem> findAll() {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer pageNo, Integer pageSize) {
+        return null;
     }
 }

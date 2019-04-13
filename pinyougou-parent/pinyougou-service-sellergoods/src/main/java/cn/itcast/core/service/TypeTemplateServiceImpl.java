@@ -68,6 +68,8 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     //添加
     @Override
     public void add(TypeTemplate tt) {
+
+        tt.setStatus("0");
         typeTemplateDao.insertSelective(tt);
     }
 
@@ -80,6 +82,7 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     //修改
     @Override
     public void update(TypeTemplate tt) {
+        tt.setStatus("0");
         typeTemplateDao.updateByPrimaryKeySelective(tt);
     }
 

@@ -44,6 +44,8 @@ public class SpecificationServiceImpl implements SpecificationService {
     //添加
     @Override
     public void add(SpecificationVo specificationVo) {
+        specificationVo.getSpecification().setStatus("0");
+
         //规格表
         specificationDao.insertSelective(specificationVo.getSpecification());
 
@@ -74,6 +76,7 @@ public class SpecificationServiceImpl implements SpecificationService {
 
     @Override
     public void update(SpecificationVo specificationVo) {
+        specificationVo.getSpecification().setStatus("0");
         //规格表 修改
         specificationDao.updateByPrimaryKeySelective(specificationVo.getSpecification());
         //规格选项表

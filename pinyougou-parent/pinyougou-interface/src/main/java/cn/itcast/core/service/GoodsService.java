@@ -2,6 +2,7 @@ package cn.itcast.core.service;
 
 import cn.itcast.core.pojo.good.Goods;
 import entity.PageResult;
+import entity.Result;
 import vo.GoodsVo;
 
 public interface GoodsService {
@@ -16,4 +17,8 @@ public interface GoodsService {
     void updateStatus(Long[] ids, String status);
 
     void delete(Long[] ids);
+
+    Result sendIds(Long[] ids);
+
+    Result soldOut(Long[] ids);
 }
