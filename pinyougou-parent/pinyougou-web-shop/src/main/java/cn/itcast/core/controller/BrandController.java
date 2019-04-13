@@ -7,10 +7,8 @@ import entity.PageResult;
 import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,6 @@ public class BrandController {
 
     @Reference
     private BrandService brandService;
-
     //查询所有品牌
     @RequestMapping("/findAll")
     public List<Brand> findAll(){
@@ -38,19 +35,19 @@ public class BrandController {
     public PageResult findPage(Integer pageNo, Integer pageSize){
         //总条数  结果集
 
-       return brandService.findPage(pageNo,pageSize);
+        return brandService.findPage(pageNo,pageSize);
 
     }
     //查询分页对象  有条件  页面传递的是id
     @RequestMapping("/search")
     public PageResult search(
-           // Integer pageNo, Integer pageSize,@RequestBody(required = false) Brand brand){//空指针异常
+            // Integer pageNo, Integer pageSize,@RequestBody(required = false) Brand brand){//空指针异常
             Integer pageNo, Integer pageSize, @RequestBody Brand brand){//空指针异常
         //总条数  结果集
 
 
 
-       return brandService.search(pageNo,pageSize,brand);
+        return brandService.search(pageNo,pageSize,brand);
 
     }
     //添加
@@ -103,9 +100,4 @@ public class BrandController {
     public List<Map> selectOptionList(){
         return brandService.selectOptionList();
     }
-
-    public static void main(String[] args) {
-        System.out.println(111);
-    }
-
 }

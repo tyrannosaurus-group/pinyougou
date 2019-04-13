@@ -7,4 +7,6 @@ public interface StaticPageService {
     // 手动点击 审核通过
     // 半夜     定时器
     public void index(Long id);
+
+    void removeStaticPage(String substring);
 }
