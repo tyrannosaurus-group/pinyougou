@@ -90,7 +90,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,parent_id,name,type_id,status
+    id,parent_id,name,type_id
     from tb_item_cat
     where id = #{id,jdbcType=BIGINT}
   </select>

@@ -114,8 +114,27 @@ app.controller('goodsController', function ($scope, $controller, $location, type
     // 商品上架  --start
     // 批量上架/单个上架
     $scope.putaway = function () {
-        // 把需要上架的商品ID传送给GoodsController
+        // 把需要上架的商品ID传送给GoodsController    soldOut
         goodsService.sendIds($scope.selectIds).success(
+            function (response) {
+                if (response.flag) {
+                    $scope.reloadList();     //刷新列表
+                    $scope.selectIds = [];
+                    alert(response.message);
+                }else {
+                    alert(response.message);
+                }
+
+            }
+        );
+    }
+    // 商品上架  --end
+
+    // 商品下架  --start
+    // 批量下架/单下上架
+    $scope.soldOut = function () {
+        // 把需要下架的商品ID传送给GoodsController
+        goodsService.soldOut($scope.selectIds).success(
             function (response) {
                 if (response.flag) {
                     $scope.reloadList();     //刷新列表
