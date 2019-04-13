@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderVo implements Serializable {
-    //订单集合
-    private List<OrderItem> orderItemList;
+
     //一个库存品的规格
-    private Map<String,String> spec;
+    private List<String> spec;
     //商店名称
     private String nickName;
     //产品名称(标题)
@@ -34,21 +33,13 @@ public class OrderVo implements Serializable {
     //商品操作
     private Integer sendstatus;
     //交易状态
-    private Integer status;
+    private String status;
 
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
-    }
-
-    public void setOrderList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
-    }
-
-    public Map<String, String> getSpec() {
+    public List<String> getSpec() {
         return spec;
     }
 
-    public void setSpec(Map<String, String> spec) {
+    public void setSpec(List<String> spec) {
         this.spec = spec;
     }
 
@@ -132,11 +123,11 @@ public class OrderVo implements Serializable {
         this.sendstatus = sendstatus;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

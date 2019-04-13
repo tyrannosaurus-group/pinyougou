@@ -12,13 +12,19 @@
     <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css" />
     
     <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
-	<script type="text/javascript" src="js/base.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
 	<script type="text/javascript" src="js/service/loginService.js"></script>
+	<script type="text/javascript" src="js/service/OrdersService.js"></script>
 	<script type="text/javascript" src="js/controller/indexController.js"></script>
-    
+	<script type="text/javascript" src="js/controller/OrdersPageController.js"></script>
+
 </head>
 
-<body  ng-app="pinyougou" ng-controller="indexController" ng-init="showName(),findOrderList()">
+<body  ng-app="pinyougou" ng-controller="indexController" ng-init="showName()">
     <!-- 头部栏位 -->
     <!--页面顶部-->
 <div id="nav-bottom">
@@ -213,7 +219,7 @@ $(function(){
                                 </tr>
                             </table>
                         </div>
-                        <div class="order-detail">
+                        <div class="order-detail" >
                             <div class="orders">
                                 <div class="choose-order">
                                     <div class="sui-pagination pagination-large top-pages">
@@ -226,9 +232,9 @@ $(function(){
                                 </div>
 
 								<!--order1-->
-                                <div class="choose-title">
-                                    <label data-toggle="checkbox" class="checkbox-pretty ">
-                                           <input type="checkbox" checked="checked"><span>2017-02-11 11:59　订单编号：7867473872181848  店铺：哇哈哈 <a>和我联系</a></span>
+                                <div class="choose-title" ng-repeat="entity in list" >
+                                    <label data-toggle="checkbox" class="checkbox-pretty " >
+                                           <input type="checkbox" checked="checked"><span >{{entity.chliOrderTime}}　订单编号：{{entity.orderId}}  店铺：{{entity.nickName}} <a>和我联系</a></span>
                                      </label>
 									  <a class="sui-btn btn-info share-btn">分享</a>
                                 </div>
@@ -237,23 +243,23 @@ $(function(){
                                         <tr>
                                             <td width="35%">
                                                 <div class="typographic"><img src="img/goods.png" />
-                                                    <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
-                                                    <span class="guige">规格：温泉喷雾150ml</span>
+                                                    <a href="#" class="block-text">{{entity.title}}</a>
+                                                    <span class="guige">规格：{{entity.spec}}</span>
                                                 </div>
                                             </td>
                                             <td width="5%" class="center">
                                                 <ul class="unstyled">
                                                     <li class="o-price">¥599.00</li>
-                                                    <li>¥299.00</li>
+                                                    <li>{{entity.price}}</li>
                                                 </ul>
                                             </td>
-                                            <td width="5%" class="center">1</td>
+                                            <td width="5%" class="center">{{entity.num}}</td>
                                             <td width="8%" class="center">
                                                
                                             </td>
                                             <td width="10%" class="center" >
                                                 <ul class="unstyled">
-                                                    <li>¥299.00</li>
+                                                    <li>{{entity.payment}}</li>
                                                     <li>（含运费：￥0.00）</li>
                                                 </ul>
                                             </td>
@@ -405,7 +411,9 @@ $(function(){
 
 
                             </div>
-                            <div class="choose-order">
+                            <!--分页-->
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                            <!--<div class="choose-order">
                                 <div class="sui-pagination pagination-large top-pages">
                                     <ul>
                                         <li class="prev disabled"><a href="#">«上一页</a></li>
@@ -420,7 +428,7 @@ $(function(){
                                             <input type="text" class="page-num"><button class="page-confirm" onclick="alert(1)">确定</button>
                                             页</span></div>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="clearfix"></div>
                         </div>
