@@ -3,6 +3,7 @@ package cn.itcast.core.service;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
 import entity.PageResult;
+import vo.OrderVo;
 
 import java.util.List;
 import entity.PageResult;
@@ -14,6 +15,9 @@ public interface OrderService {
 
 	List<OrderItem> findAll();
 
+	PageResult findPage(Integer pageNo, Integer pageSize,String name);
+
+	PageResult search(Integer page, Integer rows, String name, Order order,String searchDate);
 	PageResult findPage(Integer pageNo, Integer pageSize);
 
     PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
