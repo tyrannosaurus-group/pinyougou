@@ -104,4 +104,9 @@ public class BrandController {
     public List<Map> selectOptionList(){
         return brandService.selectOptionList();
     }
+
+    public static void main(String[] args) {
+        System.out.println(111);
+    }
+
 }
