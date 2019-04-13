@@ -20,6 +20,9 @@ public class PageListener implements MessageListener {
         ActiveMQTextMessage atm = (ActiveMQTextMessage) message;
         try {
             String id = atm.getText();
+            if (id.startsWith("o")){
+                staticPageService.removeStaticPage(id.substring(1));
+            }
             //3:将商品信息静态化处理
             staticPageService.index(Long.parseLong(id));
         } catch (JMSException e) {

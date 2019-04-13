@@ -33,4 +33,8 @@ app.service('goodsService',function($http){
     this.sendIds=function(ids){
         return $http.get('../goods/sendIds.do?ids='+ids);
     }
+    // 批量上架/单个上架
+    this.soldOut=function(ids){
+        return $http.get('../goods/soldOut.do?ids='+ids);
+    }
 });

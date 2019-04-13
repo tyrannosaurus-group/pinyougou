@@ -318,8 +318,6 @@ public class GoodsServiceImpl implements GoodsService {
                     return session.createTextMessage(String.valueOf(id));// null + ""  "null"
                 }
             });
-
-
         }
     }
 
@@ -332,7 +330,7 @@ public class GoodsServiceImpl implements GoodsService {
                 // 查询该id是否是审核通过
                 Goods goods1 = goodsDao.selectByPrimaryKey(id);
                 String auditStatus = goods1.getAuditStatus();
-                if (!"1".equalsIgnoreCase(auditStatus)){
+                if (!"1".equalsIgnoreCase(auditStatus)) {
                     return new Result(false, "该商品未审核，不能上架！");
                 }
                 // 商品上架
@@ -352,5 +350,37 @@ public class GoodsServiceImpl implements GoodsService {
             return new Result(true, "商品上架成功！");
         }
         return new Result(false, "商品上架失败！");
+    }
+
+    @Override
+    public Result soldOut(Long[] ids) {
+        if (ids != null && ids.length > 0) {
+            Goods goods = new Goods();
+            for (Long id : ids) {
+                // 查询该id是否是已经上架
+                Goods goods1 = goodsDao.selectByPrimaryKey(id);
+                String isMarketable = goods1.getIsMarketable();
+                if ("0".equalsIgnoreCase(isMarketable)){
+                    return new Result(false, "该商品已经下架！");
+                }
+                goods.setId(id);
+                goods.setIsMarketable("0");
+                goodsDao.updateByPrimaryKeySelective(goods);
+
+                //1:更新是否删除状态
+                goods.setId(id);
+                goodsDao.updateByPrimaryKeySelective(goods);
+
+                jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+                    @Override
+                    public Message createMessage(Session session) throws JMSException {
+                        //五大类型 TextMessage
+                        return session.createTextMessage("o"+String.valueOf(id));// null + ""  "null"
+                    }
+                });
+            }
+            return new Result(true, "商品下架成功！");
+        }
+        return new Result(false, "请选择商品！");
     }
 }

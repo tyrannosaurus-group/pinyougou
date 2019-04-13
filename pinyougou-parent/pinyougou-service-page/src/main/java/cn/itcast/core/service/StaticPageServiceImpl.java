@@ -95,6 +95,38 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
         }
 
     }
+
+    // 删除静态化
+    @Override
+    public void removeStaticPage(String substring) {
+        long id = Long.parseLong(substring);
+        //1:获取有模板目录的 COnfiguration
+        Configuration configuration = freeMarkerConfigurer.getConfiguration();
+        //路径 webapps 路径  绝对路径
+        String path = getPath("/"+id+".html");
+        Writer out = null;
+        //加载模板 当初 模板是什么编码 UTF-8
+        try {
+            Template template = configuration.getTemplate("RemoveItem.ftl"); //读
+            Map<String,Object> root = new HashMap<>(); //数据
+            root.put("out",true);
+            //输出流 写
+            out = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
+            //处理
+            template.process(root,out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(null != out){
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //获取全部路径
     public String getPath(String path){
         return servletContext.getRealPath(path);

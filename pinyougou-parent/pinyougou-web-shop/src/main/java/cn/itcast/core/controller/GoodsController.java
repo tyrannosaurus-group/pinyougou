@@ -71,4 +71,10 @@ public class GoodsController {
     public Result sendIds(Long[] ids) {
         return goodsService.sendIds(ids);
     }
+
+    // 批量下架/单个下架
+    @RequestMapping("/soldOut")
+    public Result soldOut(Long[] ids) {
+        return goodsService.soldOut(ids);
+    }
 }

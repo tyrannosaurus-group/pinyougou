@@ -19,4 +19,6 @@ public interface GoodsService {
     void delete(Long[] ids);
 
     Result sendIds(Long[] ids);
+
+    Result soldOut(Long[] ids);
 }
