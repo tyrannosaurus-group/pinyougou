@@ -6,13 +6,19 @@ import entity.PageResult;
 import vo.OrderVo;
 
 import java.util.List;
+import entity.PageResult;
+import vo.OrderVo;
+import vo.PageBean;
 
 public interface OrderService {
     void add(Order order);
 
-	List<OrderVo> findAll(String name);
+	List<OrderItem> findAll();
 
 	PageResult findPage(Integer pageNo, Integer pageSize,String name);
 
 	PageResult search(Integer page, Integer rows, String name, Order order,String searchDate);
+	PageResult findPage(Integer pageNo, Integer pageSize);
+
+    PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
 }
