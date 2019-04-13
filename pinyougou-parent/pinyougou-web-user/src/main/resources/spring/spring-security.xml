@@ -12,7 +12,7 @@
 	<http pattern="/register.html" security="none"></http>
 	<http pattern="/user/add.do" security="none"></http>
 	<http pattern="/user/sendCode.do" security="none"></http>
-	
+
 	<!--   entry-point-ref  入口点引用
 	   包含SpringSecurity授权过程
 	     Cas客户端 认证过程
