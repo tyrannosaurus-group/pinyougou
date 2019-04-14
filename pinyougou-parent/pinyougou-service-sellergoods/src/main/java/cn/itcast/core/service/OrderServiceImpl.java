@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import vo.OrderVo;
+import vo.PageBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,11 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return new PageResult(page.getTotal(),newOrderVoList);
 
+	}
+
+	@Override
+	public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
+		return null;
 	}
 
 	@Override
