@@ -8,6 +8,7 @@ import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vo.UserAnalyzeVo;
 import vo.UserCountVo;
 
 @RestController
@@ -38,6 +39,11 @@ public class UserController {
     @RequestMapping("/userCount")
     public UserCountVo userCount() {
         return findUserService.userCount();
+    }
+
+    @RequestMapping("/userAnalyze")
+    public UserAnalyzeVo userAnalyze() {
+        return findUserService.userAnalyze();
     }
 
 }

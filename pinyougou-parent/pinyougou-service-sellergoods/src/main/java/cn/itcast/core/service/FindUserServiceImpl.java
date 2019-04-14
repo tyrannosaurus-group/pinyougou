@@ -1,5 +1,6 @@
 package cn.itcast.core.service;
 
+import cn.itcast.common.utils.DateUtils;
 import cn.itcast.core.dao.user.UserDao;
 import cn.itcast.core.pojo.user.User;
 import cn.itcast.core.pojo.user.UserQuery;
@@ -9,7 +10,10 @@ import com.github.pagehelper.PageHelper;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import vo.UserAnalyzeVo;
 import vo.UserCountVo;
+
+import java.util.Date;
 
 @Service
 @Transactional
@@ -94,5 +98,21 @@ public class FindUserServiceImpl implements FindUserService {
         userCountVo.setFive(userDao.countByExample(userQuery9));
 
         return userCountVo;
+    }
+
+    @Override
+    public UserAnalyzeVo userAnalyze() {
+        UserAnalyzeVo userAnalyzeVo = new UserAnalyzeVo();
+
+        userAnalyzeVo.setNum(userDao.countByExample(null));
+
+        Date[] monthStartAndEndDate = DateUtils.getMonthStartAndEndDate(new Date());
+
+        UserQuery userQuery = new UserQuery();
+        userQuery.createCriteria().andLastLoginTimeBetween(monthStartAndEndDate[0], monthStartAndEndDate[1]);
+
+        userAnalyzeVo.setActive(userDao.countByExample(userQuery));
+
+        return userAnalyzeVo;
     }
 }
