@@ -10,12 +10,15 @@ import cn.itcast.core.pojo.log.PayLog;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
 import com.alibaba.dubbo.config.annotation.Service;
+import entity.PageResult;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.FastArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import vo.Cart;
+import vo.OrderVo;
+import vo.PageBean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -149,5 +152,25 @@ public class OrderServiceImpl implements  OrderService {
         //清空
         //redisTemplate.boundHashOps("CART").delete(order.getUserId());
 
+    }
+
+    @Override
+    public List<OrderVo> findAll(String name) {
+        return null;
+    }
+
+    @Override
+    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer page, Integer rows, String name) {
+        return null;
+    }
+
+    @Override
+    public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
+        return null;
     }
 }
