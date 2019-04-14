@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import vo.UserCountVo;
 
 @Service
 @Transactional
@@ -47,5 +48,51 @@ public class FindUserServiceImpl implements FindUserService {
                 userDao.updateByPrimaryKeySelective(user);
             }
         }
+    }
+
+    @Override
+    public UserCountVo userCount() {
+        UserCountVo userCountVo = new UserCountVo();
+
+        UserQuery userQuery1 = new UserQuery();
+        userQuery1.createCriteria().andSexEqualTo("1");
+
+
+        userCountVo.setTotal(userDao.countByExample(null));
+        userCountVo.setMaleCount(userDao.countByExample(userQuery1));
+
+        UserQuery userQuery2 = new UserQuery();
+        userQuery2.createCriteria().andSexEqualTo("0");
+        userCountVo.setFemaleCount(userDao.countByExample(userQuery2));
+
+        UserQuery userQuery3 = new UserQuery();
+        userQuery3.createCriteria().andStatusEqualTo("1");
+        userCountVo.setNormal(userDao.countByExample(userQuery3));
+
+        UserQuery userQuery4 = new UserQuery();
+        userQuery4.createCriteria().andStatusEqualTo("2");
+        userCountVo.setFreeze(userDao.countByExample(userQuery4));
+
+        UserQuery userQuery5 = new UserQuery();
+        userQuery5.createCriteria().andUserLevelEqualTo(1);
+        userCountVo.setOne(userDao.countByExample(userQuery5));
+
+        UserQuery userQuery6 = new UserQuery();
+        userQuery6.createCriteria().andUserLevelEqualTo(2);
+        userCountVo.setTwo(userDao.countByExample(userQuery6));
+
+        UserQuery userQuery7 = new UserQuery();
+        userQuery7.createCriteria().andUserLevelEqualTo(3);
+        userCountVo.setThree(userDao.countByExample(userQuery7));
+
+        UserQuery userQuery8 = new UserQuery();
+        userQuery8.createCriteria().andUserLevelEqualTo(4);
+        userCountVo.setFour(userDao.countByExample(userQuery8));
+
+        UserQuery userQuery9 = new UserQuery();
+        userQuery9.createCriteria().andUserLevelEqualTo(5);
+        userCountVo.setFive(userDao.countByExample(userQuery9));
+
+        return userCountVo;
     }
 }
