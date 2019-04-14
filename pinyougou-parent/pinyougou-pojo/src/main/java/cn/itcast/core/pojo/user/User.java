@@ -49,7 +49,7 @@ public class User implements Serializable {
     private String name;
 
     /**
-     * 使用状态（Y正常 N非正常）
+     * 使用状态（1正常 2非正常）
      */
     private String status;
 

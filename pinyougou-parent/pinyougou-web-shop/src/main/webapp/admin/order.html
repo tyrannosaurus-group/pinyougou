@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="orderController" ><!--ng-init="findPage(1,5)"-->
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="orderController" ng-init="findPage(1,5)">
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
@@ -44,24 +44,24 @@
                       
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                  状态：<select ng-model="searchEntity.status">
+                                  状态：<select>
                                          	<option value="">全部</option>                                               
                                          	<option value="1">未付款</option>    
                                          	<option value="2">已付款</option>    
                                          	<option value="3">未发货</option> 
-												<option value="4">已发货</option>
-												<option value="5">交易成功</option>
-												<option value="6">交易关闭</option>
-												<option value="7">待评价</option>
+											<option value="4">已发货</option> 
+											<option value="5">交易成功</option> 
+											<option value="6">交易关闭</option> 
+											<option value="7">待评价</option> 											
                                         </select>
 										
-									时间范围：<select ng-model="searchDate">
+									时间范围：<select>                                      	                                               
                                          	<option value="1">日订单</option>    
                                          	<option value="2">周订单</option>    
                                          	<option value="3">月订单</option> 																				
                                         </select>
 							        订单日期：<input >									
-									<button class="btn btn-default" ng-click="reloadList()" >查询</button>
+									<button class="btn btn-default" >查询</button>                                    
                                 </div>
                             </div>
                             <!--工具栏/-->
@@ -85,16 +85,17 @@
 			                      </thead>
 			                      <tbody>
 			                          <tr ng-repeat="entity in list">
-			                              <td><input  type="checkbox">{{entity.orderId}}</td>
-									      <td>{{entity.goodsName}}</td>
+			                              <td><input  type="checkbox"></td>
+										  	<!--<td>{{entity.id}}</td>-->
+									      <td>小米6S手机</td>
 									      <td>{{entity.price}}</td>
 									      <td>{{entity.num}}</td>
 									      <td>{{entity.totalFee}}</td>
-										  <td>{{source[entity.sourceType]}}</td>
-									      <td>{{entity.createTime}}</td>
+										  <td>app端</td>
+									      <td>2018-06-23 10:45:27</td>
 		                                  <td>
 		                                  	<span>
-		                                  		{{status[entity.status]}}
+		                                  		已付款
 		                                  	</span>	                                  	
 		                                  </td>		                                  
 		                                 

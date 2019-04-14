@@ -155,22 +155,12 @@ public class OrderServiceImpl implements  OrderService {
     }
 
     @Override
-    public List<OrderVo> findAll(String name) {
+    public List<OrderItem> findAll() {
         return null;
     }
 
     @Override
-    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
-        return null;
-    }
-
-    @Override
-    public PageResult findPage(Integer page, Integer rows, String name) {
-        return null;
-    }
-
-    @Override
-    public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
+    public PageResult findPage(Integer pageNo, Integer pageSize) {
         return null;
     }
 }
