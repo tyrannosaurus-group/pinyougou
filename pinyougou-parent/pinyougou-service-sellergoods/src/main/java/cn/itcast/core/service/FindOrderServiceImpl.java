@@ -66,8 +66,7 @@ public class FindOrderServiceImpl implements FindOrderService {
                     for (OrderItem orderItem : orderItems) {
 
                         OrderVo orderVo1 = new OrderVo();
-
-                        orderVo1.setId(order.getOrderId());
+                        orderVo1.setOrderId(order.getOrderId());
                         orderVo1.setStatus(order.getStatus());
                         orderVo1.setSourceType(order.getSourceType());
                         orderVo1.setCreateTime(order.getCreateTime());
