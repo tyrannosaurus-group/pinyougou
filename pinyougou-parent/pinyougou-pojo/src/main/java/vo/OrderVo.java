@@ -51,7 +51,30 @@ public class OrderVo implements Serializable{
     //商品操作
     private Integer sendstatus;
     //交易状态
+//订单id
 
+    //商品名称
+
+    //商品价格
+
+    //商品数量
+
+    //订单实付金额
+
+    //订单来源
+    /**
+     * 订单来源：1:app端，2：pc端，3：M端，4：微信端，5：手机qq端
+     */
+
+    //创建时间
+    /**
+     * 订单创建时间
+     */
+
+    //付款状态
+    /**
+     * 状态：1、未付款，2、已付款，3、未发货，4、已发货，5、交易成功，6、交易关闭,7、待评价
+     */
 
     public List<String> getSpec() {
         return spec;

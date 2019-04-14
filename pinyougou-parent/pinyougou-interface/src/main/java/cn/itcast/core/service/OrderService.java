@@ -14,6 +14,7 @@ public interface OrderService {
     void add(Order order);
 
 	List<OrderItem> findAll();
+	List<OrderVo> findAll(String name);
 
 	PageResult findPage(Integer pageNo, Integer pageSize,String name);
 

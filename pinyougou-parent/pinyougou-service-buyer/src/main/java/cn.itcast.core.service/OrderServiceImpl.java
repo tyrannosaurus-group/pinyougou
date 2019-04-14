@@ -44,8 +44,24 @@ import java.util.*;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+
     @Override
     public List<OrderItem> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<OrderVo> findAll(String name) {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer pageNo, Integer pageSize, String name) {
+        return null;
+    }
+
+    @Override
+    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
         return null;
     }
 
@@ -202,7 +218,7 @@ public class OrderServiceImpl implements OrderService {
                                 //欸嘿嘿,找到一个商品详情,耍耍
                                 vo.setTitle(orderItem.getTitle());
                                 vo.setPicPath(orderItem.getPicPath());
-                                vo.setPrice(orderItem.getPrice().doubleValue());
+                                vo.setPrice(orderItem.getPrice());
                                 vo.setNum(orderItem.getNum());
                                 //下面是规格了,爽爽
                                 Item item = itemDao.selectByPrimaryKey(orderItem.getItemId());

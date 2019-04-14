@@ -35,10 +35,9 @@ public class SpecificationServiceImpl implements SpecificationService {
     public PageResult search(Integer page, Integer rows, Specification specification) {
         //插件
         PageHelper.startPage(page,rows);
-        //条件对象
-        SpecificationQuery specificationQuery= new SpecificationQuery();
+        SpecificationQuery specificationQuery = new SpecificationQuery();
         SpecificationQuery.Criteria criteria = specificationQuery.createCriteria();
-        if (null !=specification.getSpecName() && !"".equals(specification.getSpecName().trim())){
+        if (null !=specification.getSpecName() &&!"".equals(specification.getSpecName().trim())){
             criteria.andSpecNameLike("%"+specification.getSpecName().trim()+"%");
         }
 
