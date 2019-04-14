@@ -10,6 +10,7 @@ import entity.PageResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vo.OrderCountVo;
 import vo.OrderVo;
 
 import java.math.BigDecimal;
@@ -96,5 +97,10 @@ public class OrderController {
 //        list.add(589);
 //        String s = JSON.toJSONString(list);
 //        return s;
+    }
+
+    @RequestMapping("/orderCount")
+    public OrderCountVo orderCount() {
+        return findOrderService.orderCount();
     }
 }
