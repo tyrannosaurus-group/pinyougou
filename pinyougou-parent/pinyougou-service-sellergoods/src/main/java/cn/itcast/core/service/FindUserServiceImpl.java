@@ -1,7 +1,6 @@
 package cn.itcast.core.service;
 
 import cn.itcast.core.dao.user.UserDao;
-import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.user.User;
 import cn.itcast.core.pojo.user.UserQuery;
 import com.alibaba.dubbo.config.annotation.Service;
