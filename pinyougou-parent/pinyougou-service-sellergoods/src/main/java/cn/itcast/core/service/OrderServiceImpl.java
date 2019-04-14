@@ -14,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	private OrderItemDao orderItemDao;
+	@Autowired
+	private OrderDao orderDao;
+
 
 	@Override
 	public void add(Order order) {
@@ -37,4 +40,6 @@ public class OrderServiceImpl implements OrderService {
 		//PageInfo<Brand> info = new PageInfo<>(brandList);
 		return new PageResult(page.getTotal(),page.getResult());
 	}
+
+
 }

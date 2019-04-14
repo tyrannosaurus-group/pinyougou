@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class OrderServiceImpl implements  OrderService {
+public class OrderServiceImpl implements  OrderService{
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -161,4 +161,6 @@ public class OrderServiceImpl implements  OrderService {
     public PageResult findPage(Integer pageNo, Integer pageSize) {
         return null;
     }
+
+
 }
