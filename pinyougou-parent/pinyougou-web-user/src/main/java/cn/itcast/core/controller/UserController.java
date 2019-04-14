@@ -5,9 +5,11 @@ import cn.itcast.core.pojo.user.User;
 import cn.itcast.core.service.UserService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import entity.Result;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vo.UserVo;
 
 /**
  * 用户管理
@@ -53,5 +55,17 @@ public class UserController {
             //预期      运行时
         }
 
+    }
+
+    @RequestMapping("/addPersonalInfo")
+    private Result addPersonalInfo(@RequestBody UserVo userVo){
+        try {
+            String name = SecurityContextHolder.getContext().getAuthentication().getName();
+            userService.addPersonalInfo(userVo,name);
+            return new Result(true,"个人信息添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true,"个人信息添加失败");
+        }
     }
 }
