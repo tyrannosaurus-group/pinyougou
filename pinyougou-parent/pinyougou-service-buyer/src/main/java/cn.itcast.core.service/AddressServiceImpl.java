@@ -24,4 +24,34 @@ public class AddressServiceImpl implements  AddressService {
         addressQuery.createCriteria().andUserIdEqualTo(name);
         return addressDao.selectByExample(addressQuery);
     }
+
+    @Override
+    public void delete(Long id) {
+        addressDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void setDefault(String name,Long id) {
+        //全改为非默认状态
+        Address address = new Address();
+        address.setId(id);
+        address.setIsDefault("0");
+        AddressQuery addressQuery = new AddressQuery();
+        addressQuery.createCriteria().andUserIdEqualTo(name).andIsDefaultEqualTo("1");
+        addressDao.updateByExampleSelective(address,addressQuery);
+
+        address.setIsDefault("1");
+        addressDao.updateByPrimaryKeySelective(address);
+    }
+
+    @Override
+    public void update(Address tbAddress) {
+        addressDao.updateByPrimaryKeySelective(tbAddress);
+    }
+
+    @Override
+    public void add(Address tbAddress,String name) {
+        tbAddress.setUserId(name);
+        addressDao.insertSelective(tbAddress);
+    }
 }
