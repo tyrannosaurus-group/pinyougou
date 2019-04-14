@@ -48,9 +48,9 @@ public class AddressController {
         }
     }
     @RequestMapping("update")
-    public Result update(@RequestBody Address tbAddress){
+    public Result update(@RequestBody Address entity){
         try {
-            addressService.update(tbAddress);
+            addressService.update(entity);
             return new Result(true,"更新地址成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,5 +67,9 @@ public class AddressController {
             e.printStackTrace();
             return new Result(true,"添加地址失败");
         }
+    }
+    @RequestMapping("findById")
+    public Address findById(Long id){
+           return addressService.findById(id);
     }
 }

@@ -1,5 +1,5 @@
 // 定义控制器:
-app.controller("brandController",function($scope,$controller,$http,brandService){
+app.controller( "brandController",function($scope,$controller,$http,brandService){
 	// AngularJS中的继承:伪继承
 	$controller('indexController',{$scope:$scope});
 	

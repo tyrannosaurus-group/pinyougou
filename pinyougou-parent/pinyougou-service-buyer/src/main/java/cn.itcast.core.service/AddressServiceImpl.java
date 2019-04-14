@@ -7,6 +7,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,24 +35,31 @@ public class AddressServiceImpl implements  AddressService {
     public void setDefault(String name,Long id) {
         //全改为非默认状态
         Address address = new Address();
-        address.setId(id);
         address.setIsDefault("0");
         AddressQuery addressQuery = new AddressQuery();
         addressQuery.createCriteria().andUserIdEqualTo(name).andIsDefaultEqualTo("1");
         addressDao.updateByExampleSelective(address,addressQuery);
 
+        address.setId(id);
         address.setIsDefault("1");
         addressDao.updateByPrimaryKeySelective(address);
     }
 
     @Override
-    public void update(Address tbAddress) {
-        addressDao.updateByPrimaryKeySelective(tbAddress);
+    public void update(Address entity) {
+        addressDao.updateByPrimaryKeySelective(entity);
     }
 
     @Override
     public void add(Address tbAddress,String name) {
         tbAddress.setUserId(name);
+        tbAddress.setIsDefault("0");
+        tbAddress.setCreateDate(new Date());
         addressDao.insertSelective(tbAddress);
+    }
+
+    @Override
+    public Address findById(Long id) {
+        return addressDao.selectByPrimaryKey(id);
     }
 }

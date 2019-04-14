@@ -11,7 +11,9 @@ public interface AddressService {
 
     void setDefault(String name,Long id);
 
-    void update(Address tbAddress);
+    void update(Address entity);
 
     void add(Address tbAddress,String name);
+
+    Address findById(Long id);
 }

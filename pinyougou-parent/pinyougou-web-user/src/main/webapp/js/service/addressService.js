@@ -13,10 +13,10 @@ app.service('addressService',function($http){
     this.findById=function(id){
         return $http.get('../address/findById.do?id='+id);
     }
-    this.update=function(tbAddress){
-        return $http.post('../address/update.do',tbAddress);
+    this.update=function(entity){
+        return $http.post('../address/update.do',entity);
     }
-    this.update=function(tbAddress){
+    this.add=function(tbAddress){
         return $http.post('../address/add.do',tbAddress);
     }
 });
