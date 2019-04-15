@@ -13,20 +13,14 @@ app.service('orderService', function ($http) {
     this.findOne = function (id) {
         return $http.get('../order/findOne.do?id=' + id);
     }
-    //增加
-    this.add = function (entity) {
-        return $http.post('../order/add.do', entity);
-    }
-    //修改
-    this.update = function (entity) {
-        return $http.post('../order/update.do', entity);
-    }
-    //删除
-    this.dele = function (ids) {
-        return $http.get('../order/delete.do?ids=' + ids);
-    }
+
     //搜索
     this.search = function (page, rows, searchDate,searchEntity) {
         return $http.post('../order/search.do?page=' + page + "&rows=" + rows+"&searchDate="+searchDate, searchEntity);
+    }
+
+    //更改状态  订单发货
+    this.changeStatus = function (id) {
+        return $http.get('../order/changeStatus.do?id='+id);
     }
 });

@@ -28,4 +28,6 @@ public interface OrderService {
 	PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate);
 
 	Map<String,List> zheXianTu(String name);
+
+	void changeStatus(Long id);
 }

@@ -260,4 +260,12 @@ public class OrderServiceImpl implements OrderService{
 
 		return map;
 	}
+
+	@Override
+	public void changeStatus(Long id) {
+		Order order = orderDao.selectByPrimaryKey(id);
+		order.setStatus("4");
+		order.setConsignTime(new Date());
+		orderDao.updateByPrimaryKeySelective(order);
+	}
 }
