@@ -5,29 +5,91 @@ app.controller('payController' ,function($scope ,$location,payService){
 		//商家后台 系统
 		//2:调统一下单API
 		//返回值：code_url
-		payService.createNative().success(
-			function(response){
-				//Map  三个值
-				//总金额 分
-				// 订单号
-				//code_url
-				
-				//显示订单号和金额
-				$scope.money= (response.total_fee/100).toFixed(2);
-				$scope.out_trade_no=response.out_trade_no;
-				
-				//生成二维码
-				 var qr=new QRious({
-					    element:document.getElementById('qrious'),
-						size:250,
-						value:response.code_url,// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
-						level:'H'
-			     });
-				 
-				 queryPayStatus();//调用查询
-				
-			}	
-		);	
+		var orderId=$location.search()['orderId'];
+		alert(orderId)
+       if (null!=orderId) {
+           alert("222")
+           payService.createNativeById(orderId).success(
+               function(response){
+                   //Map  三个值
+                   //总金额 分
+                   // 订单号
+                   //code_url
+
+                   //显示订单号和金额
+                   $scope.money= (response.total_fee/100).toFixed(2);
+                   $scope.out_trade_no=response.out_trade_no;
+
+                   //生成二维码
+                   var qr=new QRious({
+                       element:document.getElementById('qrious'),
+                       size:250,
+                       value:response.code_url,// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
+                       level:'H'
+                   });
+
+                   queryPayStatus();//调用查询
+
+               });
+       }else {
+           alert("333")
+           payService.createNative().success(
+               function (response) {
+                   //Map  三个值
+                   //总金额 分
+                   // 订单号
+                   //code_url
+
+                   //显示订单号和金额
+                   $scope.money = (response.total_fee / 100).toFixed(2);
+                   $scope.out_trade_no = response.out_trade_no;
+
+                   //生成二维码
+                   var qr = new QRious({
+                       element: document.getElementById('qrious'),
+                       size: 250,
+                       value: response.code_url,// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
+                       level: 'H'
+                   });
+
+                   queryPayStatus();//调用查询
+
+               });
+
+       }
+
+        /*var serviceObject;//服务层对象
+		if (null!=orderId) {
+			alert("222")
+            serviceObject = payService.createNativeById(orderId)
+        }else {
+			alert("333")
+			serviceObject=payService.createNative()
+		}
+			serviceObject.success(
+            	function(response){
+                    //Map  三个值
+                    //总金额 分
+                    // 订单号
+                    //code_url
+
+                    //显示订单号和金额
+                    $scope.money= (response.total_fee/100).toFixed(2);
+                    $scope.out_trade_no=response.out_trade_no;
+
+                    //生成二维码
+                    var qr=new QRious({
+                        element:document.getElementById('qrious'),
+                        size:250,
+                        value:response.code_url,// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
+                        level:'H'
+                    });
+
+                    queryPayStatus();//调用查询
+
+                }
+            );
+        }*/
 	}
 	
 	//调用查询  支付订单ID

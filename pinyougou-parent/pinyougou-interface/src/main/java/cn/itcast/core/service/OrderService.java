@@ -9,9 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import entity.PageResult;
-import vo.OrderVo;
 import vo.PageBean;
+
 
 public interface OrderService {
     void add(Order order);

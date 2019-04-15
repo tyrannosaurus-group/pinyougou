@@ -25,6 +25,10 @@ public class PayController {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         return payService.createNative(name);
     }
+    @RequestMapping("/createNativeById")
+    public Map<String, String> createNativeById(Long orderId) {
+        return payService.createNativeById(orderId);
+    }
 
     //查询订单是否已经付款
     @RequestMapping("/queryPayStatus")

@@ -37,6 +37,8 @@ public class FindOrderServiceImpl implements FindOrderService {
     private OrderDao orderDao;
 
 
+
+
     @Override
     public PageResult search(Integer pageNo, Integer pageSize, OrderVo orderVo) {
 
@@ -57,7 +59,7 @@ public class FindOrderServiceImpl implements FindOrderService {
 
         List<Order> list = pageInfo.getList();
         List<OrderVo> orderVoList = new ArrayList<>();
-        if (null != list && list.size() > 0) {
+        if (null !=list&&list.size()>0) {
             for (Order order : list) {
 
                 OrderItemQuery orderItemQuery = new OrderItemQuery();
