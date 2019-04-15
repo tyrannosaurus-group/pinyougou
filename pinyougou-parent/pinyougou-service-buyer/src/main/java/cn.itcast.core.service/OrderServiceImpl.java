@@ -43,7 +43,7 @@ import java.util.*;
  */
 @Service
 @Transactional
-public class OrderServiceImpl implements  OrderService {
+public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderItem> findAll() {
         return null;
@@ -215,10 +215,7 @@ public class OrderServiceImpl implements  OrderService {
                                 //欸嘿嘿,找到一个商品详情,耍耍
                                 vo.setTitle(orderItem.getTitle());
                                 vo.setPicPath(orderItem.getPicPath());
-                                vo.setPrice(orderItem.getPrice());
-
-                                vo.setPrice(new BigDecimal(orderItem.getPrice().doubleValue()));
-
+                                vo.setPrice(orderItem.getPrice().doubleValue());
                                 vo.setNum(orderItem.getNum());
                                 //下面是规格了,爽爽
                                 Item item = itemDao.selectByPrimaryKey(orderItem.getItemId());
@@ -264,16 +261,6 @@ public class OrderServiceImpl implements  OrderService {
         //也不知道这个位置加上缓存有没有用
         redisTemplate.boundHashOps("OrderVoList").put(name, pageBean);
         return pageBean;
-    }
-
-    @Override
-    public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {
-        return null;
-    }
-
-    @Override
-    public Map<String, List> zheXianTu(String name) {
-        return null;
     }
 
     //订单id字符串转换为Long类型集合
