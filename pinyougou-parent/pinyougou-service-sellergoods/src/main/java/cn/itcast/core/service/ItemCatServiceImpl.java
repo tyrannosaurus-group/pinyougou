@@ -139,4 +139,9 @@ public class ItemCatServiceImpl implements ItemCatService {
 
         }
     }
+
+    @Override
+    public List<ItemCat> findItemCatList() {
+        return null;
+    }
 }

@@ -9,6 +9,11 @@ import java.util.List;
 import entity.PageResult;
 import vo.OrderVo;
 import vo.PageBean;
+import entity.PageResult;
+import vo.OrderVo;
+import vo.PageBean;
+
+import java.util.List;
 
 public interface OrderService {
     void add(Order order);
@@ -21,4 +26,9 @@ public interface OrderService {
 	PageResult findPage(Integer pageNo, Integer pageSize);
 
     PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
+
+    List<OrderVo> findAll(String name);
+
+
+
 }
