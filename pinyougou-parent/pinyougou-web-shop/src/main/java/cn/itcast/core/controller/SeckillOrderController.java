@@ -1,25 +1,25 @@
 package cn.itcast.core.controller;
 
-import cn.itcast.core.pojo.item.Item;
-import cn.itcast.core.pojo.order.OrderItem;
-import cn.itcast.core.service.CollectService;
+
+import cn.itcast.core.pojo.seckill.SeckillOrder;
+import cn.itcast.core.service.SeckillOrderService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vo.SeckillOrderVo;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/collect")
-public class CollectController {
-
+@RequestMapping("/seckillOrder")
+public class SeckillOrderController {
     @Reference
-    private CollectService collectService;
+    private SeckillOrderService seckillOrderService;
 
-    @RequestMapping("/findList")
-    public List<OrderItem> findList(){
+    @RequestMapping("/findAll")
+    public List<SeckillOrderVo> findAll(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return collectService.findList(name);
+        return seckillOrderService.findAll(name);
     }
 }
