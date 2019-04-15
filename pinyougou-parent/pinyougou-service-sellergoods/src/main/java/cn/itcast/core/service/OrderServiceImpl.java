@@ -36,6 +36,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<OrderItem> findAll() {
+		return null;
+	}
+
+	@Override
 	public List<OrderVo> findAll(String name) {
 		OrderItemQuery query = new OrderItemQuery();
 		query.createCriteria().andSellerIdEqualTo(name);
@@ -125,5 +130,10 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 		return new PageResult(orderPage.getTotal(),newOrderVoList);
+	}
+
+	@Override
+	public PageResult findPage(Integer pageNo, Integer pageSize) {
+		return null;
 	}
 }
