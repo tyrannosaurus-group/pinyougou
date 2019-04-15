@@ -12,7 +12,10 @@ public interface ItemCatService {
 
     List<ItemCat> findAll();
 
+    List<ItemCat> findItemCatList();
+
     PageResult search(Integer page, Integer rows, ItemCat itemCat);
 
     void updateStatus(Long[] ids, String status);
+
 }

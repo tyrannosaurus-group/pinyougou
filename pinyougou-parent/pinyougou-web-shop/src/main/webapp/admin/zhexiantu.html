@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../js/echarts.js"></script>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+
+
+</head>
+<body>
+
+
+<div class="t2_box_con" style="padding:0px 10px 0px;">
+        <!-- 此处加载图像 -->
+        
+    <div id="rllfx" style="width: 100%; height: 350px;">
+
+    </div>
+
+      <!-- 此处加载图像 -->
+        
+    <div id="rllfx2" style="width: 100%; height: 350px;">
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+
+        var XData;
+        var YPrice;
+        $.ajax({
+            url: "http://localhost:9093/order/zheXianTu.do",
+            type: "get",
+            success: function (responsedata) {
+                var map = JSON.parse(responsedata);
+                XData = map.date;
+                alert(XData);
+                YPrice = map.price;
+                alert(YPrice);
+
+
+        var rllfx = echarts.init(document.getElementById("rllfx"));
+        var option = {
+            title: {
+                text: '订单统计折线图',
+                left: 'center',
+                fontWeight: '200'
+            },
+            /* 线条颜色，可设置多个颜色 */
+            color: ['#ffa82f', 'blue'],
+            /* 图像四周边距设置 */
+            grid: {
+                left: 30,
+                top: 30,
+                right: 20,
+                bottom: 30
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                },
+
+                right: '20'
+            },
+            /* 图例说明 */
+            legend: {
+                // 图例排项 vertical-"竖向"; horizontal-"横向"
+                orient: 'horizontal',
+                // 图例组件离容器左侧的距离
+                right: 250,
+                top: 0,
+                //图例文字的样式
+                textStyle: {
+                    color: '#6ab2ec',
+                },
+                // 与series中每个name一一对应
+                data: ['日销售额']
+            },
+            /* 鼠标悬浮时显示数据 */
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: XData,
+                //设置轴线的属性
+                axisLine: {
+                    lineStyle: {
+                        color: '#6ab2ec',
+                    }
+                },
+                //调整x轴的lable
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 10 // 让字体变小
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+
+                // 控制网格线是否显示
+                splitLine: {
+                    show: true,
+                    //  改变轴线颜色
+                    lineStyle: {
+                        // 使用深浅的间隔色
+                        color: ['#132a6e']
+                    }
+                },
+                //设置轴线的属性
+                axisLine: {
+                    lineStyle: {
+                        color: '#6ab2ec',
+                    }
+                }
+
+            },
+            /* 数据配置，若有多条折线则在数组中追加{name: , data: } */
+            series: [{
+                name: '人流量',
+                data: YPrice,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                },
+                type: 'line',
+                symbol: 'circle',
+                // 设置折点大小
+                symbolSize: 10,
+                // 设置为光滑曲线
+                smooth: true
+            }]
+        };
+
+        rllfx.setOption(option);
+            }
+        })
+    });
+</script>
+
+
+</body>
+
+</html>

@@ -530,4 +530,11 @@
       seller_id = #{sellerId,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
+  <select id="selectTotalByUserId" resultType="Long" parameterType="String" >
+    select
+    count(1)
+    from tb_order
+    where user_id=#{0} AND STATUS=#{1}
+  </select>
+
 </mapper>

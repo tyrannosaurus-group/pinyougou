@@ -1,16 +1,23 @@
 package cn.itcast.core.service;
 
+import cn.itcast.common.utils.IdWorker;
+import cn.itcast.core.dao.address.AddrnowDao;
 import cn.itcast.core.dao.user.UserDao;
+import cn.itcast.core.pojo.address.AddrnowQuery;
 import cn.itcast.core.pojo.user.User;
+import cn.itcast.core.pojo.user.UserQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
+import vo.UserVo;
 
 import javax.jms.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -21,14 +28,18 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Transactional
 public class UserServiceImpl implements  UserService {
-
-
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private AddrnowDao addrnowDao;
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
     private JmsTemplate jmsTemplate;
     @Autowired
     private Destination smsDestination;
+    @Autowired
+    private IdWorker idWorker;
     //发短信
     public void sendCode(String phone){
         //1:生成6位验证码
@@ -54,8 +65,7 @@ public class UserServiceImpl implements  UserService {
 
     }
 
-    @Autowired
-    private UserDao userDao;
+
     //用户添加
     @Override
     public void add(String smscode, User user) {
@@ -78,6 +88,17 @@ public class UserServiceImpl implements  UserService {
 
 
 
+    }
+
+    @Override
+    public void addPersonalInfo(UserVo userVo,String name) {
+        UserQuery userQuery = new UserQuery();
+        userQuery.createCriteria().andUsernameEqualTo(name);
+        userDao.updateByExampleSelective(userVo.getUser(),userQuery);
+        long addrNowId = idWorker.nextId();
+        userVo.getAddrnow().setId(new BigDecimal(addrNowId));
+        userVo.getAddrnow().setUserId(name);
+        addrnowDao.insert(userVo.getAddrnow());
     }
 
 }
