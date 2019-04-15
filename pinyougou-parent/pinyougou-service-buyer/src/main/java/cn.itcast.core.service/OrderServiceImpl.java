@@ -263,6 +263,16 @@ public class OrderServiceImpl implements OrderService {
         return pageBean;
     }
 
+    @Override
+    public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {
+        return null;
+    }
+
+    @Override
+    public Map<String, List> zheXianTu(String name) {
+        return null;
+    }
+
     //订单id字符串转换为Long类型集合
     public List<Long> turnToList(String str) {
         String[] strs = str.split(",");

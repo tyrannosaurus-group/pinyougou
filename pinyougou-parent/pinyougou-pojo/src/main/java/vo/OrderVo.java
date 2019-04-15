@@ -17,7 +17,7 @@ public class OrderVo implements Serializable{
 	//商品名称
 	private String goodsName;  //orderitem中有goodsID
 	//商品价格
-	private BigDecimal price;      //orderItem
+	private double price;      //orderItem
 	//商品数量
 	private Integer num;			 //orderItem
 	//订单实付金额
@@ -156,15 +156,15 @@ public class OrderVo implements Serializable{
 		this.goodsName = goodsName;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public Integer getNum() {
+    public Integer getNum() {
 		return num;
 	}
 
