@@ -22,4 +22,6 @@ public interface OrderService {
 	PageResult findPage(Integer pageNo, Integer pageSize);
 
     PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
+
+	PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate);
 }

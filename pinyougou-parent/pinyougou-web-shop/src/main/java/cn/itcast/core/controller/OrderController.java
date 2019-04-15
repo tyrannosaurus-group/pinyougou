@@ -30,7 +30,7 @@ public class OrderController {
 		return orderService.findAll(name);
 	}
 
-	//搜索
+	//订单搜索
 	@RequestMapping("search")
 	public PageResult search(Integer page, Integer rows, @RequestBody Order order,String searchDate) {
 		//总条数  结果集
@@ -39,6 +39,14 @@ public class OrderController {
 		return orderService.search(page, rows, name, order,searchDate);
 	}
 
+	//订单搜索
+	@RequestMapping("searchSta")
+	public PageResult searchSta(Integer page, Integer rows, @RequestBody Order order,String searchDate) {
+		//总条数  结果集
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		return orderService.searchSta(page, rows, name, order,searchDate);
+	}
 	//分页
 	@RequestMapping("findPage")
 	public PageResult findPage(Integer page, Integer rows) {

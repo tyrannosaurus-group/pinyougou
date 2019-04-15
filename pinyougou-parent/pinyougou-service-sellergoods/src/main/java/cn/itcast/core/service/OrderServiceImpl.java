@@ -1,5 +1,6 @@
 package cn.itcast.core.service;
 
+import cn.itcast.common.utils.DateUtils;
 import cn.itcast.core.dao.good.GoodsDao;
 import cn.itcast.core.dao.order.OrderDao;
 import cn.itcast.core.dao.order.OrderItemDao;
@@ -16,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import vo.OrderVo;
 import vo.PageBean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -102,12 +106,29 @@ public class OrderServiceImpl implements OrderService {
 			criteria.andStatusEqualTo(order.getStatus());
 		}
 		//条件查询之时间段查询
+
 		if ("1".equals(searchDate)){
-			//TODO 时间工具类调用
+			//日订单
+			//Order [createTime=Thu Apr 18 00:00:00 CST 2019]
+			String[] dayStr = DateUtils.getDayStartAndEndTimePointStr(order.getCreateTime());
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date[] datexx = new Date[2];
+			try {
+				datexx[0] = simpleDateFormat.parse(dayStr[0]);
+				datexx[1] = simpleDateFormat.parse(dayStr[1]);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+			criteria.andCreateTimeBetween(datexx[0],datexx[1]);
 		}else if ("2".equals(searchDate)){
-			//TODO 时间工具类调用
+			//周订单
+			Date[] weekDate = DateUtils.getWeekStartAndEndDate(order.getCreateTime());
+			criteria.andCreateTimeBetween(weekDate[0],weekDate[1]);
 		}else if ("3".equals(searchDate)){
-			//TODO 时间工具类调用
+			//月订单
+			Date[] monthDate = DateUtils.getMonthStartAndEndDate(order.getCreateTime());
+			criteria.andCreateTimeBetween(monthDate[0],monthDate[1]);
 		}
 
 		Page<Order> orderPage = (Page<Order>) orderDao.selectByExample(query);
@@ -133,6 +154,52 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
+		return null;
+	}
+
+	@Override
+	public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {
+		//Mybatis分页插件
+		PageHelper.startPage(page,rows);
+
+		OrderQuery query = new OrderQuery();
+		OrderQuery.Criteria criteria = query.createCriteria();
+		criteria.andSellerIdEqualTo(name);
+		if ("1".equals(searchDate)){
+			//日订单
+			//Order [createTime=Thu Apr 18 00:00:00 CST 2019]
+			String[] dayStr = DateUtils.getDayStartAndEndTimePointStr(order.getCreateTime());
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date[] datexx = new Date[2];
+			try {
+				datexx[0] = simpleDateFormat.parse(dayStr[0]);
+				datexx[1] = simpleDateFormat.parse(dayStr[1]);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+			criteria.andCreateTimeBetween(datexx[0],datexx[1]);
+		}else if ("2".equals(searchDate)){
+			//周订单
+			Date[] weekDate = DateUtils.getWeekStartAndEndDate(order.getCreateTime());
+			criteria.andCreateTimeBetween(weekDate[0],weekDate[1]);
+		}else if ("3".equals(searchDate)){
+			//月订单
+			Date[] monthDate = DateUtils.getMonthStartAndEndDate(order.getCreateTime());
+			criteria.andCreateTimeBetween(monthDate[0],monthDate[1]);
+		}
+
+		List<Order> orderList = orderDao.selectByExample(query);
+
+		List<Long> ids = new ArrayList<>();
+		for (Order order1 : orderList) {
+			ids.add(order1.getOrderId());
+		}
+		OrderItemQuery orderItemQuery = new OrderItemQuery();
+		orderItemQuery.createCriteria().andOrderIdIn(ids);
+		//TODO 按goodsId查询orderItem表
+
+
 		return null;
 	}
 }

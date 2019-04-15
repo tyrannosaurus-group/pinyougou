@@ -23,18 +23,16 @@
 
 	<script type="text/javascript" src="../js/base_pagination.js"></script>
 	<script type="text/javascript" src="../js/controller/baseController.js"></script>
-	<script type="text/javascript" src="../js/controller/orderController.js"></script>
-	<script type="text/javascript" src="../js/service/orderService.js"></script>
-	<script type="text/javascript" src="../js/service/itemCatService.js"></script>
-	<script type="text/javascript" src="../js/service/uploadService.js"></script>
-	<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
+	<script type="text/javascript" src="../js/controller/orderStaController.js"></script>
+	<script type="text/javascript" src="../js/service/orderStaService.js"></script>
+
 </head>
 
-<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="orderController" ><!--ng-init="findPage(1,5)"-->
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="orderStaController" >
   <!-- .box-body -->
                 
                     <div class="box-header with-border">
-                        <h3 class="box-title">订单管理</h3>
+                        <h3 class="box-title">订单统计</h3>
                     </div>
 
                     <div class="box-body">
@@ -44,17 +42,6 @@
                       
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-                                  状态：<select ng-model="searchEntity.status">
-                                         	<option value="">全部</option>                                               
-                                         	<option value="1">未付款</option>    
-                                         	<option value="2">已付款</option>    
-                                         	<option value="3">未发货</option> 
-												<option value="4">已发货</option>
-												<option value="5">交易成功</option>
-												<option value="6">交易关闭</option>
-												<option value="7">待评价</option>
-                                        </select>
-										
 									时间范围：<select ng-model="searchDate">
                                          	<option value="1">日订单</option>    
                                          	<option value="2">周订单</option>    
@@ -75,12 +62,9 @@
 			                              </th> 										  
 									      <th class="sorting">商品名称</th>
 									      <th class="sorting">商品价格</th>
-									      <th class="sorting">商品数量</th>
-									      <th class="sorting">订单实付金额</th>
-										  <th class="sorting">订单来源</th>
-									      <th class="sorting">创建时间</th>
-									      <th class="sorting">状态</th>									     						
-					                      
+									      <th class="sorting">总销售量</th>
+									      <th class="sorting">总销售额</th>
+
 			                          </tr>
 			                      </thead>
 			                      <tbody>
@@ -90,19 +74,10 @@
 									      <td>{{entity.price}}</td>
 									      <td>{{entity.num}}</td>
 									      <td>{{entity.totalFee}}</td>
-										  <td>{{source[entity.sourceType]}}</td>
-									      <td>{{entity.createTime}}</td>
-		                                  <td>
-		                                  	<span>
-		                                  		{{status[entity.status]}}
-		                                  	</span>	                                  	
-		                                  </td>		                                  
-		                                 
 			                          </tr>
 			                      </tbody>
 			                  </table>
-			                  <!--数据列表/-->                        
-							  
+			                  <!--数据列表/-->
 							 
                         </div>
                         <!-- 数据表格 /-->
