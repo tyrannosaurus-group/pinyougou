@@ -4,6 +4,8 @@ import cn.itcast.common.utils.DateUtils;
 import cn.itcast.core.dao.good.GoodsDao;
 import cn.itcast.core.dao.order.OrderDao;
 import cn.itcast.core.dao.order.OrderItemDao;
+import cn.itcast.core.pojo.good.Goods;
+import cn.itcast.core.pojo.good.GoodsQuery;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.pojo.order.OrderItemQuery;
@@ -14,14 +16,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import vo.OrderStatistics;
 import vo.OrderVo;
 import vo.PageBean;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @SuppressWarnings("all")
@@ -70,9 +72,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public PageResult findPage(Integer pageNo, Integer pageSize,String name) {
+	public PageResult findPage(Integer pageNo, Integer pageSize, String name) {
 		//Mybatis分页插件
-		PageHelper.startPage(pageNo,pageSize);
+		PageHelper.startPage(pageNo, pageSize);
 
 		OrderQuery query = new OrderQuery();
 		query.createCriteria().andSellerIdEqualTo(name);
@@ -80,34 +82,34 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> orderList = page.getResult();
 		List<OrderVo> oldOrderVoList = findAll(name);
 		List<OrderVo> newOrderVoList = new ArrayList<>();
-		if (orderList!=null&&orderList.size()>0){
+		if (orderList != null && orderList.size() > 0) {
 			for (Order order : orderList) {
 				for (OrderVo orderVo : oldOrderVoList) {
-					if (orderVo.getOrderId().equals(order.getOrderId())){
+					if (orderVo.getOrderId().equals(order.getOrderId())) {
 						newOrderVoList.add(orderVo);
 					}
 				}
 			}
 		}
-		return new PageResult(page.getTotal(),newOrderVoList);
+		return new PageResult(page.getTotal(), newOrderVoList);
 
 	}
 
 	@Override
-	public PageResult search(Integer page, Integer rows, String name, Order order,String searchDate) {
+	public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
 		//Mybatis分页插件
-		PageHelper.startPage(page,rows);
+		PageHelper.startPage(page, rows);
 
 		OrderQuery query = new OrderQuery();
 		OrderQuery.Criteria criteria = query.createCriteria();
 		criteria.andSellerIdEqualTo(name);
 		//条件查询之状态查询
-		if (order.getStatus()!=null){
+		if (order.getStatus() != null) {
 			criteria.andStatusEqualTo(order.getStatus());
 		}
 		//条件查询之时间段查询
 
-		if ("1".equals(searchDate)){
+		if ("1".equals(searchDate)) {
 			//日订单
 			//Order [createTime=Thu Apr 18 00:00:00 CST 2019]
 			String[] dayStr = DateUtils.getDayStartAndEndTimePointStr(order.getCreateTime());
@@ -120,31 +122,31 @@ public class OrderServiceImpl implements OrderService {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-			criteria.andCreateTimeBetween(datexx[0],datexx[1]);
-		}else if ("2".equals(searchDate)){
+			criteria.andCreateTimeBetween(datexx[0], datexx[1]);
+		} else if ("2".equals(searchDate)) {
 			//周订单
 			Date[] weekDate = DateUtils.getWeekStartAndEndDate(order.getCreateTime());
-			criteria.andCreateTimeBetween(weekDate[0],weekDate[1]);
-		}else if ("3".equals(searchDate)){
+			criteria.andCreateTimeBetween(weekDate[0], weekDate[1]);
+		} else if ("3".equals(searchDate)) {
 			//月订单
 			Date[] monthDate = DateUtils.getMonthStartAndEndDate(order.getCreateTime());
-			criteria.andCreateTimeBetween(monthDate[0],monthDate[1]);
+			criteria.andCreateTimeBetween(monthDate[0], monthDate[1]);
 		}
 
 		Page<Order> orderPage = (Page<Order>) orderDao.selectByExample(query);
 		List<Order> orderList = orderPage.getResult();
 		List<OrderVo> oldOrderVoList = findAll(name);
 		List<OrderVo> newOrderVoList = new ArrayList<>();
-		if (orderList!=null&&orderList.size()>0){
+		if (orderList != null && orderList.size() > 0) {
 			for (Order order1 : orderList) {
 				for (OrderVo orderVo : oldOrderVoList) {
-					if (orderVo.getOrderId().equals(order1.getOrderId())){
+					if (orderVo.getOrderId().equals(order1.getOrderId())) {
 						newOrderVoList.add(orderVo);
 					}
 				}
 			}
 		}
-		return new PageResult(orderPage.getTotal(),newOrderVoList);
+		return new PageResult(orderPage.getTotal(), newOrderVoList);
 	}
 
 	@Override
@@ -159,13 +161,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {
-		//Mybatis分页插件
-		PageHelper.startPage(page,rows);
+
 
 		OrderQuery query = new OrderQuery();
 		OrderQuery.Criteria criteria = query.createCriteria();
 		criteria.andSellerIdEqualTo(name);
-		if ("1".equals(searchDate)){
+		if ("1".equals(searchDate)) {
 			//日订单
 			//Order [createTime=Thu Apr 18 00:00:00 CST 2019]
 			String[] dayStr = DateUtils.getDayStartAndEndTimePointStr(order.getCreateTime());
@@ -178,15 +179,15 @@ public class OrderServiceImpl implements OrderService {
 				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
-			criteria.andCreateTimeBetween(datexx[0],datexx[1]);
-		}else if ("2".equals(searchDate)){
+			criteria.andCreateTimeBetween(datexx[0], datexx[1]);
+		} else if ("2".equals(searchDate)) {
 			//周订单
 			Date[] weekDate = DateUtils.getWeekStartAndEndDate(order.getCreateTime());
-			criteria.andCreateTimeBetween(weekDate[0],weekDate[1]);
-		}else if ("3".equals(searchDate)){
+			criteria.andCreateTimeBetween(weekDate[0], weekDate[1]);
+		} else if ("3".equals(searchDate)) {
 			//月订单
 			Date[] monthDate = DateUtils.getMonthStartAndEndDate(order.getCreateTime());
-			criteria.andCreateTimeBetween(monthDate[0],monthDate[1]);
+			criteria.andCreateTimeBetween(monthDate[0], monthDate[1]);
 		}
 
 		List<Order> orderList = orderDao.selectByExample(query);
@@ -197,9 +198,64 @@ public class OrderServiceImpl implements OrderService {
 		}
 		OrderItemQuery orderItemQuery = new OrderItemQuery();
 		orderItemQuery.createCriteria().andOrderIdIn(ids);
-		//TODO 按goodsId查询orderItem表
 
+		List<OrderItem> orderItemList = orderItemDao.selectByExample(orderItemQuery);
+		Set<Long> goodsIds = new HashSet<>();
+		for (OrderItem orderItem : orderItemList) {
+			goodsIds.add(orderItem.getGoodsId());
+		}
 
-		return null;
+		List<Long> orderItemIds = new ArrayList<>();
+		for (OrderItem orderItem : orderItemList) {
+			orderItemIds.add(orderItem.getId());
+		}
+		List<OrderStatistics> orderStatistics = orderItemDao.selectGroupByGoodsId(orderItemIds);
+
+		//Mybatis分页插件
+		PageHelper.startPage(page, rows);
+		GoodsQuery goodsQuery = new GoodsQuery();
+		goodsQuery.createCriteria().andIdIn(new ArrayList<>(goodsIds));
+		Page<Goods> pages = (Page<Goods>) goodsDao.selectByExample(goodsQuery);
+		List<Goods> goodsList = pages.getResult();
+		List<OrderStatistics> newOrderStatisticsList = new ArrayList<>();
+		if (goodsList != null && goodsList.size() > 0) {
+			for (Goods goods : goodsList) {
+				for (OrderStatistics orderStatistic : orderStatistics) {
+					if (goods.getId().equals(orderStatistic.getGoodsId())) {
+						orderStatistic.setGoodsName(goods.getGoodsName());
+						orderStatistic.setPrice(goods.getPrice());
+						newOrderStatisticsList.add(orderStatistic);
+					}
+				}
+			}
+		}
+		return new PageResult(pages.getTotal(), newOrderStatisticsList);
+	}
+
+	@Override
+	public Map<String, List> zheXianTu(String name) {
+		Map<String, List> map = new HashMap<>();
+		List<String> listDate = new ArrayList<>();
+		List<BigDecimal> listPayMent = new ArrayList<>();
+
+		OrderQuery orderQuery = new OrderQuery();
+		orderQuery.createCriteria().andSellerIdEqualTo(name);
+		List<Order> orderList = orderDao.selectByExample(orderQuery);
+		for (Order order : orderList) {
+			Date createTime = order.getCreateTime();
+			String dateToStr = DateUtils.formatDateToStr(createTime);
+
+			int i = listDate.indexOf(dateToStr);
+			if (-1 == i) {
+				listDate.add(dateToStr);
+				listPayMent.add(order.getPayment());
+			}else {
+				listPayMent.set(i,listPayMent.get(i).add(order.getPayment()));
+			}
+		}
+		map.put("date",listDate);
+		map.put("price",listPayMent);
+
+		return map;
 	}
 }
