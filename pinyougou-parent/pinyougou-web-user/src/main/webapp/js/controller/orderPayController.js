@@ -1,15 +1,5 @@
-//首页控制器
-app.controller('orderPayController',function($scope,loginService){
-	$scope.showName=function(){
-			loginService.showName().success(
-					function(response){
-						$scope.loginName=response.loginName;
-					}
-			);
-	}
-});
 //控制层
-app.controller('orderPayController' ,function($scope,$controller,orderPayService){
+app.controller('orderPayController' ,function($scope,$controller,$http,orderPayService){
     $controller('baseController',{$scope:$scope});//继承
     $controller('indexController',{$scope:$scope});
     //读取列表数据绑定到表单中index
@@ -34,6 +24,15 @@ app.controller('orderPayController' ,function($scope,$controller,orderPayService
     //查询实体
     $scope.findOne=function(id){
         orderPayService.findOne(id).success(
+            function(response){
+                $scope.entity= response;
+            }
+        );
+    }
+    //查询实体
+    $scope.showOrder=function(){
+        var id=$location.search()['orderItemId'];
+        orderPayService.findOrderItem(id).success(
             function(response){
                 $scope.entity= response;
             }
@@ -73,36 +72,32 @@ app.controller('orderPayController' ,function($scope,$controller,orderPayService
             }
         );
     }
-
-    $scope.searchEntity={};//定义搜索对象
-
-    //搜索
-    $scope.search=function(page,rows){
-        orderPayService.search(page,rows,$scope.searchEntity).success(
+    //批量删除
+    $scope.delPay=function(orderId){
+        //获取选中的复选框
+        orderPayService.delPay(orderId).success(
             function(response){
-                $scope.list=response.rows;
-                $scope.paginationConf.totalItems=response.total;//更新总记录数
+                if(response.flag){
+                    $scope.reloadList();//刷新列表
+                }
             }
         );
     }
-
-    // 显示状态
-    $scope.status = ["未审核","审核通过","审核未通过","关闭"];
-
-    $scope.itemCatList = [];
-    // 显示分类:
-    $scope.findItemCatList = function(){
-
-        itemCatService.findAll().success(function(response){
-            for(var i=0;i<response.length;i++){
-                $scope.itemCatList[response[i].id] = response[i].name;
+    //付款
+    $scope.payMoney = function(orderId){
+        location.href="http://localhost:9103/pay.html#?orderId="+orderId;
+        /*orderPayService.payMoney(orderId).success(function(response){
+            if(response.flag){
+                alert(response.message);
+                $scope.reloadList();//刷新列表
+            }else{
+                alert(response.message);
             }
-        });
+        });*/
     }
-
-    // 审核的方法:
-    $scope.updateStatus = function(status){
-        orderPayService.updateStatus($scope.selectIds,status).success(function(response){
+    // 付款的方法:
+    $scope.updateStatus = function(){
+        orderPayService.updateStatus($scope.selectIds).success(function(response){
             if(response.flag){
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];

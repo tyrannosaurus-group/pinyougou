@@ -14,8 +14,12 @@ public class OrderVo implements Serializable{
 
 	//订单Id
 	private Long orderId;          //order
+    //
+    private Long orderItemId;
 	//商品名称
 	private String goodsName;  //orderitem中有goodsID
+    //商品原价
+    private BigDecimal bigPrice;
 	//商品价格
 	private BigDecimal price;      //orderItem
 	//商品数量
@@ -52,6 +56,22 @@ public class OrderVo implements Serializable{
     private Integer sendstatus;
     //交易状态
 
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public BigDecimal getBigPrice() {
+        return bigPrice;
+    }
+
+    public void setBigPrice(BigDecimal bigPrice) {
+        this.bigPrice = bigPrice;
+    }
 
     public List<String> getSpec() {
         return spec;

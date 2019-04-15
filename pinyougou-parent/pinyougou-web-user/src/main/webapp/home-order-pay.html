@@ -10,12 +10,6 @@
 
     <link rel="stylesheet" type="text/css" href="css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css" />
-
-    <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
-    <script type="text/javascript" src="js/base.js"></script>
-    <script type="text/javascript" src="js/service/loginService.js"></script>
-    <script type="text/javascript" src="js/controller/orderPayController.js"></script>
-
 	<script src="js/plugins/jquery/jquery-2.2.3.min.js"></script>
 	<script src="js/plugins/bootstrap/js/bootstrap.min.js"></script>
 
@@ -232,7 +226,7 @@ $(function(){
                         </div>
 
                         <div class="order-detail">
-                            <div class="orders">
+                            <div class="orders" >
                                 <div class="choose-order">
                                     <label data-toggle="checkbox" class="checkbox-pretty checked">
                                         <input type="checkbox" checked="checked"><span>全选</span>
@@ -246,49 +240,49 @@ $(function(){
                                         </ul>
                                     </div>
                                 </div>
-								<div ng-repeat="order in list">
-                                <div class="choose-title" >
+								<div  ng-repeat="orderVo in list">
+                                <div class="choose-title">
                                     <label data-toggle="checkbox" class="checkbox-pretty ">
-                                           <input type="checkbox" checked="checked"><span>{{order.createTime}}　订单编号：{{order.id}}  店铺：{{order.userId}} <a>和我联系</a></span>
+										<input type="checkbox" ng-click="updateSelection($event,entity.id)" ><span>{{orderVo.createTime}}　订单编号：{{orderVo.orderId}}  店铺：{{orderVo.userId}} <a>和我联系</a></span>
                                      </label>
                                     <a class="sui-btn btn-info share-btn">分享</a>
                                 </div>
                                 <table class="sui-table table-bordered order-datatable">
 
                                     <tbody>
-                                        <tr ng-repeat="orderItem in order.orderItemList">
+                                        <tr>
                                             <td width="35%">
                                                 <div class="typographic"><img src="img/goods.png" />
-                                                    <a href="#" class="block-text">{{orderItem.title}}</a>
-                                                    <span class="guige">规格：温泉喷雾150ml</span>
+                                                    <a href="#" class="block-text">{{orderVo.title}}</a>
+                                                    <!--<span class="guige">规格：温泉喷雾150ml</span>-->
                                                 </div>
                                             </td>
                                             <td width="5%" class="center">
                                                 <ul class="unstyled">
-                                                    <li class="o-price">¥{{orderItem.price}}</li>
-                                                    <li>¥{{orderItem.price}}</li>
+                                                    <li class="o-price">¥{{orderVo.bigPrice}}</li>
+                                                    <li>¥{{orderVo.price}}</li>
                                                 </ul>
                                             </td>
-                                            <td width="5%" class="center">1</td>
+                                            <td width="5%" class="center">{{orderVo.num}}</td>
                                             <td width="8%" class="center"></td>
                                             <td width="10%" class="center">
                                                 <ul class="unstyled">
-                                                    <li>¥{{orderItem.price}}</li>
+                                                    <li>¥{{orderVo.totalFee}}</li>
                                                     <li>（含运费：￥0.00）</li>
                                                 </ul>
                                             </td>
                                             <td width="10%" class="center">
                                                 <ul class="unstyled">
                                                     <li>等待买家付款</li>
-                                                    <li><a href="orderDetail.html" class="btn">订单详情 </a></li>
+                                                    <li><a href="home-orderDetail.html#?orderItemId={{orderVo.orderItemId}}" class="btn">订单详情 </a></li>
                                                 </ul>
 
 
                                             </td>
                                             <td width="10%" class="center">
                                                 <ul class="unstyled">
-                                                    <li><a href="#" class="sui-btn btn-info">立即付款</a></li>
-                                                    <li><a href="#">取消订单</a></li>
+                                                    <li><a href="#" class="sui-btn btn-info" ng-click="payMoney(orderVo.orderId)">立即付款</a></li>
+                                                    <li><a href="#" ng-click="delPay(orderVo.orderId)">取消订单</a></li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -302,11 +296,13 @@ $(function(){
                                 <label data-toggle="checkbox" class="checkbox-pretty checked">
                                         <input type="checkbox" checked="checked"><span>全选</span>
                                     </label>
-                                <a href="" class="sui-btn btn-info btn-bordered hepay-btn">合并付款</a>
+                                <a href="" class="sui-btn btn-info btn-bordered hepay-btn" ng-click="updateStatus()">合并付款</a>
 								<!-- 分页 -->
-
+								<div>
+								<tm-pagination conf="paginationConf"></tm-pagination>
+								</div>
                             </div>
-							<tm-pagination conf="paginationConf"></tm-pagination>
+
                             <div class="clearfix"></div>
                         </div>
 
@@ -535,6 +531,6 @@ $(function(){
 </div>
 <!--页面底部END-->
 </body>
-
+undefined
 
 </html>

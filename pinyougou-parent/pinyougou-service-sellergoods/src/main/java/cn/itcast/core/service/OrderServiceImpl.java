@@ -40,7 +40,11 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
+<<<<<<< Updated upstream
 	@Override
+=======
+
+>>>>>>> Stashed changes
 	public List<OrderVo> findAll(String name) {
 		OrderItemQuery query = new OrderItemQuery();
 		query.createCriteria().andSellerIdEqualTo(name);
@@ -136,4 +140,12 @@ public class OrderServiceImpl implements OrderService {
 	public PageResult findPage(Integer pageNo, Integer pageSize) {
 		return null;
 	}
+<<<<<<< Updated upstream
+=======
+
+	@Override
+	public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
+		return null;
+	}
+>>>>>>> Stashed changes
 }
