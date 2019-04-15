@@ -4,6 +4,7 @@ import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.service.OrderService;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vo.OrderVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单管理
@@ -47,6 +49,7 @@ public class OrderController {
 
 		return orderService.searchSta(page, rows, name, order,searchDate);
 	}
+
 	//分页
 	@RequestMapping("findPage")
 	public PageResult findPage(Integer page, Integer rows) {
@@ -54,5 +57,14 @@ public class OrderController {
 		String name = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		return orderService.findPage(page, rows, name);
+	}
+
+	//销售折线图
+	@RequestMapping("zheXianTu")
+	public String zheXianTu(){
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		Map<String,List> map=orderService.zheXianTu(name);
+		return JSON.toJSONString(map);
 	}
 }

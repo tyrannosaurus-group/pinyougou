@@ -292,4 +292,15 @@
       seller_id = #{sellerId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <select id="selectGroupByGoodsId" parameterType="list" resultType="vo.OrderStatistics" >
+    SELECT goods_id goodsId,SUM(num) totalNum,SUM(total_fee) totalPrice FROM tb_order_item
+     <where>
+       <foreach collection="list" open="id in (" close=")" separator="," item="id">
+          #{id}
+       </foreach>
+     </where>
+     GROUP BY goods_id;
+  </select>
 </mapper>

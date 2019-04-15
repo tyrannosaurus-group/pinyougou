@@ -6,6 +6,8 @@ import entity.PageResult;
 import vo.OrderVo;
 
 import java.util.List;
+import java.util.Map;
+
 import entity.PageResult;
 import vo.OrderVo;
 import vo.PageBean;
@@ -24,4 +26,6 @@ public interface OrderService {
     PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
 
 	PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate);
+
+	Map<String,List> zheXianTu(String name);
 }
