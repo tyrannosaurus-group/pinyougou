@@ -1,12 +1,11 @@
 // 定义控制器:
-app.controller("userCountController",function($scope,$controller,$http,userCountService){
+app.controller("user2Controller",function($scope,$controller,$http,user2Service){
 	// AngularJS中的继承:伪继承
 	$controller('baseController',{$scope:$scope});
 
-
-    $scope.userCount = function(){
+    $scope.userAnalyze = function(){
         // 向后台发送请求:
-        userCountService.userCount().success(function(response){
+        user2Service.userAnalyze().success(function(response){
             $scope.entity = response;
         });
     }
