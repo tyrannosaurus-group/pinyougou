@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 		for (OrderItem orderItem : orderItems) {
 			OrderVo orderVo = new OrderVo();
 			orderVo.setNum(orderItem.getNum());
-			orderVo.setPrice(orderItem.getPrice());
+			orderVo.setPrice(orderItem.getPrice().doubleValue());
 			orderVo.setTotalFee(orderItem.getTotalFee());
 
 			orderVo.setGoodsName(goodsDao.selectByPrimaryKey(orderItem.getGoodsId()).getGoodsName());

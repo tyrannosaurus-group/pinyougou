@@ -245,7 +245,7 @@ public class OrderServiceImpl implements  OrderService {
                                 //欸嘿嘿,找到一个商品详情,耍耍
                                 vo.setTitle(orderItem.getTitle());
                                 vo.setPicPath(orderItem.getPicPath());
-                                vo.setPrice(orderItem.getPrice());
+                                vo.setPrice(orderItem.getPrice().doubleValue());
                                 vo.setNum(orderItem.getNum());
                                 //下面是规格了,爽爽
                                 Item item = itemDao.selectByPrimaryKey(orderItem.getItemId());

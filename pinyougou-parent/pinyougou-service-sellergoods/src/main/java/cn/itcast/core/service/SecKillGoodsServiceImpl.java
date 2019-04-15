@@ -73,5 +73,10 @@ public class SecKillGoodsServiceImpl implements SecKillGoodsService {
         SeckillGoods seckillGoods = secKillGoodsDao.selectByPrimaryKey(id);
         return seckillGoods;
     }
+
+    @Override
+    public void add(SeckillGoods seckillGoods, long id) {
+
+    }
 }
 
