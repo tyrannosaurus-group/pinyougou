@@ -308,6 +308,11 @@ public class OrderServiceImpl implements  OrderService {
 
     }
 
+    @Override
+    public PageResult searchStatistics(Integer page, Integer rows, String name, Date startDate, Date endDate) {
+        return null;
+    }
+
     //订单id字符串转换为Long类型集合
     public List<Long> turnToList(String str) {
         String[] strs = str.split(",");
