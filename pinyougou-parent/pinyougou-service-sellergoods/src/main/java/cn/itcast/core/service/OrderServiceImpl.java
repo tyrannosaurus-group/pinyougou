@@ -27,14 +27,14 @@ import java.util.*;
 
 @Service
 @SuppressWarnings("all")
-public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderItemDao orderItemDao;
 	@Autowired
-	private GoodsDao goodsDao;
+	private OrderDao orderDao;
 	@Autowired
 	private OrderDao orderDao;
+
 
 	@Override
 	public void add(Order order) {

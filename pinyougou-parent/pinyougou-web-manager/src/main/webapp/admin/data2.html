@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../plugins/echarts/echarts.js"></script>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+
+</head>
+
+<body>
+<!-- 创建一个DOM -->
+<div id="div1" style="width:50%;height:600px;float:left "></div>
+<div id="div2" style="width:50%;height:600px;float: right"></div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $.ajax({
+            type: "get",
+            url: "http://localhost:9101/order/getdata.do",
+            success: function (msg) {
+                // alert(msg);
+
+                var parse3 = JSON.parse(msg);
+                // 获取的是一周内每天的订单数量
+                var YData2 = parse3.num;
+                // 获取的是一周内每天的订单总金额
+                var YData3 = parse3.price;
+
+
+                // var price = msg.price;
+                // var parse2 = JSON.parse(price);
+                //
+                // var YData2= [].concat(parse);
+                // var YData3=[].concat(parse2);
+
+
+                var XData = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
+
+                //获取DOM
+                var myecharts = echarts.init(document.getElementById("div1"));
+                var option = ({
+                    title: {
+                        text: '订单数量对比',//主标题文本，支持\n换行
+                        subtext: '传智大黑马',//副文本
+                        sublink : 'http://www.itcast.cn/',//副文本链接
+                        left: 'center',//离容器左侧的距离
+                        top: 'top'//距离容器上测的距离
+                    },
+                    backgroundColor: 'grey',//背景颜色
+                    textStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'//文字的颜色
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',//每个系列，通过type决定自己的系列型号
+                            radius: '55%',
+                            data: [
+                                {value: YData2[0], name: XData[0]},
+                                {value: YData2[1], name: XData[1]},
+                                {value: YData2[2], name: XData[2]},
+                                {value: YData2[3], name: XData[3]},
+                                {value: YData2[4], name: XData[4]},
+                                {value: YData2[5], name: XData[5]},
+                                {value: YData2[6], name: XData[6]}
+                            ],
+                            roseType: 'angle',
+
+                            itemStyle: {//图形样式 normal，emphasis
+                                emphasis: {
+                                    shadowBlur: 200,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            },
+                            label: {//饼形图上的文本标签
+                                normal: {
+                                    textStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    }
+                                }
+                            },
+                            labelLine: {//标签的视觉引导线
+                                normal: {
+                                    lineStyle: {
+                                        color: 'rgba(255, 255, 255, 0.3)'
+                                    }
+                                }
+                            }
+
+                        }
+                    ]
+                });
+                myecharts.setOption(option);
+
+
+
+
+
+
+
+
+                var json = [
+                    {value: YData3[0], name: XData[0]},
+                    {value: YData3[1], name: XData[1]},
+                    {value: YData3[2], name: XData[2]},
+                    {value: YData3[3], name: XData[3]},
+                    {value: YData3[4], name: XData[4]},
+                    {value: YData3[5], name: XData[5]},
+                    {value: YData3[6], name: XData[6]}
+                ];
+                var option2 = {
+                    title : {
+                        text: '销售金额分析',
+                        subtext: '传智商城',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} 元"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:XData
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    series : [
+                        {
+                            name:'销售金额',
+                            type:'pie',
+                            radius : '55%',//饼图的半径大小
+                            center: ['50%', '60%'],//饼图的位置
+                            data:json
+                        }
+                    ]
+                };
+
+              var  echartsPie = echarts.init(document.getElementById('div2'));
+
+                echartsPie.setOption(option2);
+
+            }
+        });
+
+
+    });
+</script>
+<!--
+1.引入echarts.min.js
+2.准备DOM
+3.初始化echars实例
+4.准备数据项
+5.调用setOption方法将数据和图标显示在图表上
+ -->
+</body>
+
+
+</html>
