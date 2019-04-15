@@ -266,4 +266,61 @@ public class OrderServiceImpl implements OrderService {
 		order.setConsignTime(new Date());
 		orderDao.updateByPrimaryKeySelective(order);
 	}
+
+	@Override
+	public PageResult searchStatistics(Integer page, Integer rows, String name, Date startDate, Date endDate) {
+		OrderQuery query = new OrderQuery();
+		OrderQuery.Criteria criteria = query.createCriteria();
+		criteria.andSellerIdEqualTo(name);
+		if (startDate!=null){
+			if (endDate!=null){
+				criteria.andCreateTimeBetween(startDate,endDate);
+			}else {
+				criteria.andCreateTimeGreaterThanOrEqualTo(startDate);
+			}
+		}else if (endDate!=null) {
+			criteria.andCreateTimeLessThanOrEqualTo(endDate);
+		}
+
+		List<Order> orderList = orderDao.selectByExample(query);
+
+		List<Long> ids = new ArrayList<>();
+		for (Order order1 : orderList) {
+			ids.add(order1.getOrderId());
+		}
+		OrderItemQuery orderItemQuery = new OrderItemQuery();
+		orderItemQuery.createCriteria().andOrderIdIn(ids);
+
+		List<OrderItem> orderItemList = orderItemDao.selectByExample(orderItemQuery);
+		Set<Long> goodsIds = new HashSet<>();
+		for (OrderItem orderItem : orderItemList) {
+			goodsIds.add(orderItem.getGoodsId());
+		}
+
+		List<Long> orderItemIds = new ArrayList<>();
+		for (OrderItem orderItem : orderItemList) {
+			orderItemIds.add(orderItem.getId());
+		}
+		List<OrderStatistics> orderStatistics = orderItemDao.selectGroupByGoodsId(orderItemIds);
+
+		//Mybatis分页插件
+		PageHelper.startPage(page, rows);
+		GoodsQuery goodsQuery = new GoodsQuery();
+		goodsQuery.createCriteria().andIdIn(new ArrayList<>(goodsIds));
+		Page<Goods> pages = (Page<Goods>) goodsDao.selectByExample(goodsQuery);
+		List<Goods> goodsList = pages.getResult();
+		List<OrderStatistics> newOrderStatisticsList = new ArrayList<>();
+		if (goodsList != null && goodsList.size() > 0) {
+			for (Goods goods : goodsList) {
+				for (OrderStatistics orderStatistic : orderStatistics) {
+					if (goods.getId().equals(orderStatistic.getGoodsId())) {
+						orderStatistic.setGoodsName(goods.getGoodsName());
+						orderStatistic.setPrice(goods.getPrice());
+						newOrderStatisticsList.add(orderStatistic);
+					}
+				}
+			}
+		}
+		return new PageResult(pages.getTotal(), newOrderStatisticsList);
+	}
 }

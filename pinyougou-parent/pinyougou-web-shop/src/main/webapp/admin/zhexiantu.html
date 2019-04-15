@@ -36,10 +36,8 @@
             success: function (responsedata) {
                 var map = JSON.parse(responsedata);
                 XData = map.date;
-                alert(XData);
-                YPrice = map.price;
-                alert(YPrice);
 
+                YPrice = map.price;
 
         var rllfx = echarts.init(document.getElementById("rllfx"));
         var option = {

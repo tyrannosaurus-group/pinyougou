@@ -7,7 +7,12 @@ app.service('orderStaService', function ($http) {
     }
 
     //搜索
-    this.search = function (page, rows, searchDate,searchEntity) {
+    /*this.searchSta = function (page, rows, searchDate,searchEntity) {
         return $http.post('../order/searchSta.do?page=' + page + "&rows=" + rows+"&searchDate="+searchDate, searchEntity);
+    }*/
+
+    //搜索
+    this.searchStatistics = function (page, rows, searchEntity) {
+        return $http.post('../order/searchStatistics.do?page=' + page + "&rows=" + rows,searchEntity);
     }
 });

@@ -5,6 +5,7 @@ import cn.itcast.core.pojo.order.OrderItem;
 import entity.PageResult;
 import vo.OrderVo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,4 +31,6 @@ public interface OrderService {
 	Map<String,List> zheXianTu(String name);
 
 	void changeStatus(Long id);
+
+	PageResult searchStatistics(Integer page, Integer rows, String name, Date startDate, Date endDate);
 }

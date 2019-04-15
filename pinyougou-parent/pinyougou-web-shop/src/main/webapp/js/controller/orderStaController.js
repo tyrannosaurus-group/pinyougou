@@ -17,8 +17,18 @@ app.controller('orderStaController' ,function($scope,$controller,$location,order
     $scope.searchEntity = {};//定义搜索对象
 
     //搜索
+    /*$scope.searchSta = function (page, rows) {
+        orderStaService.searchSta(page, rows,$scope.searchDate, $scope.searchEntity).success(
+            function (response) {
+                $scope.list = response.rows;
+                $scope.paginationConf.totalItems = response.total;//更新总记录数
+            }
+        );
+    }*/
+
+    //搜索
     $scope.search = function (page, rows) {
-        orderStaService.search(page, rows,$scope.searchDate, $scope.searchEntity).success(
+        orderStaService.searchStatistics(page, rows,$scope.searchEntity).success(
             function (response) {
                 $scope.list = response.rows;
                 $scope.paginationConf.totalItems = response.total;//更新总记录数

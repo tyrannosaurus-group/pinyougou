@@ -42,13 +42,16 @@
                       
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-									时间范围：<select ng-model="searchDate">
+									<!--时间范围：<select ng-model="searchDate">
                                          	<option value="">全部订单</option>
                                          	<option value="1">日订单</option>
                                          	<option value="2">周订单</option>
                                          	<option value="3">月订单</option> 																				
                                         </select>
-							        订单日期：<input type="date" ng-model="searchEntity.createTime">
+							        订单日期：<input type="date" ng-model="searchEntity.createTime">-->
+									起始日期：<input type="date" ng-model="searchEntity.startDate">
+									截止日期：<input type="date" ng-model="searchEntity.endDate">
+
 									<button class="btn btn-default" ng-click="reloadList()" >查询</button>
                                 </div>
                             </div>
