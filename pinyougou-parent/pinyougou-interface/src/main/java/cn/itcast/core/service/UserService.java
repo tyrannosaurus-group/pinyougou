@@ -6,4 +6,6 @@ public interface UserService {
     void sendCode(String phone);
 
     void add(String smscode, User user);
+
+    User findUser(String username);
 }
