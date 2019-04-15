@@ -27,14 +27,14 @@ import java.util.*;
 
 @Service
 @SuppressWarnings("all")
-
+public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private OrderItemDao orderItemDao;
 	@Autowired
 	private OrderDao orderDao;
-	@Autowired
-	private OrderDao orderDao;
 
+	@Autowired
+	private GoodsDao goodsDao;
 
 	@Override
 	public void add(Order order) {
@@ -55,7 +55,9 @@ import java.util.*;
 		for (OrderItem orderItem : orderItems) {
 			OrderVo orderVo = new OrderVo();
 			orderVo.setNum(orderItem.getNum());
-			orderVo.setPrice(orderItem.getPrice());
+			BigDecimal a = orderItem.getPrice();
+
+			orderVo.setPrice(a.doubleValue());
 			orderVo.setTotalFee(orderItem.getTotalFee());
 
 			orderVo.setGoodsName(goodsDao.selectByPrimaryKey(orderItem.getGoodsId()).getGoodsName());

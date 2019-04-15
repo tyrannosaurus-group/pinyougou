@@ -75,7 +75,7 @@ public class FindOrderServiceImpl implements FindOrderService {
                         orderVo1.setCreateTime(order.getCreateTime());
 
                         orderVo1.setGoodsName(orderItem.getTitle());
-                        orderVo1.setPrice(orderItem.getPrice());
+                        orderVo1.setPrice(orderItem.getPrice().doubleValue());
                         orderVo1.setNum(orderItem.getNum());
                         orderVo1.setTotalFee(orderItem.getTotalFee());
 
