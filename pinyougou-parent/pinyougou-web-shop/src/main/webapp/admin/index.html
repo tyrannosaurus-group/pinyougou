@@ -19,6 +19,20 @@
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="../plugins/adminLTE/js/app.min.js"></script>
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/goodsController.js"></script>
+    <script type="text/javascript" src="../js/service/goodsService.js"></script>
+    <script type="text/javascript" src="../js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="../js/service/uploadService.js"></script>
+    <script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
+
 
 
 
@@ -350,6 +364,11 @@
 				                    <i class="fa fa-circle-o"></i> 商品管理
 				                </a>
 				            </li>
+                            <li id="admin-login">
+                                <a href="goods.html" target="iframe">
+                                    <i class="fa fa-circle-o"></i> 新增秒杀商品
+                                </a>
+                            </li>
 				        </ul>
 				    </li>
 
