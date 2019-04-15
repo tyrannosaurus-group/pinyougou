@@ -6,6 +6,7 @@ import cn.itcast.core.service.OrderService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import entity.PageResult;
+import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,5 +67,18 @@ public class OrderController {
 
 		Map<String,List> map=orderService.zheXianTu(name);
 		return JSON.toJSONString(map);
+	}
+
+	//销售折线图
+	@RequestMapping("changeStatus")
+	public Result changeStatus(Long id){
+		try {
+			orderService.changeStatus(id);
+			return new Result(true,"发货成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false,"发货失败");
+		}
+
 	}
 }

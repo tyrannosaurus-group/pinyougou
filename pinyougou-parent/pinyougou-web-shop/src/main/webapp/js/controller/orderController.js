@@ -39,6 +39,21 @@ app.controller('orderController' ,function($scope,$controller,$location,typeTemp
         );
     }
 
+    //更改状态  订单发货
+    $scope.changeStatus = function (id) {
+        orderService.changeStatus(id).success(
+            function (response) {
+                if (response.flag) {
+                    $scope.reloadList();     //刷新列表
+                    $scope.selectIds = [];
+                    alert(response.message);
+                }else {
+                    alert(response.message);
+                }
+            }
+        );
+    }
+
 	$scope.OrderList = [];
 
 
