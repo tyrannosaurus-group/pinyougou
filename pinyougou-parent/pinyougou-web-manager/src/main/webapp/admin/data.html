@@ -62,19 +62,15 @@
 
                 var rllfx = echarts.init(document.getElementById("rllfx"));
                 var option = {
-                    title:{
-                        text:'订单数量统计折线图',
-                        left:'center',
-                        fontWeight:'200'
+                    title: {
+                        text: '销售订单数量折线图',
+                        subtext: '数据来源：大传智'
                     },
-                    /* 线条颜色，可设置多个颜色 */
-                    color: ['#ffa82f','blue'],
-                    /* 图像四周边距设置 */
-                    grid:{
-                        left:30,
-                        top:30,
-                        right:20,
-                        bottom:30
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['订单数量']
                     },
                     toolbox: {
                         show: true,
@@ -86,97 +82,57 @@
                             magicType: {type: ['line', 'bar']},
                             restore: {},
                             saveAsImage: {}
-                        },
-
-                        right:'20'
-                    },
-                    /* 图例说明 */
-                    legend: {
-                        // 图例排项 vertical-"竖向"; horizontal-"横向"
-                        orient: 'horizontal',
-                        // 图例组件离容器左侧的距离
-                        right : 250,
-                        top:0,
-                        //图例文字的样式
-                        textStyle:{
-                            color:'#6ab2ec',
-                        },
-                        // 与series中每个name一一对应
-                        data:['订单数']
-                    },
-                    /* 鼠标悬浮时显示数据 */
-                    tooltip : {
-                        trigger: 'axis',
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
                         }
                     },
-                    xAxis: {
+                    xAxis:  {
                         type: 'category',
-                        data: XData,
-                        //设置轴线的属性
-                        axisLine:{
-                            lineStyle:{
-                                color:'#6ab2ec',
-                            }
-                        },
-                        //调整x轴的lable
-                        axisLabel:{
-                            textStyle:{
-                                fontSize:10 // 让字体变小
-                            }
-                        }
+                        boundaryGap: false,
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
                     },
                     yAxis: {
                         type: 'value',
-
-                        // 控制网格线是否显示
-                        splitLine: {
-                            show: true,
-                            //  改变轴线颜色
-                            lineStyle: {
-                                // 使用深浅的间隔色
-                                color: ['#132a6e']
-                            }
-                        },
-                        //设置轴线的属性
-                        axisLine:{
-                            lineStyle:{
-                                color:'#6ab2ec',
-                            }
-                        },
                         axisLabel: {
                             formatter: '{value} 单'
                         }
                     },
-                    /* 数据配置，若有多条折线则在数组中追加{name: , data: } */
-                    series: [{
-                        name:'订单数',
-                        data: YData2,
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        },
+                    series: [
+                        {
+                            name:'订单金额',
+                            type:'line',
+                            data:YData2,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'},
+                                    [{
+                                        symbol: 'none',
+                                        x: '90%',
+                                        yAxis: 'max'
+                                    }, {
+                                        symbol: 'circle',
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '最大值'
+                                            }
+                                        },
+                                        type: 'max',
+                                        name: '最高点'
+                                    }]
 
-
-                        markLine: {
-                            data: [
-                                {type: 'average', name: '平均值'}
-                            ]
-                        },
-                        type: 'line',
-                        symbol: 'circle',
-                        // 设置折点大小
-                        symbolSize: 10,
-                        // 设置为光滑曲线
-                        smooth: true
-                    }]
+                                ]
+                            }
+                        }
+                    ]
                 };
 
-                rllfx.setOption(option);
 
+                rllfx.setOption(option);
 
 
 
@@ -194,19 +150,15 @@
                 var YData3 = parse3.price;
                 var rllfx2 = echarts.init(document.getElementById("rllfx2"));
                 var option2 = {
-                    title:{
-                        text:'订单统计折线图',
-                        left:'center',
-                        fontWeight:'200'
+                    title: {
+                        text: '销售金额折线图',
+                        subtext: '数据来源：小传智'
                     },
-                    /* 线条颜色，可设置多个颜色 */
-                    color: ['#ffa82f','blue'],
-                    /* 图像四周边距设置 */
-                    grid:{
-                        left:30,
-                        top:30,
-                        right:20,
-                        bottom:30
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['订单金额']
                     },
                     toolbox: {
                         show: true,
@@ -218,90 +170,56 @@
                             magicType: {type: ['line', 'bar']},
                             restore: {},
                             saveAsImage: {}
-                        },
-
-                        right:'20'
-                    },
-                    /* 图例说明 */
-                    legend: {
-                        // 图例排项 vertical-"竖向"; horizontal-"横向"
-                        orient: 'horizontal',
-                        // 图例组件离容器左侧的距离
-                        right : 250,
-                        top:0,
-                        //图例文字的样式
-                        textStyle:{
-                            color:'#6ab2ec',
-                        },
-                        // 与series中每个name一一对应
-                        data:['订单金额']
-                    },
-                    /* 鼠标悬浮时显示数据 */
-                    tooltip : {
-                        trigger: 'axis',
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
                         }
                     },
-                    xAxis: {
+                    xAxis:  {
                         type: 'category',
-                        data: XData,
-                        //设置轴线的属性
-                        axisLine:{
-                            lineStyle:{
-                                color:'#6ab2ec',
-                            }
-                        },
-                        //调整x轴的lable
-                        axisLabel:{
-                            textStyle:{
-                                fontSize:10 // 让字体变小
-                            }
-                        }
+                        boundaryGap: false,
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
                     },
                     yAxis: {
                         type: 'value',
+                        axisLabel: {
+                            formatter: '{value} 元'
+                        }
+                    },
+                    series: [
+                        {
+                            name:'订单金额',
+                            type:'line',
+                            color:['blue'],
+                            data:YData3,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'},
+                                    [{
+                                        symbol: 'none',
+                                        x: '90%',
+                                        yAxis: 'max'
+                                    }, {
+                                        symbol: 'circle',
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '最大值'
+                                            }
+                                        },
+                                        type: 'max',
+                                        name: '最高点'
+                                    }]
 
-                        // 控制网格线是否显示
-                        splitLine: {
-                            show: true,
-                            //  改变轴线颜色
-                            lineStyle: {
-                                // 使用深浅的间隔色
-                                color: ['#132a6e']
-                            }
-                        },
-                        //设置轴线的属性
-                        axisLine:{
-                            lineStyle:{
-                                color:'#6ab2ec',
+                                ]
                             }
                         }
-
-                    },
-                    /* 数据配置，若有多条折线则在数组中追加{name: , data: } */
-                    series: [{
-                        name:'订单金额',
-                        data: YData3,
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最大值'},
-                                {type: 'min', name: '最小值'}
-                            ]
-                        },
-                        markLine: {
-                            data: [
-                                {type: 'average', name: '平均值'}
-                            ]
-                        },
-                        type: 'line',
-                        symbol: 'circle',
-                        // 设置折点大小
-                        symbolSize: 10,
-                        // 设置为光滑曲线
-                        smooth: true
-                    }]
+                    ]
                 };
+
 
                 rllfx2.setOption(option2);
             }
