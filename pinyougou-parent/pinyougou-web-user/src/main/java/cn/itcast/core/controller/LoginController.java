@@ -26,7 +26,7 @@ public class LoginController {
 
         Map<String,Object> map = new HashMap<>();
         map.put("loginName",name);
-       // map.put("curTime",new Date());
+        map.put("curTime",new Date());
         return map;
 
     }

@@ -49,6 +49,7 @@ public class PayController {
                     //调用Api 将 此二维码失效
                     //TODO 调用关闭订单Api
 
+
                     return new Result(false,"支付超时");
                 }
             }else{
