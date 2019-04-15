@@ -50,7 +50,8 @@ public class CartController {
 //            2：获取Cookie中购物车集合
                     if ("CART".equals(cookie.getName())) {
                         String value = cookie.getValue();
-                        cartList = JSON.parseArray(value, Cart.class);
+                        String decode = URLDecoder.decode(value, "utf-8");
+                        cartList = JSON.parseArray(decode, Cart.class);
 
                         break;
 

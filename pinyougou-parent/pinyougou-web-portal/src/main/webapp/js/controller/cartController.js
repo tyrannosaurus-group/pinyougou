@@ -1,5 +1,18 @@
 //购物车控制层
 app.controller('cartController',function($scope,cartService){
+    //移到我的关注
+    $scope.removeGoodsToCollect=function(itemId){
+        cartService.removeGoodsToCollect().success(
+            function(response){
+                if(response.flag){//如果成功
+                    $scope.findCartList();//刷新列表
+                }else{
+                    alert(response.message);
+                }
+            }
+        );
+    }
+
 	//查询购物车列表
 	$scope.findCartList=function(){
 		cartService.findCartList().success(

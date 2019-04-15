@@ -59,27 +59,37 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
         Writer out = null;
         //加载模板 当初 模板是什么编码 UTF-8
         try {
-            Template template = configuration.getTemplate("item.ftl"); //读
-            Map<String,Object> root = new HashMap<>(); //数据
+            //  读
+            Template template = configuration.getTemplate("item.ftl");
+
+            //数据
+            Map<String,Object> root = new HashMap<>();
+
             //库存结果集  商品ID外键
             ItemQuery itemQuery = new ItemQuery();
             itemQuery.createCriteria().andGoodsIdEqualTo(id);
-            List<Item> itemList = itemDao.selectByExample(itemQuery);
+            List<Item> itemList =
+                    itemDao.selectByExample(itemQuery);
             root.put("itemList",itemList);
+
             //商品详情表  商品表  商品ID　　商品详情ID
             GoodsDesc goodsDesc = goodsDescDao.selectByPrimaryKey(id);
             root.put("goodsDesc",goodsDesc);
+
             //查询商品对象
             Goods goods = goodsDao.selectByPrimaryKey(id);
             root.put("goods",goods);
+
             //查询 一级分类名称
             root.put("itemCat1",itemCatDao.selectByPrimaryKey(goods.getCategory1Id()).getName());
             //查询 二级分类名称
             root.put("itemCat2",itemCatDao.selectByPrimaryKey(goods.getCategory2Id()).getName());
             //查询 三级分类名称
             root.put("itemCat3",itemCatDao.selectByPrimaryKey(goods.getCategory3Id()).getName());
+
             //输出流 写
             out = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
+
             //处理
             template.process(root,out);
         } catch (Exception e) {
@@ -96,35 +106,9 @@ public class StaticPageServiceImpl implements StaticPageService,ServletContextAw
 
     }
 
-    // 删除静态化
     @Override
     public void removeStaticPage(String substring) {
-        long id = Long.parseLong(substring);
-        //1:获取有模板目录的 COnfiguration
-        Configuration configuration = freeMarkerConfigurer.getConfiguration();
-        //路径 webapps 路径  绝对路径
-        String path = getPath("/"+id+".html");
-        Writer out = null;
-        //加载模板 当初 模板是什么编码 UTF-8
-        try {
-            Template template = configuration.getTemplate("RemoveItem.ftl"); //读
-            Map<String,Object> root = new HashMap<>(); //数据
-            root.put("out",true);
-            //输出流 写
-            out = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
-            //处理
-            template.process(root,out);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                if(null != out){
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
 
     //获取全部路径
