@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../plugins/echarts/echarts.js" ></script>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+
+<div class="t2_box_con center-block" style="padding:0px 10px 0px; margin-left:3%">
+        <!-- 此处加载图像 -->
+        <div id="rllfx" style="width: 100%; height: 300px;">
+
+        </div>
+</div>
+<div class="t2_box_con center-block" style="padding:0px 10px 0px; margin-left:3%">
+        <!-- 此处加载图像 -->
+        <div id="rllfx2" style="width: 100%; height: 300px;">
+
+</div>
+</div>
+
+<script type="text/javascript"  >
+
+    $(function () {
+
+        $.ajax({
+            type: "get",
+            url: "http://localhost:9101/order/getdata.do",
+            success: function(msg){
+               // alert(msg);
+
+                var parse3 = JSON.parse(msg);
+              // 获取的是一周内每天的订单数量
+                var YData2 = parse3.num;
+                // 获取的是一周内每天的订单总金额
+              //  var YData3 = parse3.price;
+
+
+
+
+
+
+
+
+                // var price = msg.price;
+                // var parse2 = JSON.parse(price);
+                //
+                // var YData2= [].concat(parse);
+                // var YData3=[].concat(parse2);
+
+
+
+                var XData = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
+             //   var YData = [100, 230, 650, 360, 850, 430, 600];
+
+                var rllfx = echarts.init(document.getElementById("rllfx"));
+                var option = {
+                    title: {
+                        text: '销售订单数量折线图',
+                        subtext: '数据来源：大传智'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['订单数量']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis:  {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} 单'
+                        }
+                    },
+                    series: [
+                        {
+                            name:'订单数量',
+                            type:'line',
+                            data:YData2,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'},
+                                    [{
+                                        symbol: 'none',
+                                        x: '90%',
+                                        yAxis: 'max'
+                                    }, {
+                                        symbol: 'circle',
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '最大值'
+                                            }
+                                        },
+                                        type: 'max',
+                                        name: '最高点'
+                                    }]
+
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+
+                rllfx.setOption(option);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var YData3 = parse3.price;
+                var rllfx2 = echarts.init(document.getElementById("rllfx2"));
+                var option2 = {
+                    title: {
+                        text: '销售金额折线图',
+                        subtext: '数据来源：小传智'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['订单金额']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis:  {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['周一','周二','周三','周四','周五','周六','周日']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} 元'
+                        }
+                    },
+                    series: [
+                        {
+                            name:'订单金额',
+                            type:'line',
+                            color:['blue'],
+                            data:YData3,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'},
+                                    [{
+                                        symbol: 'none',
+                                        x: '90%',
+                                        yAxis: 'max'
+                                    }, {
+                                        symbol: 'circle',
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '最大值'
+                                            }
+                                        },
+                                        type: 'max',
+                                        name: '最高点'
+                                    }]
+
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+
+                rllfx2.setOption(option2);
+            }
+        });
+
+
+    });
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -9,4 +9,6 @@ public interface UserService {
     void add(String smscode, User user);
 
     void addPersonalInfo(UserVo userVo,String name);
+
+    User findUser(String username);
 }

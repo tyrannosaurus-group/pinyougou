@@ -19,6 +19,7 @@ import vo.UserVo;
 import javax.jms.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -99,6 +100,17 @@ public class UserServiceImpl implements  UserService {
         userVo.getAddrnow().setId(new BigDecimal(addrNowId));
         userVo.getAddrnow().setUserId(name);
         addrnowDao.insert(userVo.getAddrnow());
+    }
+
+    @Override
+    public User findUser(String username) {
+        UserQuery userQuery = new UserQuery();
+        userQuery.createCriteria().andUsernameEqualTo(username);
+        List<User> users = userDao.selectByExample(userQuery);
+        if (users!=null&&users.size()>0){
+            return users.get(0);
+        }
+        return null;
     }
 
 }

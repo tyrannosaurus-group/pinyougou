@@ -8,4 +8,12 @@ app.controller('indexController',function($scope,loginService){
 					}
 			);
 	}
+
+    $scope.findList=function () {
+        loginService.findList().success(
+            function (response) {
+                $scope.collectList=response;
+            }
+        )
+    }
 });

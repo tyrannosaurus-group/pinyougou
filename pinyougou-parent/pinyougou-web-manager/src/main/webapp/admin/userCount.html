@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户统计</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+
+    <script type="text/javascript" src="../js/base.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/userCountController.js"></script>
+    <script type="text/javascript" src="../js/service/userCountService.js"></script>
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="userCountController" ng-init="userCount()">
+            <!-- .box-body -->
+
+            <div class="box-header with-border">
+                <h3 class="box-title">用户统计</h3>
+            </div>
+
+            <div class="box-body">
+
+                <!-- 数据表格 -->
+                <div class="table-box">
+
+
+                    <table class="table table-bordered table-striped table-hover dataTable">
+                        <tr>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;"><span class="text-center">用户总人数:{{entity.total}}</span></th>
+                        </tr>
+
+                    </table>
+
+
+                    <table class="table table-bordered table-striped table-hover dataTable">
+                        <tr>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">男性用户：{{entity.maleCount}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">女性用户：{{entity.femaleCount}}</th>
+                        </tr>
+
+                    </table>
+                    <!--工具栏/-->
+
+                    <!--数据列表-->
+                    <table  class="table table-bordered table-striped table-hover dataTable">
+                        <tr>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">正常用户：{{entity.normal}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">冻结用户：{{entity.freeze}}</th>
+                        </tr>
+                    </table>
+                    <!--数据列表/-->
+                    <table  class="table table-bordered table-striped table-hover dataTable">
+                        <tr>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">一级用户：{{entity.one}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">二级用户：{{entity.two}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">三级用户：{{entity.three}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">四级用户：{{entity.four}}</th>
+                            <th class="sorting" style="vertical-align: middle !important;text-align: center;">五级用户：{{entity.five}}</th>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <!-- 数据表格 /-->
+
+
+            </div>
+            <!-- /.box-body -->
+
+</body>
+</html>
