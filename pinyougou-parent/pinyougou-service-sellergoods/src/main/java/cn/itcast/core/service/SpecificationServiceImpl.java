@@ -113,4 +113,19 @@ public class SpecificationServiceImpl implements SpecificationService {
 
         }
     }
+    //批量删除规格
+    @Override
+    public void delete(Long[] ids) {
+        //删除规格
+        for (Long id : ids) {
+            specificationDao.deleteByPrimaryKey(id);
+            //删除规格属性
+            SpecificationOptionQuery query = new SpecificationOptionQuery();
+            query.createCriteria().andSpecIdEqualTo(id);
+            specificationOptionDao.deleteByExample(query);
+        }
+
+
+
+    }
 }

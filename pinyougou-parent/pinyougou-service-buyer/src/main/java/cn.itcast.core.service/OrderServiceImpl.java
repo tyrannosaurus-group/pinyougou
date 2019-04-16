@@ -36,6 +36,7 @@ import vo.OrderVo;
 import vo.PageBean;
 
 import java.math.BigDecimal;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -158,7 +159,6 @@ public class OrderServiceImpl implements  OrderService {
 
         //付款方式
         payLog.setPayType("1");
-
         //保存完成
         payLogDao.insertSelective(payLog);
 
@@ -292,6 +292,8 @@ public class OrderServiceImpl implements  OrderService {
         redisTemplate.boundHashOps("OrderVoList").put(name, pageBean);
         return pageBean;
     }
+
+
 
     @Override
     public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {

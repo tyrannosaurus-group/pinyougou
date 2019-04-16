@@ -5,6 +5,7 @@ import cn.itcast.core.pojo.seckill.SeckillOrder;
 import entity.PageResult;
 import vo.SecKillOrdersVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface SecKillOrdersService {
@@ -12,5 +13,5 @@ public interface SecKillOrdersService {
 
     List<String> findSecKillSeller();
 
-    SecKillOrdersVo findOne(Long id);
+    SecKillOrdersVo findOne( Long id);
 }

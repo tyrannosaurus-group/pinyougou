@@ -1,5 +1,8 @@
 package cn.itcast.core.pojo.seckill;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,6 +11,7 @@ public class SeckillOrder implements Serializable {
     /**
      * 主键
      */
+    @JSONField(serializeUsing= ToStringSerializer.class)
     private Long id;
 
     /**
@@ -73,6 +77,10 @@ public class SeckillOrder implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getSeckillId() {

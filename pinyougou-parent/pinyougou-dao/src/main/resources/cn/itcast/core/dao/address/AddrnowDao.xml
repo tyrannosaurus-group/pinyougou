@@ -7,6 +7,7 @@
     <result column="cityid" property="cityid" jdbcType="VARCHAR" />
     <result column="areaid" property="areaid" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="occupation" property="occupation" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +69,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, provinceid, cityid, areaid, user_id
+      id, provinceid, cityid, areaid, user_id, occupation
     </if>
     <if test="fields != null" >
       ${fields}
@@ -90,7 +91,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
     select 
-    id,provinceid,cityid,areaid,user_id
+    id,provinceid,cityid,areaid,user_id,occupation
     from tb_addrnow
     where id = #{id,jdbcType=DECIMAL}
   </select>
@@ -106,9 +107,11 @@
   </delete>
   <insert id="insert" parameterType="cn.itcast.core.pojo.address.Addrnow" >
     insert into tb_addrnow (id, provinceid, cityid, 
-      areaid, user_id)
+      areaid, user_id, occupation
+      )
     values (#{id,jdbcType=DECIMAL}, #{provinceid,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, 
-      #{areaid,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+      #{areaid,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.itcast.core.pojo.address.Addrnow" >
     insert into tb_addrnow
@@ -128,6 +131,9 @@
       <if test="userId != null" >
         user_id,
       </if>
+      <if test="occupation != null" >
+        occupation,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -144,6 +150,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -171,6 +180,9 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
+      <if test="record.occupation != null" >
+        occupation = #{record.occupation,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -182,7 +194,8 @@
       provinceid = #{record.provinceid,jdbcType=VARCHAR},
       cityid = #{record.cityid,jdbcType=VARCHAR},
       areaid = #{record.areaid,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR}
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      occupation = #{record.occupation,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -202,6 +215,9 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="occupation != null" >
+        occupation = #{occupation,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=DECIMAL}
   </update>
@@ -210,7 +226,8 @@
     set provinceid = #{provinceid,jdbcType=VARCHAR},
       cityid = #{cityid,jdbcType=VARCHAR},
       areaid = #{areaid,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR}
+      user_id = #{userId,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR}
     where id = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>
