@@ -222,7 +222,7 @@ public class OrderServiceImpl implements  OrderService {
                         //先在外层的循环,找一个order,毕竟是唯一的
                         Order order = orderDao.selectByPrimaryKey(orderId);
                         //先把order里面的属性加给ordervo
-                        BeforeOrderVo.setOrderId(orderId);
+                        BeforeOrderVo.setOrderId(String.valueOf(orderId));
                         BeforeOrderVo.setNickName(order.getSellerId());
                         BeforeOrderVo.setChliOrderTime(order.getCreateTime());
                         BeforeOrderVo.setPayment(order.getPayment().doubleValue());
@@ -245,7 +245,7 @@ public class OrderServiceImpl implements  OrderService {
                                 //欸嘿嘿,找到一个商品详情,耍耍
                                 vo.setTitle(orderItem.getTitle());
                                 vo.setPicPath(orderItem.getPicPath());
-                                vo.setPrice(orderItem.getPrice());
+                                vo.setPrice(orderItem.getPrice().doubleValue());
                                 vo.setNum(orderItem.getNum());
                                 //下面是规格了,爽爽
                                 Item item = itemDao.selectByPrimaryKey(orderItem.getItemId());

@@ -130,6 +130,18 @@ public class Order implements Serializable {
      * 商家ID
      */
     private String sellerId;
+    /**
+     * 订单项集合
+     */
+    private List<OrderItem> orderItemList;
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
+    }
 
     private List<OrderItem> orderItemList;
 

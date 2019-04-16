@@ -314,4 +314,14 @@ app.controller('goodsController', function ($scope, $controller, $location, type
 
         });
     }
+    $scope.addSeckillGoods=function (id,entity) {
+        itemCatService.addSeckillGoods(id,entity).success(function (response) {
+            if (response.flag) {
+                // 获得url  image_entity = {color:黑色,url:http://192.......jpg}
+                alert(response.message);
+            } else {
+                alert(response.message);
+            }
+        })
+    }
 });	

@@ -39,6 +39,8 @@ public class FindOrderServiceImpl implements FindOrderService {
     private OrderDao orderDao;
 
 
+
+
     @Override
     public PageResult search(Integer pageNo, Integer pageSize, OrderVo orderVo) {
 
@@ -59,7 +61,7 @@ public class FindOrderServiceImpl implements FindOrderService {
 
         List<Order> list = pageInfo.getList();
         List<OrderVo> orderVoList = new ArrayList<>();
-        if (null != list && list.size() > 0) {
+        if (null !=list&&list.size()>0) {
             for (Order order : list) {
 
                 OrderItemQuery orderItemQuery = new OrderItemQuery();
@@ -77,7 +79,7 @@ public class FindOrderServiceImpl implements FindOrderService {
                         orderVo1.setCreateTime(order.getCreateTime());
 
                         orderVo1.setGoodsName(orderItem.getTitle());
-                        orderVo1.setPrice(orderItem.getPrice());
+                        orderVo1.setPrice(orderItem.getPrice().doubleValue());
                         orderVo1.setNum(orderItem.getNum());
                         orderVo1.setTotalFee(orderItem.getTotalFee());
 

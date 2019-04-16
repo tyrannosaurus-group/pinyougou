@@ -8,5 +8,9 @@ app.service('loginService',function($http){
     this.findList=function () {
         return $http.get("../collect/findList.do");
     }
-	
+
+    this.findSeckilList=function () {
+		return $http.get("../seckill/findSeckillList.do")
+    }
+
 });

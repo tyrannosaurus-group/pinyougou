@@ -1,10 +1,20 @@
 package vo;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import cn.itcast.common.utils.LongJsonDeserializer;
+import cn.itcast.common.utils.LongJsonSerializer;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,11 +23,17 @@ import java.util.Map;
 public class OrderVo implements Serializable{
 
 	//订单Id
-	private Long orderId;          //order
+//    @JsonSerialize(using = LongJsonSerializer.class)
+//    @JsonDeserialize(using = LongJsonDeserializer.class)
+	private String orderId;          //order
+    //
+    private Long orderItemId;
 	//商品名称
 	private String goodsName;  //orderitem中有goodsID
+    //商品原价
+    private BigDecimal bigPrice;
 	//商品价格
-	private BigDecimal price;      //orderItem
+	private double price;      //orderItem
 	//商品数量
 	private Integer num;			 //orderItem
 	//订单实付金额
@@ -75,6 +91,22 @@ public class OrderVo implements Serializable{
     /**
      * 状态：1、未付款，2、已付款，3、未发货，4、已发货，5、交易成功，6、交易关闭,7、待评价
      */
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public BigDecimal getBigPrice() {
+        return bigPrice;
+    }
+
+    public void setBigPrice(BigDecimal bigPrice) {
+        this.bigPrice = bigPrice;
+    }
 
     public List<String> getSpec() {
         return spec;
@@ -140,15 +172,15 @@ public class OrderVo implements Serializable{
         this.sendstatus = sendstatus;
     }
 
-    public Long getOrderId() {
-		return orderId;
-	}
+    public String getOrderId() {
+        return orderId;
+    }
 
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
-	public String getGoodsName() {
+    public String getGoodsName() {
 		return goodsName;
 	}
 
@@ -156,15 +188,15 @@ public class OrderVo implements Serializable{
 		this.goodsName = goodsName;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public Integer getNum() {
+    public Integer getNum() {
 		return num;
 	}
 
@@ -203,7 +235,5 @@ public class OrderVo implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
 
 }

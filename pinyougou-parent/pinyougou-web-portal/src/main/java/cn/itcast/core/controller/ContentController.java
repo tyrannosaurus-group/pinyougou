@@ -20,8 +20,8 @@ public class ContentController {
     private ContentService contentService;
 
     //根据广告类型的ID 查询此类型下所有广告结果集
-    @RequestMapping("/findByCategoryId")
+    /*@RequestMapping("/findByCategoryId")
     public List<Content> findByCategoryId(Long categoryId){
         return contentService.findByCategoryId(categoryId);
-    }
+    }*/
 }

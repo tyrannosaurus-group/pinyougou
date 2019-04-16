@@ -72,4 +72,9 @@ app.controller('orderController' ,function($scope,$controller,$location,typeTemp
 
 		});
 	}
+	$scope.findSeckillOrderAll =function () {
+		orderService.findSeckillOrderAll().success(function (response) {
+			$scope.seckillOrderList=response;
+        })
+    }
 });	
