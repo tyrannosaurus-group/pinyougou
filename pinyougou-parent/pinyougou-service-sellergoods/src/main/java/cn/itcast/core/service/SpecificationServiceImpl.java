@@ -1,5 +1,6 @@
 package cn.itcast.core.service;
 
+import cn.itcast.common.utils.ImportExcelUtil;
 import cn.itcast.core.dao.specification.SpecificationDao;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
 import cn.itcast.core.pojo.good.BrandQuery;
@@ -13,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import vo.SpecificationVo;
 
 import java.util.List;
@@ -111,6 +113,54 @@ public class SpecificationServiceImpl implements SpecificationService {
             specification.setStatus(status);
             specificationDao.updateByPrimaryKeySelective(specification);
 
+        }
+    }
+
+
+    @Override
+    public void importData( List<List<Object>>  rowlist) {
+       // List<List<Object>> rowlist = null;
+        try {
+         //   rowlist = ImportExcelUtil.getBankListByExcel(file.getInputStream(), file.getOriginalFilename());
+
+            if (null!=rowlist&&rowlist.size()>0){
+
+
+                for (int i = 0; i < rowlist.size(); i++) {
+                    //第i行的数据
+                    List<Object> row = rowlist.get(i);
+                    Specification specification = new Specification();
+                    // 这里就是第i行第1列的数据了.
+                    Object object0 = row.get(0);
+                    if (object0!= null) {
+                        String countString=String.valueOf(object0);
+                        Long id=Long.valueOf(countString);
+                        specification.setId(id);
+                    }
+
+
+                    Object object1 = row.get(1);
+                    if (object1!= null) {
+
+                        specification.setSpecName(String.valueOf(object1));
+                    }
+
+
+
+
+                    Object object2 = row.get(2);
+                    if (object2!= null) {
+
+                        specification.setStatus(String.valueOf(object2));
+                    }
+                       specificationDao.insertSelective(specification);
+                    /*...执行数据库操作*/
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     //批量删除规格

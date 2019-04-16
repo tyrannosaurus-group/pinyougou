@@ -102,4 +102,17 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
     // 显示状态
     $scope.status = ["未审核","审核通过","审核未通过","关闭"];
 
+    //上传资源
+    $scope.uploadFile = function () {
+        // 调用uploadService的方法完成文件的上传
+        specificationService.uploadFile().success(function (response) {
+            if (response.flag) {
+               alert("so easy ！！！！！")
+            } else {
+                alert(response.message);
+            }
+        });
+    }
+
+
 });	

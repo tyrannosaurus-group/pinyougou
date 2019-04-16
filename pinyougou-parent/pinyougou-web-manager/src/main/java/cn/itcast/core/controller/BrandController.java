@@ -1,16 +1,24 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.common.utils.ImportExcelUtil;
+import cn.itcast.common.utils.ImportExcelUtils;
 import cn.itcast.core.pojo.good.Brand;
+import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.service.BrandService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import entity.PageResult;
 import entity.Result;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -114,5 +122,7 @@ public class BrandController {
             return new Result(false,"失败");
         }
     }
+
+
 
 }

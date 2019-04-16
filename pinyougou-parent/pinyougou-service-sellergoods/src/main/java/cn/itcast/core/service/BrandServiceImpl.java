@@ -1,14 +1,17 @@
 package cn.itcast.core.service;
 
+import cn.itcast.common.utils.ImportExcelUtil;
 import cn.itcast.core.dao.good.BrandDao;
 import cn.itcast.core.pojo.good.Brand;
 import cn.itcast.core.pojo.good.BrandQuery;
+import cn.itcast.core.pojo.specification.Specification;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -134,4 +137,14 @@ public class BrandServiceImpl implements BrandService {
             brandDao.updateByPrimaryKeySelective(brand);
         }
     }
+
+
+
+
+
+
+
+
+
+
 }
