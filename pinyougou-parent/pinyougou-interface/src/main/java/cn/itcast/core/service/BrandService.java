@@ -2,6 +2,7 @@ package cn.itcast.core.service;
 
 import cn.itcast.core.pojo.good.Brand;
 import entity.PageResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,6 @@ public interface BrandService {
     List<Map> selectOptionList();
 
     void updateStatus(Long[] ids, String status);
+
+
 }

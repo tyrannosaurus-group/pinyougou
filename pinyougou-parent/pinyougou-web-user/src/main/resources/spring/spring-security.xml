@@ -74,7 +74,11 @@
         <beans:property name="key" value="an_id_for_this_auth_provider_only"/> 
     </beans:bean>        
    		 <!-- 自定义给用户名授权的实现类 -->
-	<beans:bean id="userDetailsService" class="cn.itcast.core.service.UserDetailServiceImpl"/>
+    <beans:bean id="userDetailsService" class="cn.itcast.core.service.UserDetailServiceImpl">
+        <beans:property name="userService" ref="userService"></beans:property>
+
+    </beans:bean>
+
 	
 	<!-- 认证过滤器 结束 -->
 	
@@ -97,7 +101,7 @@
     <!-- 引用dubbo 服务 -->
     <dubbo:application name="pinyougou-user-web" />
     <dubbo:registry address="zookeeper://192.168.200.128:2181"/>
-    <dubbo:annotation package="cn.itcast.core.controller" />
+    <dubbo:annotation package="cn.itcast.core" />
     <!-- 超时全局设置   10分钟   check=false不检查服务提供方-->
     <dubbo:consumer timeout="600000" check="false"/>
     <dubbo:reference id="userService"  interface="cn.itcast.core.service.UserService" />
