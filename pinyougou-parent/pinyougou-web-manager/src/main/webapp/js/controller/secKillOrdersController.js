@@ -26,8 +26,9 @@ app.controller('secKillOrdersController' ,function($scope,$controller,secKillOrd
 	$scope.findOne=function(id){				
 		secKillOrdersService.findOne(id).success(
 			function(response){
-				$scope.entity.seckillOrder= response.seckillOrder;
-				$scope.entity.seckillGoods= response.seckillGoods;
+				$scope.seckillOrder= response.seckillOrder;
+				$scope.seckillGoods= response.seckillGoods;
+				alert($scope.seckillOrder.seckillId)
 			}
 		);				
 	}
@@ -67,15 +68,15 @@ app.controller('secKillOrdersController' ,function($scope,$controller,secKillOrd
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
-	$scope.searchTitle={};//定义搜索对象
 
 	//搜索
 	$scope.search=function(page,rows){			
 		secKillOrdersService.search(page,rows,$scope.searchEntity).success(
 			function(response){
-				$scope.list=response.rows;	
-				$scope.paginationConf.totalItems=response.total;//更新总记录数
-			}			
+                $scope.list=response.rows;
+                alert(list.get(1))
+                $scope.paginationConf.totalItems=response.total;//更新总记录数
+			}
 		);
 	}
     

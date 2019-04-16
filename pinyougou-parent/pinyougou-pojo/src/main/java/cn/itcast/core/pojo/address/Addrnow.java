@@ -14,6 +14,8 @@ public class Addrnow implements Serializable {
 
     private String userId;
 
+    private String occupation;
+
     private static final long serialVersionUID = 1L;
 
     public BigDecimal getId() {
@@ -56,6 +58,14 @@ public class Addrnow implements Serializable {
         this.userId = userId == null ? null : userId.trim();
     }
 
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation == null ? null : occupation.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -67,6 +77,7 @@ public class Addrnow implements Serializable {
         sb.append(", cityid=").append(cityid);
         sb.append(", areaid=").append(areaid);
         sb.append(", userId=").append(userId);
+        sb.append(", occupation=").append(occupation);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -88,7 +99,8 @@ public class Addrnow implements Serializable {
             && (this.getProvinceid() == null ? other.getProvinceid() == null : this.getProvinceid().equals(other.getProvinceid()))
             && (this.getCityid() == null ? other.getCityid() == null : this.getCityid().equals(other.getCityid()))
             && (this.getAreaid() == null ? other.getAreaid() == null : this.getAreaid().equals(other.getAreaid()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getOccupation() == null ? other.getOccupation() == null : this.getOccupation().equals(other.getOccupation()));
     }
 
     @Override
@@ -100,6 +112,7 @@ public class Addrnow implements Serializable {
         result = prime * result + ((getCityid() == null) ? 0 : getCityid().hashCode());
         result = prime * result + ((getAreaid() == null) ? 0 : getAreaid().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getOccupation() == null) ? 0 : getOccupation().hashCode());
         return result;
     }
 }

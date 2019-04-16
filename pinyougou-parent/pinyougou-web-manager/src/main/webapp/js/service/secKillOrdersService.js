@@ -11,6 +11,8 @@ app.service('secKillOrdersService',function($http){
 	}
 	//查询实体
 	this.findOne=function(id){
+		alert(id)
+
 		return $http.get('../secKillOrders/findOne.do?id='+id);
 	}
 	//增加 

@@ -52,7 +52,7 @@
                 <option value="1">已支付</option>
                 <option value="2">关闭</option>
             </select>
-                商品名称：<input ng-model="searchTitle.title">
+
                 <button class="btn btn-default" ng-click="reloadList()">查询</button>
             </div>
         </div>
@@ -115,51 +115,51 @@
                 <table class="table table-bordered table-striped" width="800px">
                     <tr>
                         <td>订单ID</td>
-                        <td>{{entity.seckillOrder.id}}</td>
+                        <td>{{seckillOrder.id}}</td>
                     </tr>
                     <tr>
                         <td>商品标题</td>
-                        <td>{{entity.seckillGoods.title}}</td>
+                        <td>{{seckillGoods.title}}</td>
                     </tr>
                     <tr>
                         <td>支付金额</td>
-                        <td>{{entity.seckillOrder.money}}</td>
+                        <td>{{seckillOrder.money}}</td>
                     </tr>
                     <tr>
                         <td>用户</td>
-                        <td>{{entity.seckillOrder.userId}}</td>
+                        <td>{{seckillOrder.userId}}</td>
                     </tr>
                     <tr>
                         <td>商家</td>
-                        <td>{{entity.seckillOrder.sellerId}}</td>
+                        <td>{{seckillOrder.sellerId}}</td>
                     </tr>
                     <tr>
                         <td>下单时间</td>
-                        <td>{{entity.seckillOrder.createTime}}</td>
+                        <td>{{seckillOrder.createTime}}</td>
                     </tr>
                     <tr>
                         <td>支付时间</td>
-                        <td>{{entity.seckillOrder.payTime}}</td>
+                        <td>{{seckillOrder.payTime}}</td>
                     </tr>
                     <tr>
                         <td>交易状态</td>
-                        <td>{{entity.seckillOrder.status}}</td>
+                        <td>{{seckillOrder.status}}</td>
                     </tr>
                     <tr>
                         <td>收货人地址</td>
-                        <td>{{entity.seckillOrder.receiverAddress}}</td>
+                        <td>{{seckillOrder.receiverAddress}}</td>
                     </tr>
                     <tr>
                         <td>收货人电话</td>
-                        <td>{{entity.seckillOrder.receiverMobile}}</td>
+                        <td>{{seckillOrder.receiverMobile}}</td>
                     </tr>
                     <tr>
                         <td>收货人</td>
-                        <td>{{entity.seckillOrder.receiver}}</td>
+                        <td>{{seckillOrder.receiver}}</td>
                     </tr>
                     <tr>
                         <td>交易流水</td>
-                        <td>{{entity.seckillOrder.transactionId}}</td>
+                        <td>{{seckillOrder.transactionId}}</td>
                     </tr>
 
                 </table>

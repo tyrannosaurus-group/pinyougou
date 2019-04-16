@@ -3,10 +3,14 @@ package cn.itcast.core.service;
 import cn.itcast.common.utils.IdWorker;
 import cn.itcast.core.dao.address.AddrnowDao;
 import cn.itcast.core.dao.user.UserDao;
+import cn.itcast.core.pojo.address.Address;
+import cn.itcast.core.pojo.address.Addrnow;
+import cn.itcast.core.pojo.address.AddrnowQuery;
 import cn.itcast.core.pojo.user.User;
 import cn.itcast.core.pojo.user.UserQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
@@ -16,8 +20,13 @@ import vo.UserVo;
 
 import javax.jms.*;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -89,14 +98,33 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public void addPersonalInfo(UserVo userVo,String name) {
+    public void addPersonalInfo(UserVo userVo, String name) {
+        //user表
+        User user = new User();
+        user.setHeadPic(userVo.getHeadPic());
+        user.setNickName(userVo.getNickName());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = simpleDateFormat.parse(userVo.getBirthday());
+            user.setBirthday(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         UserQuery userQuery = new UserQuery();
         userQuery.createCriteria().andUsernameEqualTo(name);
-        userDao.updateByExampleSelective(userVo.getUser(),userQuery);
+        userDao.updateByExampleSelective(user, userQuery);
+
+
+        //addrnow表
+        Addrnow addrnow = new Addrnow();
+        addrnow.setProvinceid(userVo.getProvinceid());
+        addrnow.setCityid(userVo.getCityid());
+        addrnow.setAreaid(userVo.getAreaid());
+        addrnow.setOccupation(userVo.getOccupation());
         long addrNowId = idWorker.nextId();
-        userVo.getAddrnow().setId(new BigDecimal(addrNowId));
-        userVo.getAddrnow().setUserId(name);
-        addrnowDao.insert(userVo.getAddrnow());
+        addrnow.setId(new BigDecimal(addrNowId));
+        addrnow.setUserId(name);
+        addrnowDao.insert(addrnow);
     }
 
     @Override

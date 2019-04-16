@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -134,6 +135,20 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 
         }
+    }
+
+    //批量删除
+    @Override
+    public void delete(Long[] ids) {
+
+       /* 根据id删除
+       for (Long id : ids) {
+            typeTemplateDao.deleteByPrimaryKey(id);
+        }*/
+        //根据条件删除
+        TypeTemplateQuery typeTemplateQuery = new TypeTemplateQuery();
+        typeTemplateQuery.createCriteria().andIdIn(Arrays.asList(ids));//数组转list集合
+        typeTemplateDao.deleteByExample(typeTemplateQuery);
     }
 
     //Mysql 索引库 消息 队列  分布式文件系统 Redis缓存
