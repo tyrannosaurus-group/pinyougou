@@ -107,7 +107,7 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
         // 调用uploadService的方法完成文件的上传
         specificationService.uploadFile().success(function (response) {
             if (response.flag) {
-
+               alert("so easy ！！！！！")
             } else {
                 alert(response.message);
             }
