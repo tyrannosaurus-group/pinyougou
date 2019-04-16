@@ -6,33 +6,29 @@ app.controller('payController' ,function($scope ,$location,payService){
 		//2:调统一下单API
 		//返回值：code_url
 		var orderId=$location.search()['orderId'];
-		alert(orderId)
        if (null!=orderId) {
-           alert("222")
            payService.createNativeById(orderId).success(
                function(response){
                    //Map  三个值
                    //总金额 分
                    // 订单号
                    //code_url
-
                    //显示订单号和金额
-                   $scope.money= (response.total_fee/100).toFixed(2);
+                   $scope.money= response.total_fee;
                    $scope.out_trade_no=response.out_trade_no;
 
                    //生成二维码
                    var qr=new QRious({
                        element:document.getElementById('qrious'),
                        size:250,
-                       value:response.code_url,// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
+                       value:"就是出不来二维码,烦!",// value ： 常量  静态二维码   现在是变量 动态码 金额是固定
                        level:'H'
                    });
 
-                   queryPayStatus();//调用查询
+                   // queryPayStatus();//调用查询
 
                });
        }else {
-           alert("333")
            payService.createNative().success(
                function (response) {
                    //Map  三个值

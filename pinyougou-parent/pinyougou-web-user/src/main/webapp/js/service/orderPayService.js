@@ -13,6 +13,9 @@ app.service('orderPayService',function($http){
     this.findOrderItem=function(id){
         return $http.get('../orderPay/findOrderItem.do?id='+id);
     }
+    this.findOrderById=function(id){
+        return $http.get('../orderPay/findOrderById.do?id='+id);
+    }
     //增加
     this.add=function(entity){
         return  $http.post('../orderPay/add.do',entity );

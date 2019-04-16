@@ -1,10 +1,20 @@
 package vo;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import cn.itcast.common.utils.LongJsonDeserializer;
+import cn.itcast.common.utils.LongJsonSerializer;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +23,9 @@ import java.util.Map;
 public class OrderVo implements Serializable{
 
 	//订单Id
-	private Long orderId;          //order
+//    @JsonSerialize(using = LongJsonSerializer.class)
+//    @JsonDeserialize(using = LongJsonDeserializer.class)
+	private String orderId;          //order
     //
     private Long orderItemId;
 	//商品名称
@@ -137,15 +149,15 @@ public class OrderVo implements Serializable{
         this.sendstatus = sendstatus;
     }
 
-    public Long getOrderId() {
-		return orderId;
-	}
+    public String getOrderId() {
+        return orderId;
+    }
 
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
-	public String getGoodsName() {
+    public String getGoodsName() {
 		return goodsName;
 	}
 
@@ -200,7 +212,5 @@ public class OrderVo implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
 
 }

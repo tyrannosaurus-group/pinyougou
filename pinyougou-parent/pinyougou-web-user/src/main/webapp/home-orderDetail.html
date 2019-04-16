@@ -19,7 +19,7 @@
 	<!-- 引入angular的js -->
 	<script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
 
-	<script type="text/javascript" src="js/base_pagination.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
 	<script type="text/javascript" src="js/controller/baseController.js"></script>
 	<script type="text/javascript" src="js/service/orderPayService.js"></script>
 	<script type="text/javascript" src="js/controller/orderPayController.js"></script>
@@ -27,7 +27,7 @@
 	<script type="text/javascript" src="js/controller/indexController.js"></script>
 </head>
 
-<body ng-app="pinyougou" ng-controller="orderPayController" ng-init="showName()">
+<body ng-app="pinyougou" ng-controller="orderPayController" ng-init="showName();findOrderById()">
     <!-- 头部栏位 -->
     <!--页面顶部-->
 <div id="nav-bottom">
@@ -212,20 +212,18 @@ $(function(){
                                         </div>
                                         <label>
                                             <span>提交订单</span>
-                                            <span>{{orderVo.title}}</span>
                                             <span>2016-06-27</span>
                                             <span>13:03:53</span>
                                         </label>
                                     </div>
-                                    <div class="current">
+                                    <div class="todo">
                                         <div class="wrap">
                                         <div class="round">2</div>
                                         <div class="bar"></div>
                                         </div>
                                         <label>
                                             <span>付款成功</span>
-                                            <span>2016-06-27</span>
-                                            <span>13:03:53</span>
+
                                         </label>
                                     </div>
                                     <div class="todo">
@@ -235,8 +233,7 @@ $(function(){
                                         </div>
                                         <label>
                                             <span>发货</span>
-                                            <span>2016-06-27</span>
-                                            <span>13:03:53</span>
+
                                         </label>
                                     </div>
                                     <div class="todo">
@@ -246,8 +243,7 @@ $(function(){
                                         </div>
                                         <label>
                                             <span>确认收货</span>
-                                            <span>2016-06-27</span>
-                                            <span>13:03:53</span>
+
                                         </label>
                                     </div>
                                     
@@ -257,25 +253,22 @@ $(function(){
                                         </div>
                                         <label>
                                             <span>评价晒单</span>
-                                            <span>2016-06-27</span>
-                                            <span>13:03:53</span>
+
                                         </label>
                                     </div>
                                     </div>
                             </div>
                             <div class="order-state">
-                                <p>当前订单状态：<span class="red">已发货</span></p>
-                                <p>还剩06天00小时 自动确认收货</p>
+                                <p>当前订单状态：<span class="red">未付款</span></p>
+
                             </div>
                         </div>
                         <div class="order-info">
                             <h5>订单信息</h5>
-                            <p>收货地址：神茶减肥茶就观察及噶盘滚啊  </p>
-                            <p>订单单号：178789758976986</p>
-                            <p>下单时间：2017-06-04 09：03：03</p>
-                            <p>支付时间：2017-06-05  09：03：03</p>
+                            <p>收货地址：金燕龙办公楼  </p>
+                            <p>订单单号：{{entity.orderId}}</p>
+                            <p>下单时间：{{entity.createTime}}</p>
                             <p>支付方式：微信</p>
-                            <p>发货时间：201707-06-06 09：03：03</p>
                         </div>
                         <div class="order-goods">
                             <table class="sui-table">
@@ -289,7 +282,7 @@ $(function(){
                              
                                 <tbody>                               
                                     <tr>
-                                        <td colspan="5">订单编号：787587819591509</td>
+                                        <td colspan="5">订单编号：{{entity.orderId}}</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -300,21 +293,20 @@ $(function(){
                                         </td>
                                         <td>
                                             <ul class="unstyled">
-                                                    <li class="o-price">¥599.00</li>	
-                                                    <li>¥299.00</li>											
+                                                    <li class="o-price">¥{{entity.payment}}</li>
+                                                    <li>¥{{entity.payment}}</li>
                                                 </ul>
                                         </td>
                                         <td>1</td>
                                         <td>无优惠</td>
-                                        <td>交易成功</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="order-price">
-                                <p>商品总金额：￥1.8</p>
+                                <p>商品总金额：￥{{entity.payment}}</p>
                                 <p>运费金额：，免费用</p>
                                 <p>使用优惠券：无</p>
-                                <h4 class="red">实际支付：￥1.8</h4>
+                                <h4 class="red">实际支付：￥0.0</h4>
                             </div>
                             <div class="clearfix"></div>
                         </div>

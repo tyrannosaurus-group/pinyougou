@@ -1,5 +1,5 @@
 //控制层
-app.controller('orderPayController' ,function($scope,$controller,$http,orderPayService){
+app.controller('orderPayController' ,function($scope,$controller,$location,$http,orderPayService){
     $controller('baseController',{$scope:$scope});//继承
     $controller('indexController',{$scope:$scope});
     //读取列表数据绑定到表单中index
@@ -33,6 +33,15 @@ app.controller('orderPayController' ,function($scope,$controller,$http,orderPayS
     $scope.showOrder=function(){
         var id=$location.search()['orderItemId'];
         orderPayService.findOrderItem(id).success(
+            function(response){
+                $scope.entity= response;
+            }
+        );
+    }
+    //查询实体
+    $scope.findOrderById=function(){
+        var id=$location.search()['orderId'];
+        orderPayService.findOrderById(id).success(
             function(response){
                 $scope.entity= response;
             }
@@ -75,9 +84,11 @@ app.controller('orderPayController' ,function($scope,$controller,$http,orderPayS
     //批量删除
     $scope.delPay=function(orderId){
         //获取选中的复选框
+        alert(orderId)
         orderPayService.delPay(orderId).success(
             function(response){
                 if(response.flag){
+                    alert(response.message)
                     $scope.reloadList();//刷新列表
                 }
             }
@@ -85,7 +96,8 @@ app.controller('orderPayController' ,function($scope,$controller,$http,orderPayS
     }
     //付款
     $scope.payMoney = function(orderId){
-        location.href="http://localhost:9103/pay.html#?orderId="+orderId;
+        window.open("http://localhost:9103/pay.html#?orderId="+orderId);
+        // location.href="http://localhost:9103/pay.html#?orderId="+orderId;
         /*orderPayService.payMoney(orderId).success(function(response){
             if(response.flag){
                 alert(response.message);

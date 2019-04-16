@@ -109,6 +109,12 @@ public class OrderPayServiceImpl implements OrderPayService {
         orderDao.updateByPrimaryKeySelective(order);
     }
 
+    @Override
+    public Order findOrderById(String orderId) {
+        return  orderDao.selectByPrimaryKey(Long.parseLong(orderId));
+
+    }
+
     List<OrderVo> findOrderVoList(String name){
         ArrayList<OrderVo> orderVoList = new ArrayList<>();
         OrderQuery orderQuery = new OrderQuery();
@@ -124,7 +130,7 @@ public class OrderPayServiceImpl implements OrderPayService {
                 Goods goods = goodsDao.selectByPrimaryKey(orderItem.getGoodsId());
                 //新建orderVo对象并装满
                 OrderVo orderVo = new OrderVo();
-                orderVo.setOrderId(order.getOrderId());
+                orderVo.setOrderId(String.valueOf(order.getOrderId()));
                 orderVo.setOrderItemId(orderItem.getItemId());
                 orderVo.setBigPrice(goods.getPrice());
                 orderVo.setPrice(orderItem.getPrice());

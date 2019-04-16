@@ -1,5 +1,6 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.service.OrderPayService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import entity.PageResult;
@@ -53,10 +54,14 @@ public class OrderPayController {
     public Result delPay(Long orderId){
         try {
             orderPayService.delPay(orderId);
-            return new Result(true,"付款成功");
+            return new Result(true,"取消订单成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,"付款失败");
+            return new Result(false,"取消订单失败");
         }
+    }
+    @RequestMapping("findOrderById")
+    public Order findOrderById(String id){
+        return orderPayService.findOrderById(id);
     }
 }

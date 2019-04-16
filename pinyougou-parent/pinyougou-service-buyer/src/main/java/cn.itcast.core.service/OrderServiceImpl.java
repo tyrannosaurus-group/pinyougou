@@ -214,7 +214,7 @@ public class OrderServiceImpl implements OrderService {
                         //先在外层的循环,找一个order,毕竟是唯一的
                         Order order = orderDao.selectByPrimaryKey(orderId);
                         //先把order里面的属性加给ordervo
-                        BeforeOrderVo.setOrderId(orderId);
+                        BeforeOrderVo.setOrderId(String.valueOf(orderId));
                         BeforeOrderVo.setNickName(order.getSellerId());
                         BeforeOrderVo.setChliOrderTime(order.getCreateTime());
                         BeforeOrderVo.setPayment(order.getPayment().doubleValue());

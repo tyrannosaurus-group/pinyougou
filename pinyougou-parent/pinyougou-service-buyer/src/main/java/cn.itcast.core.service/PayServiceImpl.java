@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -160,7 +158,7 @@ public class PayServiceImpl implements PayService {
     public Map<String, String> createNativeById(Long orderId) {
         Order order = orderDao.selectByPrimaryKey(orderId);
         //调统一下单Api
-        /*String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+       /* String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
         //发出Http请求 Apache httpClient 类
         HttpClient httpClient = new HttpClient(url);
@@ -218,16 +216,18 @@ public class PayServiceImpl implements PayService {
             Map<String, String> map = WXPayUtil.xmlToMap(content);*/
 
         HashMap<String, String> map = new HashMap<>();
-        //二维码连接
+            //二维码连接
             //金额
             map.put("total_fee", String.valueOf(order.getPayment()));
             //订单ID
             map.put("out_trade_no", String.valueOf(order.getOrderId()));
-            return map;
 
-        } /*catch (Exception e) {
+            return map;
+/*
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;*/
 
+    }
 }

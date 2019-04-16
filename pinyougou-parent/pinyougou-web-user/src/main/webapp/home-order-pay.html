@@ -241,9 +241,10 @@ $(function(){
                                     </div>
                                 </div>
 								<div  ng-repeat="orderVo in list">
+                                    {{orderVo.orderId}}
                                 <div class="choose-title">
                                     <label data-toggle="checkbox" class="checkbox-pretty ">
-										<input type="checkbox" ng-click="updateSelection($event,entity.id)" ><span>{{orderVo.createTime}}　订单编号：{{orderVo.orderId}}  店铺：{{orderVo.userId}} <a>和我联系</a></span>
+										<input type="checkbox" ng-click="updateSelection($event,orderVo.orderId)" ><span>{{orderVo.createTime}}　订单编号：{{orderVo.orderId}}  店铺：{{orderVo.userId}} <a>和我联系</a></span>
                                      </label>
                                     <a class="sui-btn btn-info share-btn">分享</a>
                                 </div>
@@ -274,7 +275,7 @@ $(function(){
                                             <td width="10%" class="center">
                                                 <ul class="unstyled">
                                                     <li>等待买家付款</li>
-                                                    <li><a href="home-orderDetail.html#?orderItemId={{orderVo.orderItemId}}" class="btn">订单详情 </a></li>
+                                                    <li><a href="home-orderDetail.html#?orderId={{orderVo.orderId}}" class="btn">订单详情 </a></li>
                                                 </ul>
 
 
@@ -298,9 +299,8 @@ $(function(){
                                     </label>
                                 <a href="" class="sui-btn btn-info btn-bordered hepay-btn" ng-click="updateStatus()">合并付款</a>
 								<!-- 分页 -->
-								<div>
 								<tm-pagination conf="paginationConf"></tm-pagination>
-								</div>
+
                             </div>
 
                             <div class="clearfix"></div>
