@@ -88,7 +88,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,name,first_char
+    id,name,first_char,status
     from tb_brand
     where id = #{id,jdbcType=BIGINT}
   </select>
