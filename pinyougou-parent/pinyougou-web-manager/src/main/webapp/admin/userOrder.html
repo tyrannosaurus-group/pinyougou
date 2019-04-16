@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户数据导出</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/userOrderController.js"></script>
+    <script type="text/javascript" src="../js/service/userOrderService.js"></script>
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="userOrderController">
+            <!-- .box-body -->
+
+            <div class="box-header with-border">
+                <h3 class="box-title">用户数据导出</h3>
+            </div>
+
+            <div class="box-body">
+
+                <!-- 数据表格 -->
+                <div class="table-box">
+
+
+                    <div class="box-tools pull-left">
+                        <div class="has-feedback">
+                            时间：<input type="datetime-local" ng-model="searchEntity.startTime">
+
+                                <input type="datetime-local" ng-model="searchEntity.endTime">
+
+
+
+                            用户名：<input type="text" ng-model="searchEntity.userId" >
+
+
+                            <button class="btn btn-default" ng-click="reloadList()">查询</button>
+                        </div>
+                    </div>
+
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback">
+                            <input class="btn btn-default" type="button" ng-click="export()" value="导出所有记录"/>
+                        </div>
+                    </div>
+                    <!--工具栏/-->
+
+                    <!--数据列表-->
+                    <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+
+                            <tr ng-repeat="entity in list">
+
+                                <td>
+                                    <table class="table table-bordered table-striped table-hover dataTable">
+                                        <thead>
+                                            <td class="sorting">用户id</td>
+                                            <td class="sorting">订单id</td>
+                                            <td class="sorting">订单状态</td>
+                                            <td class="sorting text-center">订单项</td>
+
+
+
+                                        </thead>
+
+                                        <tbody>
+                                            <tr ng-repeat="order in entity.orderList">
+
+                                                <td>{{entity.userId}}</td>
+                                                <td>{{order.orderId}}</td>
+                                                <td>
+                                                    <span>{{status[order.status]}}</span>
+                                                </td>
+                                                <td>
+                                                    <table class="table table-bordered table-striped table-hover dataTable">
+
+                                                        <thead>
+                                                            <td class="sorting">商品名称</td>
+                                                            <td class="sorting">商品价格</td>
+                                                            <td class="sorting">购买数量</td>
+                                                            <td class="sorting">总费用</td>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr ng-repeat="orderItem in order.orderItemList">
+
+
+                                                                <td>{{orderItem.title}}</td>
+                                                                <td>{{orderItem.price}}</td>
+                                                                <td>{{orderItem.num}}</td>
+                                                                <td>{{orderItem.totalFee}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+
+
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                    </table>
+                    <!--数据列表/-->
+
+
+                </div>
+                <!-- 数据表格 /-->
+
+                <!-- 分页 -->
+                <tm-pagination conf="paginationConf"></tm-pagination>
+
+            </div>
+            <!-- /.box-body -->
+
+</body>
+</html>
