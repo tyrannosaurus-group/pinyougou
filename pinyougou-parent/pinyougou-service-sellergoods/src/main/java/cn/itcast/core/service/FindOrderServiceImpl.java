@@ -9,6 +9,7 @@ import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.pojo.order.OrderItemQuery;
 import cn.itcast.core.pojo.order.OrderQuery;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import entity.PageResult;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import vo.OrderCountVo;
 import vo.OrderVo;
+import vo.UserOrderVo;
 
 import javax.xml.crypto.Data;
 import java.math.BigDecimal;
@@ -192,6 +194,108 @@ public class FindOrderServiceImpl implements FindOrderService {
         orderCountVo.setTodayFee(new BigDecimal(todayFee));
 
         return orderCountVo;
+    }
+
+    @Override
+    public PageResult download(Integer pageNo, Integer pageSize,UserOrderVo vo) {
+
+
+
+        List<Order> orderList= orderDao.selectByExample(null);
+
+        HashSet<String> hashSet = new HashSet<>();
+        for (Order order : orderList) {
+            hashSet.add(order.getUserId());
+        }
+
+        List<UserOrderVo> list = new ArrayList<>();;
+        Page<Order> page=null;
+
+        for (String s : hashSet) {
+
+
+            UserOrderVo userOrderVo = new UserOrderVo();
+
+            userOrderVo.setUserId(s);
+
+            OrderQuery orderQuery = new OrderQuery();
+            OrderQuery.Criteria criteria = orderQuery.createCriteria();
+            criteria.andUserIdEqualTo(s);
+
+            if (null != vo.getStartTime() && !"".equals(vo.getStartTime())&&null != vo.getEndTime() && !"".equals(vo.getEndTime())) {
+                criteria.andCreateTimeBetween(vo.getStartTime(), vo.getEndTime());
+            }
+
+            if (null != vo.getUserId() && !"".equals(vo.getUserId())) {
+                criteria.andUserIdEqualTo("%"+vo.getUserId()+"%");
+            }
+
+            PageHelper.startPage(pageNo, pageSize);
+
+            page = (Page<Order>) orderDao.selectByExample(orderQuery);
+            List<Order> orderList1 = page.getResult();
+
+            for (Order order : orderList1) {
+
+                OrderItemQuery orderItemQuery = new OrderItemQuery();
+                orderItemQuery.createCriteria().andOrderIdEqualTo(order.getOrderId());
+
+                List<OrderItem> orderItems = orderItemDao.selectByExample(orderItemQuery);
+
+                order.setOrderItemList(orderItems);
+
+            }
+            userOrderVo.setOrderList(orderList1);
+
+            list.add(userOrderVo);
+        }
+
+
+        return new PageResult(page.getTotal(),list);
+    }
+
+    @Override
+    public List<UserOrderVo> findAllUserOrders() {
+
+        List<Order> orderList= orderDao.selectByExample(null);
+
+        HashSet<String> hashSet = new HashSet<>();
+        for (Order order : orderList) {
+            hashSet.add(order.getUserId());
+        }
+
+        List<UserOrderVo> list = new ArrayList<>();;
+        Page<Order> page=null;
+
+        for (String s : hashSet) {
+
+
+            UserOrderVo userOrderVo = new UserOrderVo();
+
+            userOrderVo.setUserId(s);
+
+            OrderQuery orderQuery = new OrderQuery();
+            orderQuery.createCriteria().andUserIdEqualTo(s);
+
+
+
+            List<Order> orderList1 =orderDao.selectByExample(orderQuery);
+
+            for (Order order : orderList1) {
+
+                OrderItemQuery orderItemQuery = new OrderItemQuery();
+                orderItemQuery.createCriteria().andOrderIdEqualTo(order.getOrderId());
+
+                List<OrderItem> orderItems = orderItemDao.selectByExample(orderItemQuery);
+
+                order.setOrderItemList(orderItems);
+
+            }
+            userOrderVo.setOrderList(orderList1);
+
+            list.add(userOrderVo);
+        }
+        return list;
     }
 
 
