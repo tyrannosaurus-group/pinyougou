@@ -33,5 +33,10 @@ app.service('userService',function($http){
 	this.sendCode=function(phone){
 		return $http.get('../user/sendCode.do?phone='+phone);
 	}
+
+	//个人信息
+	this.sendInfo=function(info){
+		return $http.post('../user/addPersonalInfo.do',info);
+	}
 	
 });

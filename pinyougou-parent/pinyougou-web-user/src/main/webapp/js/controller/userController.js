@@ -36,6 +36,8 @@ app.controller('userController' ,function($scope,$controller ,uploadService ,use
 			}
 		);		
 	}
+	$scope.info={};
+
 
 	//上传图片
 	$scope.uploadFile = function () {
@@ -43,7 +45,19 @@ app.controller('userController' ,function($scope,$controller ,uploadService ,use
 		uploadService.uploadFile().success(function (response) {
 			if (response.flag) {
 				// 获得url  image_entity = {color:黑色,url:http://192.......jpg}
-				$scope.entity.headPic = response.message;
+				$scope.info.headPic = response.message;
+			} else {
+				alert(response.message);
+			}
+		});
+	}
+	//传数据
+	$scope.sendInfo = function () {
+		// 调用uploadService的方法完成文件的上传
+		$scope.info.birthday = $scope.year+"-"+$scope.month+"-"+$scope.day;
+		userService.sendInfo($scope.info).success(function (response) {
+			if (response.flag) {
+				alert(response.message);
 			} else {
 				alert(response.message);
 			}

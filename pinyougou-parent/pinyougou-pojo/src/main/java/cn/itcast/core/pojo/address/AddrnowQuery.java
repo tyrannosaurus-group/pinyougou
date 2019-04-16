@@ -454,6 +454,76 @@ public class AddrnowQuery {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
+
+        public Criteria andOccupationIsNull() {
+            addCriterion("occupation is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationIsNotNull() {
+            addCriterion("occupation is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationEqualTo(String value) {
+            addCriterion("occupation =", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationNotEqualTo(String value) {
+            addCriterion("occupation <>", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationGreaterThan(String value) {
+            addCriterion("occupation >", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationGreaterThanOrEqualTo(String value) {
+            addCriterion("occupation >=", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationLessThan(String value) {
+            addCriterion("occupation <", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationLessThanOrEqualTo(String value) {
+            addCriterion("occupation <=", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationLike(String value) {
+            addCriterion("occupation like", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationNotLike(String value) {
+            addCriterion("occupation not like", value, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationIn(List<String> values) {
+            addCriterion("occupation in", values, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationNotIn(List<String> values) {
+            addCriterion("occupation not in", values, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationBetween(String value1, String value2) {
+            addCriterion("occupation between", value1, value2, "occupation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOccupationNotBetween(String value1, String value2) {
+            addCriterion("occupation not between", value1, value2, "occupation");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

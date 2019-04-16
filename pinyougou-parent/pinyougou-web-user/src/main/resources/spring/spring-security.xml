@@ -74,7 +74,9 @@
         <beans:property name="key" value="an_id_for_this_auth_provider_only"/> 
     </beans:bean>        
    		 <!-- 自定义给用户名授权的实现类 -->
-	<beans:bean id="userDetailsService" class="cn.itcast.core.service.UserDetailServiceImpl"/>
+	<beans:bean id="userDetailsService" class="cn.itcast.core.service.UserDetailServiceImpl">
+        <beans:property name="userService" ref="userService"></beans:property>
+    </beans:bean>
 	
 	<!-- 认证过滤器 结束 -->
 	
