@@ -56,11 +56,12 @@
                                         </select>
 										
 									时间范围：<select ng-model="searchDate">
+												<option value="">全部订单</option>
                                          	<option value="1">日订单</option>    
                                          	<option value="2">周订单</option>    
                                          	<option value="3">月订单</option> 																				
                                         </select>
-							        订单日期：<input >									
+							        订单日期：<input type="date" ng-model="searchEntity.createTime">
 									<button class="btn btn-default" ng-click="reloadList()" >查询</button>
                                 </div>
                             </div>
@@ -79,8 +80,8 @@
 									      <th class="sorting">订单实付金额</th>
 										  <th class="sorting">订单来源</th>
 									      <th class="sorting">创建时间</th>
-									      <th class="sorting">状态</th>									     						
-					                      
+									      <th class="sorting">状态</th>
+										  <th class="text-center">操作</th>
 			                          </tr>
 			                      </thead>
 			                      <tbody>
@@ -96,8 +97,11 @@
 		                                  	<span>
 		                                  		{{status[entity.status]}}
 		                                  	</span>	                                  	
-		                                  </td>		                                  
-		                                 
+		                                  </td>
+										  <td class="text-center">
+											  <button type="button" class="btn bg-olive btn-xs" ng-click="changeStatus(entity.orderId)"
+													  data-toggle="modal" data-target="#editModal"  >发货</button>
+										  </td>
 			                          </tr>
 			                      </tbody>
 			                  </table>

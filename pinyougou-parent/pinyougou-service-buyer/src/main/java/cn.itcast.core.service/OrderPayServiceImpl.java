@@ -133,7 +133,7 @@ public class OrderPayServiceImpl implements OrderPayService {
                 orderVo.setOrderId(String.valueOf(order.getOrderId()));
                 orderVo.setOrderItemId(orderItem.getItemId());
                 orderVo.setBigPrice(goods.getPrice());
-                orderVo.setPrice(orderItem.getPrice());
+                orderVo.setPrice(orderItem.getPrice().doubleValue());
                 orderVo.setNum(orderItem.getNum());
                 orderVo.setTotalFee(orderItem.getTotalFee());
                 orderVo.setSourceType(order.getSourceType());

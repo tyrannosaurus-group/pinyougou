@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <title>待付款</title>
-     <!--<link rel="icon" href="assets/img/favicon.ico">-->
+     <link rel="icon" href="assets/img/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="css/pages-seckillOrder.css" />
@@ -39,14 +39,8 @@
 			<div class="py-container">
 				<div class="shortcut">
 					<ul class="fl">
-                        <div ng-if="loginName == null">
-                            <li class="f-item">品优购欢迎您！</li>
-                            <li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a
-                                    href="register.html" target="_blank">免费注册</a></span></li>
-                        </div>
-                        <div ng-if="loginName != null">
-                            <li class="f-item">{{loginName}}</span>  欢迎您！ <a href="logout/cas">退出登录 </a></span></li>
-                        </div>
+						<li class="f-item">品优购欢迎您！</li>
+						<li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
 					</ul>
 					<ul class="fr">
 						<li class="f-item">我的订单</li>
@@ -145,7 +139,7 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#service").hover(function(){
@@ -165,7 +159,7 @@ $(function(){
 <script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
 <script type="text/javascript" src="js/widget/nav.js"></script>
-
+</body>
     <!--header-->
     <div id="account">
         <div class="py-container">
@@ -531,6 +525,5 @@ $(function(){
 </div>
 <!--页面底部END-->
 </body>
-undefined
 
 </html>

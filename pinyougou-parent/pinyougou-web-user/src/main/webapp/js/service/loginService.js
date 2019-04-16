@@ -4,5 +4,13 @@ app.service('loginService',function($http){
 	this.showName=function(){
 		return $http.get('../login/name.do');
 	}
-	
+
+    this.findList=function () {
+        return $http.get("../collect/findList.do");
+    }
+
+    this.findSeckilList=function () {
+		return $http.get("../seckill/findSeckillList.do")
+    }
+
 });

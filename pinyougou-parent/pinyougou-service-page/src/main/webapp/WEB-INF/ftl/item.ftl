@@ -70,7 +70,7 @@
 						<div id="preview" class="spec-preview">
 							<span class="jqzoom">
 							 <#if (imageList?size>0)>
-							     <img jqimg="${imageList[1].url}" src="${imageList[0].url}" width="400px" height="400px" />
+							     <img jqimg="${imageList[0].url}" src="${imageList[0].url}" width="400px" height="400px" />
 							 </#if>
 							</span>
 						</div>

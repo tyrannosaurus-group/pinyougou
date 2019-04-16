@@ -18,7 +18,6 @@ import cn.itcast.core.pojo.seller.Seller;
 import cn.itcast.core.pojo.seller.SellerQuery;
 import cn.itcast.core.pojo.specification.Specification;
 import com.alibaba.dubbo.config.annotation.Service;
-import entity.PageResult;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.ctc.wstx.util.StringUtil;
@@ -37,33 +36,17 @@ import vo.OrderVo;
 import vo.PageBean;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 订单管理
  */
 @Service
 @Transactional
-public class OrderServiceImpl implements OrderService {
-    @Override
-    public List<OrderItem> findAll() {
-        return null;
-    }
-
-    @Override
-    public PageResult findPage(Integer pageNo, Integer pageSize, String name) {
-        return null;
-    }
-
-    @Override
-    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
-        return null;
-    }
-
-    @Override
-    public PageResult findPage(Integer pageNo, Integer pageSize) {
-        return null;
-    }
+public class OrderServiceImpl implements  OrderService {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -188,6 +171,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderItem> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<OrderVo> findAll(String name) {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer pageNo, Integer pageSize, String name) {
+        return null;
+    }
+
+    @Override
+    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
+        return null;
+    }
+
+    @Override
+    public PageResult findPage(Integer pageNo, Integer pageSize) {
+        return null;
+    }
+
+    @Override
     public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
         PageBean<OrderVo> pageBean = new PageBean<>();
         pageBean.setPageNumber(pageNum);
@@ -237,7 +245,7 @@ public class OrderServiceImpl implements OrderService {
                                 //欸嘿嘿,找到一个商品详情,耍耍
                                 vo.setTitle(orderItem.getTitle());
                                 vo.setPicPath(orderItem.getPicPath());
-                                vo.setPrice(new BigDecimal(orderItem.getPrice().doubleValue()));
+                                vo.setPrice(orderItem.getPrice().doubleValue());
                                 vo.setNum(orderItem.getNum());
                                 //下面是规格了,爽爽
                                 Item item = itemDao.selectByPrimaryKey(orderItem.getItemId());
@@ -285,6 +293,27 @@ public class OrderServiceImpl implements OrderService {
         return pageBean;
     }
 
+    @Override
+    public PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate) {
+        return null;
+    }
+
+    @Override
+    public Map<String, List> zheXianTu(String name) {
+        return null;
+    }
+
+    @Override
+    public void changeStatus(Long id) {
+
+    }
+
+    @Override
+    public PageResult searchStatistics(Integer page, Integer rows, String name, Date startDate, Date endDate) {
+        return null;
+    }
+
+
     //订单id字符串转换为Long类型集合
     public List<Long> turnToList(String str) {
         String[] strs = str.split(",");
@@ -297,34 +326,5 @@ public class OrderServiceImpl implements OrderService {
         return longs;
     }
 
-    public static void main(String[] args) {
-        String str = "111,222";
-        String[] strs = str.split(",");
-        List<Long> longs = new ArrayList<>();
-        for (String s : strs) {
-            long parseLong = Long.parseLong(s);
-            System.out.println(parseLong);
-            longs.add(parseLong);
-        }
     }
 
-    @Override
-    public List<OrderVo> findAll(String name) {
-        return null;
-    }
-
-    /*@Override
-    public PageResult search(Integer page, Integer rows, String name, Order order, String searchDate) {
-        return null;
-    }
-
-    @Override
-    public PageResult findPage(Integer page, Integer rows, String name) {
-        return null;
-    }
-
-    @Override
-    public PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name) {
-        return null;
-    }*/
-}

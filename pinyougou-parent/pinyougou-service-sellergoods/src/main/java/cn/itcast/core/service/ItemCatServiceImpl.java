@@ -36,13 +36,17 @@ public class ItemCatServiceImpl implements ItemCatService {
         for (ItemCat itemCat : itemCatList) {
 
             //缓存 数据类型 Hash类型
-            redisTemplate.boundHashOps("itemCatList").put(itemCat.getName(), itemCat.getTypeId());
+            redisTemplate.boundHashOps("itemCatList").put(itemCat.getName(),itemCat.getTypeId());
 
         }
         //添加
         //修改
         //删除
         //redisTemplate.boundHashOps("itemCatList").delete(itemCat.getName())
+
+
+
+
 
 
         //从Mysql数据查询
@@ -140,4 +144,17 @@ public class ItemCatServiceImpl implements ItemCatService {
         }
     }
 
+
+
+    //添加
+    @Override
+    public void add(ItemCat itemCat) {
+         itemCatDao.insertSelective(itemCat);
+    }
+
+    //修改
+    @Override
+    public void update(ItemCat itemCat) {
+        itemCatDao.updateByPrimaryKeySelective(itemCat);
+    }
 }

@@ -8,4 +8,28 @@ app.controller('indexController',function($scope,$controller,$http,loginService)
 					}
 			);
 	}
+
+    $scope.findList=function () {
+        loginService.findList().success(
+            function (response) {
+                $scope.collectList=response;
+            }
+        )
+    }
+	$scope.findList=function () {
+		loginService.findList().success(
+			function (response) {
+				$scope.collectList=response;
+            }
+		)
+    }
+    $scope.findSeckilList=function () {
+		loginService.findSeckilList().success(
+			function (responese) {
+				$scope.seckillList=responese;
+                seckillList.getGoodsDesc.setCustomAttributeItems=JSON.parse(seckillList.getGoodsDesc.getCustomAttributeItems)
+            }
+		)
+
+    }
 });

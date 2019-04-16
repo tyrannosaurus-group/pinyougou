@@ -154,6 +154,52 @@ public class PayServiceImpl implements PayService {
         return null;
     }
 
+    /**
+     * 增加 关闭支付方法
+     * @param out_trade_no
+     * @return
+     */
+    @Override
+    public Map<String, String> closePay(String out_trade_no) {
+        String url = "https://api.mch.weixin.qq.com/pay/closeorder";
+        //发出Http请求 Apache httpClient 类
+        HttpClient httpClient = new HttpClient(url);
+        //是http https
+        httpClient.setHttps(true);
+        //入参：
+        Map<String, String> param = new HashMap<>();
+
+
+//        公众账号ID 	appid 	是 	String(32) 	wxd678efh567hg6787 	微信支付分配的公众账号ID（企业号corpid即为此appId）
+        param.put("appid", appid);
+//        商户号 	mch_id 	是 	String(32) 	1230000109 	微信支付分配的商户号
+        param.put("mch_id", partner);
+        //商户订单号	out_trade_no	String(32)	20150806125346	商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|*@ ，且在同一个商户号下唯一。 详见商户订单号
+        param.put("out_trade_no", out_trade_no);
+
+        // 随机字符串	nonce_str	是	String(32)	C380BEC2BFD727A4B6845133519F3AD6	随机字符串，不长于32位。推荐随机数生成算法
+        param.put("nonce_str", WXPayUtil.generateNonceStr());
+
+        try {
+            //        签名 	sign 	是 	String(32) 	C380BEC2BFD727A4B6845133519F3AD6 	通过签名算法计算得出的签名值，详见签名生成算法
+            String xml = WXPayUtil.generateSignedXml(param, partnerkey);
+//        签名类型 	sign_type 	否 	String(32) 	MD5 	签名类型，默认为MD5，支持HMAC-SHA256和MD5。
+            httpClient.setXmlParam(xml);
+            //执行
+            httpClient.post();
+            //响应 xml 格式字符串
+            String content = httpClient.getContent();
+
+            //转成Map
+            Map<String, String> map = WXPayUtil.xmlToMap(content);
+
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public Map<String, String> createNativeById(Long orderId) {
         Order order = orderDao.selectByPrimaryKey(orderId);

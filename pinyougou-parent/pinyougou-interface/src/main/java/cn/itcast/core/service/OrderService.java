@@ -5,20 +5,18 @@ import cn.itcast.core.pojo.order.OrderItem;
 import entity.PageResult;
 import vo.OrderVo;
 
+import java.util.Date;
 import java.util.List;
-import entity.PageResult;
-import vo.OrderVo;
-import vo.PageBean;
-import entity.PageResult;
-import vo.OrderVo;
+import java.util.Map;
+
 import vo.PageBean;
 
-import java.util.List;
 
 public interface OrderService {
     void add(Order order);
 
 	List<OrderItem> findAll();
+	List<OrderVo> findAll(String name);
 
 	PageResult findPage(Integer pageNo, Integer pageSize,String name);
 
@@ -27,8 +25,11 @@ public interface OrderService {
 
     PageBean<OrderVo> findOrderList(Integer pageNum, Integer pageSize, String name);
 
-    List<OrderVo> findAll(String name);
+	PageResult searchSta(Integer page, Integer rows, String name, Order order, String searchDate);
 
+	Map<String,List> zheXianTu(String name);
 
+	void changeStatus(Long id);
 
+	PageResult searchStatistics(Integer page, Integer rows, String name, Date startDate, Date endDate);
 }

@@ -1,6 +1,7 @@
 package cn.itcast.core.service;
 
 
+import cn.itcast.common.utils.DateUtils;
 import cn.itcast.core.dao.order.OrderDao;
 import cn.itcast.core.dao.order.OrderItemDao;
 import cn.itcast.core.pojo.order.Order;
@@ -13,10 +14,14 @@ import com.github.pagehelper.PageInfo;
 import entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import vo.OrderCountVo;
 import vo.OrderVo;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.crypto.Data;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 订单管理
@@ -66,14 +71,13 @@ public class FindOrderServiceImpl implements FindOrderService {
                     for (OrderItem orderItem : orderItems) {
 
                         OrderVo orderVo1 = new OrderVo();
-
                         orderVo1.setOrderId(order.getOrderId());
                         orderVo1.setStatus(order.getStatus());
                         orderVo1.setSourceType(order.getSourceType());
                         orderVo1.setCreateTime(order.getCreateTime());
 
                         orderVo1.setGoodsName(orderItem.getTitle());
-                        orderVo1.setPrice(orderItem.getPrice());
+                        orderVo1.setPrice(orderItem.getPrice().doubleValue());
                         orderVo1.setNum(orderItem.getNum());
                         orderVo1.setTotalFee(orderItem.getTotalFee());
 
@@ -85,4 +89,111 @@ public class FindOrderServiceImpl implements FindOrderService {
 
         return new PageResult(pageInfo.getTotal(), orderVoList);
     }
+
+    @Override
+    public Map<String, List<Order>> findOrders() {
+        HashMap<String, List<Order>> map = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date1 = null;
+        Date date2 = null;
+        Date date3 = null;
+        Date date4 = null;
+        Date date5 = null;
+        Date date6 = null;
+        Date date7 = null;
+        Date date8 = null;
+        try {
+            date1 = sdf.parse("2017-08-24 00:00:00");
+            date2 = sdf.parse("2017-08-25 00:00:00");
+            date3 = sdf.parse("2017-08-25 24:00:00");
+            date4 = sdf.parse("2017-08-26 24:00:00");
+            date5 = sdf.parse("2017-10-12 24:00:00");
+            date6 = sdf.parse("2017-10-14 24:00:00");
+            date7 = sdf.parse("2018-03-08 24:00:03");
+            date8 = sdf.parse("2019-08-24 20:44:03");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OrderQuery orderQuery1 = new OrderQuery();
+        orderQuery1.createCriteria().andCreateTimeBetween(date1, date2);
+        List<Order> orders1 = orderDao.selectByExample(orderQuery1);
+        map.put("1", orders1);
+
+        OrderQuery orderQuery2 = new OrderQuery();
+        orderQuery2.createCriteria().andCreateTimeBetween(date2, date3);
+        List<Order> orders2 = orderDao.selectByExample(orderQuery2);
+        map.put("2", orders2);
+
+
+        OrderQuery orderQuery3 = new OrderQuery();
+        orderQuery3.createCriteria().andCreateTimeBetween(date3, date4);
+        List<Order> orders3 = orderDao.selectByExample(orderQuery3);
+        map.put("3", orders3);
+
+
+        OrderQuery orderQuery4 = new OrderQuery();
+        orderQuery4.createCriteria().andCreateTimeBetween(date4, date5);
+        List<Order> orders4 = orderDao.selectByExample(orderQuery4);
+        map.put("4", orders4);
+
+
+        OrderQuery orderQuery5 = new OrderQuery();
+        orderQuery5.createCriteria().andCreateTimeBetween(date5, date6);
+        List<Order> orders5 = orderDao.selectByExample(orderQuery5);
+        map.put("5", orders5);
+
+
+        OrderQuery orderQuery6 = new OrderQuery();
+        orderQuery6.createCriteria().andCreateTimeBetween(date6, date7);
+        List<Order> orders6 = orderDao.selectByExample(orderQuery6);
+        map.put("6", orders6);
+
+
+        OrderQuery orderQuery7 = new OrderQuery();
+        orderQuery7.createCriteria().andCreateTimeBetween(date7, date8);
+        List<Order> orders7 = orderDao.selectByExample(orderQuery7);
+        map.put("7", orders7);
+        return map;
+    }
+
+    @Override
+    public OrderCountVo orderCount() {
+        OrderCountVo orderCountVo = new OrderCountVo();
+
+        orderCountVo.setCount(orderDao.countByExample(null));
+
+        List<Order> orderList = orderDao.selectByExample(null);
+        double total = 0;
+        for (Order order : orderList) {
+            total += order.getPayment().doubleValue();
+        }
+
+        orderCountVo.setTotal(new BigDecimal(total));
+
+        OrderQuery orderQuery = new OrderQuery();
+        String[] dayStartAndEndTimePointStr = DateUtils.getDayStartAndEndTimePointStr(new Date());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date1 = null;
+        Date date2 = null;
+        try {
+            date1 = simpleDateFormat.parse(dayStartAndEndTimePointStr[0]);
+            date2 = simpleDateFormat.parse(dayStartAndEndTimePointStr[1]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        orderQuery.createCriteria().andCreateTimeBetween(date1, date2);
+
+        orderCountVo.setToday(orderDao.countByExample(orderQuery));
+
+        List<Order> orderList1 = orderDao.selectByExample(orderQuery);
+        double todayFee = 0;
+        for (Order order : orderList1) {
+            todayFee += order.getPayment().doubleValue();
+        }
+        orderCountVo.setTodayFee(new BigDecimal(todayFee));
+
+        return orderCountVo;
+    }
+
+
 }

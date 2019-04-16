@@ -33,7 +33,7 @@ public class OrderVo implements Serializable{
     //商品原价
     private BigDecimal bigPrice;
 	//商品价格
-	private BigDecimal price;      //orderItem
+	private double price;      //orderItem
 	//商品数量
 	private Integer num;			 //orderItem
 	//订单实付金额
@@ -67,7 +67,30 @@ public class OrderVo implements Serializable{
     //商品操作
     private Integer sendstatus;
     //交易状态
+//订单id
 
+    //商品名称
+
+    //商品价格
+
+    //商品数量
+
+    //订单实付金额
+
+    //订单来源
+    /**
+     * 订单来源：1:app端，2：pc端，3：M端，4：微信端，5：手机qq端
+     */
+
+    //创建时间
+    /**
+     * 订单创建时间
+     */
+
+    //付款状态
+    /**
+     * 状态：1、未付款，2、已付款，3、未发货，4、已发货，5、交易成功，6、交易关闭,7、待评价
+     */
 
     public Long getOrderItemId() {
         return orderItemId;
@@ -165,15 +188,15 @@ public class OrderVo implements Serializable{
 		this.goodsName = goodsName;
 	}
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public Integer getNum() {
+    public Integer getNum() {
 		return num;
 	}
 
