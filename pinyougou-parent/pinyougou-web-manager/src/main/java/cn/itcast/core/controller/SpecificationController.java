@@ -1,5 +1,6 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.common.utils.ImportExcelUtil;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.service.SpecificationService;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -7,7 +8,9 @@ import entity.PageResult;
 import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import vo.SpecificationVo;
 
 import java.util.List;
@@ -68,6 +71,23 @@ public class SpecificationController {
     public Result updateStatus(Long[] ids,String status){
         try {
             specificationService.updateStatus(ids,status);
+            return new Result(true,"成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"失败");
+        }
+    }
+
+
+    @RequestMapping("/export")
+    public Result update(@RequestParam(value = "file") MultipartFile file){
+        try {
+
+
+
+            List<List<Object>>  rowlist = ImportExcelUtil.getBankListByExcel(file.getInputStream(), file.getOriginalFilename());
+            specificationService.importData(rowlist);
+
             return new Result(true,"成功");
         } catch (Exception e) {
             e.printStackTrace();
