@@ -1,5 +1,9 @@
 //购物车控制层
-app.controller('cartController',function($scope,cartService){
+app.controller('cartController',function($scope,cartService,$http){
+
+    // AngularJS中的继承:伪继承
+    $controller('baseController',{$scope:$scope});
+
     //移到我的关注
     $scope.removeGoodsToCollect=function(itemId){
         cartService.removeGoodsToCollect().success(

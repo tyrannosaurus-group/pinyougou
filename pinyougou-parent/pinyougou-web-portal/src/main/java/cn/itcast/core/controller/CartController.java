@@ -35,7 +35,7 @@ public class CartController {
     //加入购物车  入参：库存ID  购买 数据 num
     @RequestMapping("/addGoodsToCartList")
     /*    @CrossOrigin(origins={"http://localhost:9003"},allowCredentials="true")*/
-    @CrossOrigin(origins = {"http://localhost:9003"})
+    @CrossOrigin(origins = {"http://localhost:8101"})
     public Result addGoodsToCartList(Long itemId, Integer num,
                                      HttpServletRequest request, HttpServletResponse response) {
 
@@ -117,7 +117,7 @@ public class CartController {
 
             //判断当前用户是否登陆
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (!"anonymousUser".equals(name)) {
+            if (!"anonymity".equals(name)) {
                 //登陆了
                // 5：将上面合并后的购物车集合再次追加到Redis缓存   清空Cookie
                 cartService.addCartListToRedis(cartList,name);

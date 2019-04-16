@@ -3,7 +3,6 @@ package cn.itcast.core.service;
 import cn.itcast.common.utils.IdWorker;
 import cn.itcast.core.dao.address.AddrnowDao;
 import cn.itcast.core.dao.user.UserDao;
-import cn.itcast.core.pojo.address.AddrnowQuery;
 import cn.itcast.core.pojo.user.User;
 import cn.itcast.core.pojo.user.UserQuery;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import vo.UserVo;
 
@@ -20,7 +18,6 @@ import javax.jms.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
