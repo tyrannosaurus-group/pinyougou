@@ -315,11 +315,9 @@ public class GoodsServiceImpl implements GoodsService {
                 @Override
                 public Message createMessage(Session session) throws JMSException {
                     //五大类型 TextMessage
-                    return session.createTextMessage(String.valueOf(id) + "out");// null + ""  "null"
+                    return session.createTextMessage(String.valueOf(id));// null + ""  "null"
                 }
             });
-
-
         }
     }
 
@@ -369,12 +367,15 @@ public class GoodsServiceImpl implements GoodsService {
                 goods.setIsMarketable("0");
                 goodsDao.updateByPrimaryKeySelective(goods);
 
-                //目的地 发送的消息
-                jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                //1:更新是否删除状态
+                goods.setId(id);
+                goodsDao.updateByPrimaryKeySelective(goods);
+
+                jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
                     @Override
                     public Message createMessage(Session session) throws JMSException {
                         //五大类型 TextMessage
-                        return session.createTextMessage( "o" + String.valueOf(id) );// null + ""  "null"
+                        return session.createTextMessage("o"+String.valueOf(id));// null + ""  "null"
                     }
                 });
             }

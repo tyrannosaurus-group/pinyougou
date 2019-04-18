@@ -7,6 +7,7 @@ import cn.itcast.core.pojo.good.BrandQuery;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
+import cn.itcast.core.pojo.specification.SpecificationQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -156,5 +157,20 @@ public class SpecificationServiceImpl implements SpecificationService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    //批量删除规格
+    @Override
+    public void delete(Long[] ids) {
+        //删除规格
+        for (Long id : ids) {
+            specificationDao.deleteByPrimaryKey(id);
+            //删除规格属性
+            SpecificationOptionQuery query = new SpecificationOptionQuery();
+            query.createCriteria().andSpecIdEqualTo(id);
+            specificationOptionDao.deleteByExample(query);
+        }
+
+
+
     }
 }

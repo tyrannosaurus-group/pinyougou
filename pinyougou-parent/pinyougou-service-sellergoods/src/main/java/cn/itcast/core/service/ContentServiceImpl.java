@@ -96,11 +96,8 @@ public class ContentServiceImpl implements ContentService {
             //4:保存缓存一份  时间
             redisTemplate.boundValueOps(categoryId).set(contentList, 5, TimeUnit.HOURS);
             //redisTemplate.boundValueOps(categoryId).expire(5, TimeUnit.HOURS);
-
         }
         //5:返回
         return contentList;
-
     }
-
 }

@@ -22,7 +22,9 @@ public class ItemDeleteListener implements MessageListener {
         ActiveMQTextMessage atm = (ActiveMQTextMessage) message;
         try {
             String id = atm.getText();
-
+            if (id.startsWith("o")){
+                id = id.substring(1);
+            }
             //2:索引库中商品 得删除掉
             SolrDataQuery solrDataQuery = new SimpleQuery("item_goodsid:" + id);
             solrTemplate.delete(solrDataQuery);
