@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>审核管理</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/secKillOrdersController.js"></script>
+    <script type="text/javascript" src="../js/service/secKillOrdersService.js"></script>
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="secKillOrdersController">
+<!-- .box-body -->
+
+<div class="box-header with-border">
+    <h3 class="box-title">秒杀查询</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+                <button class="btn btn-default" ng-click="findSecKillSeller()">商家名称：</button>
+                <select ng-model="searchEntity.sellerId">
+                    <option></option>
+                    <option ng-repeat="sellerId in sellerlist">{{sellerId}}</option>
+                </select>
+                交易状态：<select ng-model="searchEntity.status">
+                <option value="">全部</option>
+                <option value="0">未支付</option>
+                <option value="1">已支付</option>
+                <option value="2">关闭</option>
+            </select>
+
+                <button class="btn btn-default" ng-click="reloadList()">查询</button>
+            </div>
+        </div>
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
+                <th class="sorting_asc">订单ID</th>
+                <th class="sorting">用户名称</th>
+                <th class="sorting">商家名称</th>
+                <th class="sorting">下单时间</th>
+                <th class="sorting">支付时间</th>
+                <th class="sorting">付款状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entity in list">
+                <td><input ng-click="updateSelection($event,entity.id)" type="checkbox"></td>
+                <td>{{entity.id}}</td>
+                <td>{{entity.userId}}</td>
+                <td>{{entity.sellerId}}</td>
+                <td>{{entity.createTime}}</td>
+                <td>{{entity.payTime}}</td>
+                <td>
+                    <span>{{status[entity.status]}}</span>
+                <td></td>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#itemModal"
+                            ng-click="findOne(entity.id)">详情
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--数据列表/-->
+
+
+    </div>
+    <!-- 数据表格 /-->
+    <!-- 分页 -->
+    <tm-pagination conf="paginationConf"></tm-pagination>
+
+</div>
+<!-- /.box-body -->
+<!-- 编辑窗口 -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">商品详情</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped" width="800px">
+                    <tr>
+                        <td>订单ID</td>
+                        <td>{{seckillOrder.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>商品标题</td>
+                        <td>{{seckillGoods.title}}</td>
+                    </tr>
+                    <tr>
+                        <td>支付金额</td>
+                        <td>{{seckillOrder.money}}</td>
+                    </tr>
+                    <tr>
+                        <td>用户</td>
+                        <td>{{seckillOrder.userId}}</td>
+                    </tr>
+                    <tr>
+                        <td>商家</td>
+                        <td>{{seckillOrder.sellerId}}</td>
+                    </tr>
+                    <tr>
+                        <td>下单时间</td>
+                        <td>{{seckillOrder.createTime}}</td>
+                    </tr>
+                    <tr>
+                        <td>支付时间</td>
+                        <td>{{seckillOrder.payTime}}</td>
+                    </tr>
+                    <tr>
+                        <td>交易状态</td>
+                        <td>{{seckillOrder.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>收货人地址</td>
+                        <td>{{seckillOrder.receiverAddress}}</td>
+                    </tr>
+                    <tr>
+                        <td>收货人电话</td>
+                        <td>{{seckillOrder.receiverMobile}}</td>
+                    </tr>
+                    <tr>
+                        <td>收货人</td>
+                        <td>{{seckillOrder.receiver}}</td>
+                    </tr>
+                    <tr>
+                        <td>交易流水</td>
+                        <td>{{seckillOrder.transactionId}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
