@@ -1,5 +1,6 @@
  //控制层 
-app.controller('userController' ,function($scope,$controller   ,userService){	
+app.controller('userController' ,function($scope,$controller ,uploadService ,userService){
+	$controller('baseController',{$scope:$scope});
 	$scope.entity = {};
 	//注册用户
 	$scope.reg=function(){
@@ -34,6 +35,33 @@ app.controller('userController' ,function($scope,$controller   ,userService){
 				alert(response.message);
 			}
 		);		
+	}
+	$scope.info={};
+
+
+	//上传图片
+	$scope.uploadFile = function () {
+		// 调用uploadService的方法完成文件的上传
+		uploadService.uploadFile().success(function (response) {
+			if (response.flag) {
+				// 获得url  image_entity = {color:黑色,url:http://192.......jpg}
+				$scope.info.headPic = response.message;
+			} else {
+				alert(response.message);
+			}
+		});
+	}
+	//传数据
+	$scope.sendInfo = function () {
+		// 调用uploadService的方法完成文件的上传
+		$scope.info.birthday = $scope.year+"-"+$scope.month+"-"+$scope.day;
+		userService.sendInfo($scope.info).success(function (response) {
+			if (response.flag) {
+				alert(response.message);
+			} else {
+				alert(response.message);
+			}
+		});
 	}
 	
 });	

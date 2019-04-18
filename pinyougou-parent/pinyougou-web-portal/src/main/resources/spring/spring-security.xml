@@ -14,6 +14,9 @@
 	<http pattern="/index.html" security="none"></http>
 	<http pattern="/search.html" security="none"></http>
  	<http pattern="/cart.html" security="none"></http>
+    <http pattern="/content/findByCategoryId.do" security="none"></http>
+    <http pattern="/itemCat/findItemCatList.do" security="none"></http>
+
 
 	<!--   entry-point-ref  入口点引用 -->
 	<http use-expressions="false" entry-point-ref="casProcessingFilterEntryPoint">
@@ -92,7 +95,6 @@
     <!-- 单点登出  结束 -->
 
 
-
     <!-- 引用dubbo 服务 -->
     <dubbo:application name="pinyougou-portal-web" />
     <dubbo:registry address="zookeeper://192.168.200.128:2181"/>
@@ -100,5 +102,6 @@
     <!-- 超时全局设置   10分钟   check=false不检查服务提供方-->
     <dubbo:consumer timeout="600000" check="false"/>
     <dubbo:reference id="userService"  interface="cn.itcast.core.service.UserService" />
+
 	
 </beans:beans>

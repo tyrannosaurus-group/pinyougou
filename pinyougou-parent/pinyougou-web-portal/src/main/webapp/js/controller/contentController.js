@@ -1,4 +1,4 @@
-app.controller("contentController",function($scope,contentService){
+app.controller("contentController",function($scope,contentService,itemCatService){
 
 	//首页的所有广告
 	$scope.contentList = [];
@@ -16,5 +16,14 @@ app.controller("contentController",function($scope,contentService){
 	$scope.search=function(){
 		location.href="http://localhost:9103/search.html#?keywords="+$scope.keywords;
 	}
-	
+
+    //查询商品分类列表
+    $scope.findItemCatList=function(){
+        itemCatService.findItemCatList().success(
+            function(response){
+                $scope.itemCatList=response;
+            }
+        );
+    }
+
 });
