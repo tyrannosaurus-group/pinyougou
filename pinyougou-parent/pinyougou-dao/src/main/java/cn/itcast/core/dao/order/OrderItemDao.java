@@ -4,6 +4,7 @@ import cn.itcast.core.pojo.order.OrderItem;
 import cn.itcast.core.pojo.order.OrderItemQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import vo.OrderStatistics;
 
 public interface OrderItemDao {
     int countByExample(OrderItemQuery example);
@@ -27,4 +28,6 @@ public interface OrderItemDao {
     int updateByPrimaryKeySelective(OrderItem record);
 
     int updateByPrimaryKey(OrderItem record);
+
+    List<OrderStatistics> selectGroupByGoodsId(List<Long> ids);
 }
